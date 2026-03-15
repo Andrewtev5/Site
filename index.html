@@ -12,17 +12,19 @@
 
 <div class="background-light"></div>
 
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeActiveModal()"></div>
+
 <!-- MENU TAB -->
-<div class="menu-tab" onclick="toggleMenu()">
+<button class="menu-tab" type="button" onclick="toggleMenu()" aria-label="Open menu">
 <div class="tab-icon">
 <span></span>
 <span></span>
 <span></span>
 </div>
-</div>
+</button>
 
 <header class="header">
-
 <h1 class="logo-title">
 <span>L</span>
 <span>A</span>
@@ -35,40 +37,69 @@
 <span>R</span>
 <span>E</span>
 </h1>
-
 </header>
 
 <!-- SIDE MENU -->
 
-<div class="side-menu" id="sideMenu">
-
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+<div class="side-menu-head">
+<div>
+<p class="menu-eyebrow">Lamp Store</p>
 <h3>Menu</h3>
-
-<ul>
-<li>Log in</li>
-<li>Create account</li>
-<li>My orders</li>
-<li>Return product</li>
-<li>Contact</li>
-</ul>
-
+</div>
+<button class="menu-close" type="button" onclick="closeMenu()" aria-label="Close menu">&times;</button>
 </div>
 
+<div class="menu-account-card" id="menuAccountCard">
+<span class="menu-account-label" id="menuAccountLabel">Guest mode</span>
+<strong class="menu-account-name" id="menuAccountName">Sign in to save lamps in your personal library.</strong>
+</div>
+
+<nav class="menu-nav">
+<button class="menu-item" id="menuAuthPrimary" type="button" onclick="openAuthModal('login')">
+<span>Log in</span>
+<small>Access your account securely</small>
+</button>
+
+<button class="menu-item" id="menuAuthSecondary" type="button" onclick="openAuthModal('register')">
+<span>Create account</span>
+<small>Create a new protected profile</small>
+</button>
+
+<button class="menu-item" id="menuLibraryButton" type="button" onclick="openLibraryModal()">
+<span>Library</span>
+<small>Saved lamps and favorites</small>
+</button>
+
+<button class="menu-item" type="button" onclick="openInfoModal('return')">
+<span>Return product</span>
+<small>Return and warranty guidance</small>
+</button>
+
+<button class="menu-item" type="button" onclick="openInfoModal('contact')">
+<span>Contact</span>
+<small>Support and communication</small>
+</button>
+</nav>
+</aside>
+
 <main class="container">
-
 <div class="inner-panel">
-
+<div class="hero-copy">
+<p class="hero-kicker">Modern lighting with a premium touch</p>
 <h2 class="title">Our Lamps</h2>
+<p class="hero-text">Choose a lamp and add it to your personal library. Your saved collection is available after sign in.</p>
+</div>
 
 <div class="products">
-
-<div class="product">
-
+<article class="product">
 <img src="images/lamp1.jpg" class="product-image" alt="LED Lamp 10W">
 
 <div class="product-info">
-
+<div class="product-topline">
 <h3>LED Lamp 10W</h3>
+<span class="product-tag">Warm light</span>
+</div>
 
 <p class="description">
 Energy-efficient LED lamp for home lighting.
@@ -77,19 +108,27 @@ Long lifespan and low power consumption.
 
 <p class="price">15 PLN</p>
 
-<button type="button">Add to cart</button>
-
+<button
+class="product-action"
+type="button"
+data-add-library
+data-product-id="led-lamp-10w"
+data-product-name="LED Lamp 10W"
+data-product-price="15 PLN"
+>
+Add to library
+</button>
 </div>
+</article>
 
-</div>
-
-<div class="product">
-
+<article class="product">
 <img src="images/lamp2.jpg" class="product-image" alt="Smart WiFi Lamp">
 
 <div class="product-info">
-
+<div class="product-topline">
 <h3>Smart WiFi Lamp</h3>
+<span class="product-tag">Smart home</span>
+</div>
 
 <p class="description">
 Smart lamp controlled via mobile phone.
@@ -98,17 +137,117 @@ Adjust brightness and color.
 
 <p class="price">40 PLN</p>
 
-<button type="button">Add to cart</button>
-
+<button
+class="product-action"
+type="button"
+data-add-library
+data-product-id="smart-wifi-lamp"
+data-product-name="Smart WiFi Lamp"
+data-product-price="40 PLN"
+>
+Add to library
+</button>
 </div>
-
+</article>
 </div>
-
 </div>
-
-</div>
-
 </main>
+
+<!-- AUTH MODAL -->
+
+<section class="modal-window auth-modal" id="authModal" aria-hidden="true" aria-label="Authentication">
+<div class="modal-head">
+<div>
+<p class="modal-kicker">Protected access</p>
+<h3 class="modal-title">Account</h3>
+</div>
+<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close account window">&times;</button>
+</div>
+
+<div class="auth-tabs">
+<button class="auth-tab active" id="loginTabButton" type="button" onclick="switchAuthTab('login')">Log in</button>
+<button class="auth-tab" id="registerTabButton" type="button" onclick="switchAuthTab('register')">Create account</button>
+</div>
+
+<div class="auth-panels">
+<form class="auth-panel active" id="loginPanel" novalidate>
+<label class="field">
+<span>Email</span>
+<input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+</label>
+
+<label class="field">
+<span>Password</span>
+<input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+</label>
+
+<button class="form-submit" id="loginSubmit" type="submit">Log in</button>
+</form>
+
+<form class="auth-panel" id="registerPanel" novalidate>
+<label class="field">
+<span>Full name</span>
+<input id="registerName" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
+</label>
+
+<label class="field">
+<span>Email</span>
+<input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+</label>
+
+<label class="field">
+<span>Password</span>
+<input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required>
+</label>
+
+<label class="field">
+<span>Repeat password</span>
+<input id="registerPasswordRepeat" name="passwordRepeat" type="password" autocomplete="new-password" placeholder="Repeat your password" required>
+</label>
+
+<p class="password-hint">Use at least 8 characters, upper and lower case letters, and one digit.</p>
+
+<button class="form-submit" id="registerSubmit" type="submit">Create account</button>
+</form>
+</div>
+
+<p class="security-note">Local demo auth with browser-side password hashing. For true production security we will need a backend next.</p>
+</section>
+
+<!-- LIBRARY MODAL -->
+
+<section class="modal-window library-modal" id="libraryModal" aria-hidden="true" aria-label="Saved lamp library">
+<div class="modal-head">
+<div>
+<p class="modal-kicker">Personal space</p>
+<h3 class="modal-title">Your Library</h3>
+</div>
+<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close library window">&times;</button>
+</div>
+
+<p class="library-intro" id="libraryIntro">Sign in to keep your saved lamps here.</p>
+
+<div class="library-list" id="libraryList"></div>
+
+<div class="library-empty" id="libraryEmptyState">
+<strong>Your library is empty.</strong>
+<p>Add products from the catalog and they will appear here.</p>
+</div>
+</section>
+
+<!-- INFO MODAL -->
+
+<section class="modal-window info-modal" id="infoModal" aria-hidden="true" aria-label="Information window">
+<div class="modal-head">
+<div>
+<p class="modal-kicker" id="infoKicker">Support</p>
+<h3 class="modal-title" id="infoTitle">Information</h3>
+</div>
+<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close information window">&times;</button>
+</div>
+
+<p class="info-text" id="infoText"></p>
+</section>
 
 <!-- CHAT BUTTON -->
 
@@ -121,7 +260,6 @@ Adjust brightness and color.
 <!-- CHAT MODAL -->
 
 <section class="chat-modal" id="chatWindow" aria-hidden="true" aria-label="Lamp Assistant window">
-
 <div class="chat-badge">Lamp Assistant</div>
 
 <h3 class="chat-title">Hi! I am ready to help you.</h3>
@@ -148,8 +286,9 @@ I can help you choose a lamp, learn about delivery, and quickly find the right m
 </div>
 
 <p class="chat-tip">Click outside the window or press the robot button again to close it.</p>
-
 </section>
+
+<div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
 <footer>
 <p>&copy; 2026 Lamp Store</p>
