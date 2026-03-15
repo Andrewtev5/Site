@@ -6,19 +6,20 @@ session: "lamp_store_session_v1"
 const state = {
 activeModal: null,
 activeAuthTab: "login",
-currentUserEmail: null
+currentUserEmail: null,
+catalogProducts: {}
 };
 
 const infoContent = {
 return: {
 kicker: "Returns",
 title: "Return product",
-text: "You can prepare a return request after sign in. In the next step we can add a proper return form, order lookup, and return status tracking."
+text: "You can prepare a return request after sign in. For the diploma demo, the store already supports saving products, pseudo-purchasing them, and managing the library in one place."
 },
 contact: {
 kicker: "Contact",
 title: "Support contact",
-text: "Lamp Store support can help with product questions, delivery details, and account issues. In the next step we can connect this section to a contact form or messenger."
+text: "Lamp Store support can help with product questions, delivery details, and account issues. In the next step this section can be connected to a contact form, messenger, or diploma presentation FAQ."
 }
 };
 
@@ -93,28 +94,6 @@ return [];
 
 function saveUsers(users){
 localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
-}
-
-function getCurrentUser(){
-if(!state.currentUserEmail){
-return null;
-}
-
-return getUsers().find((user) => user.email === state.currentUserEmail) || null;
-}
-
-function saveCurrentSession(email){
-state.currentUserEmail = email;
-
-if(email){
-sessionStorage.setItem(STORAGE_KEYS.session, email);
-}else{
-sessionStorage.removeItem(STORAGE_KEYS.session);
-}
-}
-
-function loadCurrentSession(){
-state.currentUserEmail = sessionStorage.getItem(STORAGE_KEYS.session);
 }
 
 function normalizeEmail(email){
@@ -231,6 +210,86 @@ button.textContent = button.dataset.originalText || button.textContent;
 button.disabled = false;
 }
 
+function saveCurrentSession(email){
+state.currentUserEmail = email;
+
+if(email){
+sessionStorage.setItem(STORAGE_KEYS.session, email);
+}else{
+sessionStorage.removeItem(STORAGE_KEYS.session);
+}
+}
+
+function loadCurrentSession(){
+state.currentUserEmail = sessionStorage.getItem(STORAGE_KEYS.session);
+}
+
+function collectCatalogProducts(){
+state.catalogProducts = {};
+
+document.querySelectorAll("[data-product-id]").forEach((element) => {
+const productId = element.dataset.productId;
+
+if(!productId || state.catalogProducts[productId]){
+return;
+}
+
+state.catalogProducts[productId] = {
+id: productId,
+name: element.dataset.productName || "Lamp",
+price: element.dataset.productPrice || "0 PLN",
+image: element.dataset.productImage || "images/lamp1.jpg",
+tag: element.dataset.productTag || "Lamp",
+description: element.dataset.productDescription || "Premium lamp for a stylish interior."
+};
+});
+}
+
+function getCatalogProduct(productId){
+return state.catalogProducts[productId] || null;
+}
+
+function normalizeLibraryItem(item){
+const defaults = getCatalogProduct(item?.id) || {};
+
+return {
+id: item?.id || defaults.id || `lamp-${Date.now()}`,
+name: item?.name || defaults.name || "Lamp",
+price: item?.price || defaults.price || "0 PLN",
+image: item?.image || defaults.image || "images/lamp1.jpg",
+tag: item?.tag || defaults.tag || "Lamp",
+description: item?.description || defaults.description || "Premium lamp for a stylish interior.",
+savedAt: item?.savedAt || new Date().toISOString(),
+purchasedAt: item?.purchasedAt || null
+};
+}
+
+function getCurrentUser(){
+if(!state.currentUserEmail){
+return null;
+}
+
+const currentUser = getUsers().find((user) => user.email === state.currentUserEmail) || null;
+
+if(!currentUser){
+return null;
+}
+
+return {
+...currentUser,
+library: Array.isArray(currentUser.library) ? currentUser.library.map(normalizeLibraryItem) : []
+};
+}
+
+function updateUserRecord(updatedUser){
+const users = getUsers().map((user) => user.email === updatedUser.email ? {
+...updatedUser,
+library: Array.isArray(updatedUser.library) ? updatedUser.library.map(normalizeLibraryItem) : []
+} : user);
+
+saveUsers(users);
+}
+
 function switchAuthTab(tab){
 state.activeAuthTab = tab;
 
@@ -337,17 +396,24 @@ return;
 }
 
 if(currentUser){
+const savedCount = currentUser.library.length;
+const purchasedCount = currentUser.library.filter((item) => item.purchasedAt).length;
+
 menuAccountLabel.textContent = "Signed in";
-menuAccountName.textContent = `${currentUser.name}, your personal lamp library is active.`;
+menuAccountName.textContent = `${currentUser.name}, ${savedCount} lamp${savedCount === 1 ? "" : "s"} in library${purchasedCount ? `, ${purchasedCount} purchased.` : "."}`;
 setMenuButtonContent(menuAuthPrimary, "Account", "Stay signed in and manage your access", "openAuthModal('login')");
 setMenuButtonContent(menuAuthSecondary, "Log out", "Securely close the current session", "logoutUser()");
 return;
 }
 
 menuAccountLabel.textContent = "Guest mode";
-menuAccountName.textContent = "Sign in to save lamps in your personal library.";
+menuAccountName.textContent = "Sign in to save lamps in your personal library and run a demo purchase.";
 setMenuButtonContent(menuAuthPrimary, "Log in", "Access your account securely", "openAuthModal('login')");
 setMenuButtonContent(menuAuthSecondary, "Create account", "Create a new protected profile", "openAuthModal('register')");
+}
+
+function formatDate(value){
+return new Date(value).toLocaleDateString();
 }
 
 function renderLibrary(){
@@ -365,17 +431,18 @@ libraryList.innerHTML = "";
 if(!currentUser){
 libraryIntro.textContent = "Sign in to keep your saved lamps here.";
 libraryEmptyState.style.display = "block";
-libraryEmptyState.innerHTML = "<strong>Authorization required.</strong><p>Log in or create an account to build a personal lamp library.</p>";
+libraryEmptyState.innerHTML = "<strong>Authorization required.</strong><p>Log in or create an account to build a personal lamp library and use the demo purchase buttons.</p>";
 return;
 }
 
-libraryIntro.textContent = `${currentUser.name}, these are the lamps saved in your private library.`;
+const savedItems = currentUser.library;
+const purchasedCount = savedItems.filter((item) => item.purchasedAt).length;
 
-const savedItems = Array.isArray(currentUser.library) ? currentUser.library : [];
+libraryIntro.textContent = `${currentUser.name}, you saved ${savedItems.length} lamp${savedItems.length === 1 ? "" : "s"} in your private library. Purchased: ${purchasedCount}.`;
 
 if(savedItems.length === 0){
 libraryEmptyState.style.display = "block";
-libraryEmptyState.innerHTML = "<strong>Your library is empty.</strong><p>Add products from the catalog and they will appear here.</p>";
+libraryEmptyState.innerHTML = "<strong>Your library is empty.</strong><p>Add products from the catalog and they will appear here with images and a buy button.</p>";
 return;
 }
 
@@ -385,11 +452,52 @@ savedItems.forEach((item) => {
 const card = document.createElement("article");
 card.className = "library-card";
 
+const image = document.createElement("img");
+image.className = "library-card-image";
+image.src = item.image;
+image.alt = item.name;
+
 const copy = document.createElement("div");
+copy.className = "library-card-copy";
+
+const tag = document.createElement("span");
+tag.className = "library-card-tag";
+tag.textContent = item.tag;
+
 const title = document.createElement("strong");
-const price = document.createElement("span");
 title.textContent = item.name;
-price.textContent = `${item.price} - saved ${new Date(item.savedAt).toLocaleDateString()}`;
+
+const meta = document.createElement("span");
+meta.textContent = `${item.price} - saved ${formatDate(item.savedAt)}`;
+
+const description = document.createElement("span");
+description.textContent = item.description;
+
+const status = document.createElement("span");
+status.className = "library-card-status";
+status.textContent = item.purchasedAt ? `Purchased on ${formatDate(item.purchasedAt)}` : "Ready for demo purchase";
+
+if(item.purchasedAt){
+status.classList.add("purchased");
+}
+
+copy.appendChild(tag);
+copy.appendChild(title);
+copy.appendChild(meta);
+copy.appendChild(description);
+copy.appendChild(status);
+
+const actions = document.createElement("div");
+actions.className = "library-card-actions";
+
+const buyButton = document.createElement("button");
+buyButton.className = "library-buy";
+buyButton.type = "button";
+buyButton.textContent = item.purchasedAt ? "Purchased" : "Buy";
+buyButton.disabled = Boolean(item.purchasedAt);
+buyButton.addEventListener("click", () => {
+buyProduct(item, "library");
+});
 
 const removeButton = document.createElement("button");
 removeButton.className = "library-remove";
@@ -399,54 +507,162 @@ removeButton.addEventListener("click", () => {
 removeFromLibrary(item.id);
 });
 
-copy.appendChild(title);
-copy.appendChild(price);
+actions.appendChild(buyButton);
+actions.appendChild(removeButton);
+card.appendChild(image);
 card.appendChild(copy);
-card.appendChild(removeButton);
+card.appendChild(actions);
 libraryList.appendChild(card);
 });
 }
 
-function updateUserRecord(updatedUser){
-const users = getUsers().map((user) => user.email === updatedUser.email ? updatedUser : user);
-saveUsers(users);
-}
-
-function addToLibrary(product){
+function getProductState(productId){
 const currentUser = getCurrentUser();
 
 if(!currentUser){
-showToast("Please sign in first to save lamps in your library.", "error");
+return {
+saved: false,
+purchased: false
+};
+}
+
+const item = currentUser.library.find((entry) => entry.id === productId);
+
+return {
+saved: Boolean(item),
+purchased: Boolean(item?.purchasedAt)
+};
+}
+
+function renderProductActions(){
+document.querySelectorAll("[data-add-library]").forEach((button) => {
+const productId = button.dataset.productId || "";
+const productState = getProductState(productId);
+
+button.textContent = productState.saved ? "Saved in library" : "Add to library";
+button.disabled = productState.saved;
+});
+
+document.querySelectorAll("[data-buy-product]").forEach((button) => {
+const productId = button.dataset.productId || "";
+const productState = getProductState(productId);
+
+button.textContent = productState.purchased ? "Purchased" : "Buy now";
+button.disabled = productState.purchased;
+});
+}
+
+function syncUi(){
+renderMenuAccount();
+renderLibrary();
+renderProductActions();
+}
+
+function ensureSignedIn(actionText){
+const currentUser = getCurrentUser();
+
+if(currentUser){
+return currentUser;
+}
+
+showToast(`Please sign in first to ${actionText}.`, "error");
 openAuthModal("login");
+return null;
+}
+
+function buildProductPayloadFromButton(button){
+return normalizeLibraryItem({
+id: button.dataset.productId || "",
+name: button.dataset.productName || "Lamp",
+price: button.dataset.productPrice || "0 PLN",
+image: button.dataset.productImage || "images/lamp1.jpg",
+tag: button.dataset.productTag || "Lamp",
+description: button.dataset.productDescription || "Premium lamp for a stylish interior."
+});
+}
+
+function saveProductRecord(product, options = {}){
+const currentUser = ensureSignedIn(options.actionText || "save this product");
+
+if(!currentUser){
+return { ok: false };
+}
+
+const currentLibrary = currentUser.library;
+const existingItem = currentLibrary.find((item) => item.id === product.id);
+
+if(existingItem && !options.purchase){
+return {
+ok: false,
+reason: "already-saved"
+};
+}
+
+const now = new Date().toISOString();
+const nextItem = normalizeLibraryItem({
+...existingItem,
+...product,
+savedAt: existingItem?.savedAt || now,
+purchasedAt: options.purchase ? existingItem?.purchasedAt || now : existingItem?.purchasedAt || null
+});
+
+const nextLibrary = existingItem
+? currentLibrary.map((item) => item.id === product.id ? nextItem : item)
+: [...currentLibrary, nextItem];
+
+updateUserRecord({
+...currentUser,
+library: nextLibrary
+});
+
+syncUi();
+
+return {
+ok: true,
+added: !existingItem,
+alreadyPurchased: Boolean(existingItem?.purchasedAt),
+purchased: Boolean(nextItem.purchasedAt)
+};
+}
+
+function addToLibrary(product){
+const result = saveProductRecord(product, { actionText: "save products in your library" });
+
+if(!result.ok){
+if(result.reason === "already-saved"){
+showToast("This lamp is already in your library.", "error");
+openLibraryModal();
+}
 return;
 }
 
-const currentLibrary = Array.isArray(currentUser.library) ? currentUser.library : [];
-const alreadySaved = currentLibrary.some((item) => item.id === product.id);
+showToast(`${product.name} was added to your library.`);
+}
 
-if(alreadySaved){
+function buyProduct(product, source = "catalog"){
+const result = saveProductRecord(product, {
+purchase: true,
+actionText: "complete the demo purchase"
+});
+
+if(!result.ok){
+if(result.reason === "already-saved" && source === "catalog"){
 showToast("This lamp is already in your library.", "error");
+}
+return;
+}
+
+if(result.alreadyPurchased){
+showToast("This lamp has already been purchased in the demo.", "error");
 openLibraryModal();
 return;
 }
 
-const updatedUser = {
-...currentUser,
-library: [
-...currentLibrary,
-{
-id: product.id,
-name: product.name,
-price: product.price,
-savedAt: new Date().toISOString()
-}
-]
-};
+showToast(`${product.name} demo purchase completed.`);
 
-updateUserRecord(updatedUser);
-renderMenuAccount();
-renderLibrary();
-showToast(`${product.name} was added to your library.`);
+if(source === "catalog"){
+openLibraryModal();
+}
 }
 
 function removeFromLibrary(productId){
@@ -458,11 +674,11 @@ return;
 
 const updatedUser = {
 ...currentUser,
-library: (currentUser.library || []).filter((item) => item.id !== productId)
+library: currentUser.library.filter((item) => item.id !== productId)
 };
 
 updateUserRecord(updatedUser);
-renderLibrary();
+syncUi();
 showToast("Lamp removed from your library.");
 }
 
@@ -524,8 +740,7 @@ createdAt: new Date().toISOString()
 
 saveUsers(users);
 saveCurrentSession(email);
-renderMenuAccount();
-renderLibrary();
+syncUi();
 event.target.reset();
 closeActiveModal();
 showToast("Account created and signed in successfully.");
@@ -570,8 +785,7 @@ return;
 }
 
 saveCurrentSession(user.email);
-renderMenuAccount();
-renderLibrary();
+syncUi();
 event.target.reset();
 closeActiveModal();
 showToast(`Welcome back, ${user.name}.`);
@@ -584,8 +798,7 @@ setButtonBusy(submitButton, false, "Checking...");
 
 function logoutUser(){
 saveCurrentSession(null);
-renderMenuAccount();
-renderLibrary();
+syncUi();
 closeMenu();
 showToast("You have been logged out.");
 }
@@ -593,11 +806,13 @@ showToast("You have been logged out.");
 function bindProductActions(){
 document.querySelectorAll("[data-add-library]").forEach((button) => {
 button.addEventListener("click", () => {
-addToLibrary({
-id: button.dataset.productId || "",
-name: button.dataset.productName || "Lamp",
-price: button.dataset.productPrice || "0 PLN"
+addToLibrary(buildProductPayloadFromButton(button));
 });
+});
+
+document.querySelectorAll("[data-buy-product]").forEach((button) => {
+button.addEventListener("click", () => {
+buyProduct(buildProductPayloadFromButton(button), "catalog");
 });
 });
 }
@@ -615,13 +830,41 @@ loginForm.addEventListener("submit", handleLogin);
 }
 }
 
+function initScrollReveal(){
+const revealItems = document.querySelectorAll(".reveal-on-scroll");
+
+if(!revealItems.length){
+return;
+}
+
+if(!("IntersectionObserver" in window)){
+revealItems.forEach((item) => item.classList.add("is-visible"));
+return;
+}
+
+const observer = new IntersectionObserver((entries) => {
+entries.forEach((entry) => {
+if(entry.isIntersecting){
+entry.target.classList.add("is-visible");
+observer.unobserve(entry.target);
+}
+});
+}, {
+threshold: 0.16,
+rootMargin: "0px 0px -40px 0px"
+});
+
+revealItems.forEach((item) => observer.observe(item));
+}
+
 function bootstrap(){
+collectCatalogProducts();
 loadCurrentSession();
-renderMenuAccount();
-renderLibrary();
 bindProductActions();
 bindForms();
 switchAuthTab(state.activeAuthTab);
+syncUi();
+initScrollReveal();
 }
 
 document.addEventListener("keydown", (event) => {

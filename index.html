@@ -88,11 +88,37 @@
 <div class="hero-copy">
 <p class="hero-kicker">Modern lighting with a premium touch</p>
 <h2 class="title">Our Lamps</h2>
-<p class="hero-text">Choose a lamp and add it to your personal library. Your saved collection is available after sign in.</p>
+<p class="hero-text">Choose a lamp, save it to your personal library, or complete a demo purchase. Your collection and purchase status stay available after sign in.</p>
+</div>
+
+<section class="hero-stats reveal-on-scroll" aria-label="Store highlights">
+<article class="stat-card">
+<span class="stat-value">4</span>
+<span class="stat-label">designer lamps in the catalog</span>
+</article>
+
+<article class="stat-card">
+<span class="stat-value">24/7</span>
+<span class="stat-label">smart home inspiration</span>
+</article>
+
+<article class="stat-card">
+<span class="stat-value">Demo</span>
+<span class="stat-label">instant pseudo-purchase flow for diploma defense</span>
+</article>
+</section>
+
+<section class="catalog-section reveal-on-scroll" aria-labelledby="catalogTitle">
+<div class="section-head">
+<div>
+<p class="section-kicker">Catalog</p>
+<h3 class="section-title" id="catalogTitle">Featured collection</h3>
+</div>
+<p class="section-text">Each product card now supports two actions: saving to the library and a demo purchase button for your project presentation.</p>
 </div>
 
 <div class="products">
-<article class="product">
+<article class="product" data-product-card>
 <img src="images/lamp1.jpg" class="product-image" alt="LED Lamp 10W">
 
 <div class="product-info">
@@ -108,20 +134,45 @@ Long lifespan and low power consumption.
 
 <p class="price">15 PLN</p>
 
+<div class="product-meta">
+<span>Soft warm spectrum</span>
+<span>Low power consumption</span>
+<span>Best for bedrooms</span>
+</div>
+
+<div class="product-actions">
 <button
-class="product-action"
+class="product-action secondary"
 type="button"
 data-add-library
 data-product-id="led-lamp-10w"
 data-product-name="LED Lamp 10W"
 data-product-price="15 PLN"
+data-product-image="images/lamp1.jpg"
+data-product-tag="Warm light"
+data-product-description="Energy-efficient LED lamp for home lighting. Long lifespan and low power consumption."
 >
 Add to library
 </button>
+
+<button
+class="product-action"
+type="button"
+data-buy-product
+data-product-id="led-lamp-10w"
+data-product-name="LED Lamp 10W"
+data-product-price="15 PLN"
+data-product-image="images/lamp1.jpg"
+data-product-tag="Warm light"
+data-product-description="Energy-efficient LED lamp for home lighting. Long lifespan and low power consumption."
+>
+Buy now
+</button>
+</div>
 </div>
 </article>
 
-<article class="product">
+<article class="product" data-product-card>
 <img src="images/lamp2.jpg" class="product-image" alt="Smart WiFi Lamp">
 
 <div class="product-info">
@@ -137,19 +188,216 @@ Adjust brightness and color.
 
 <p class="price">40 PLN</p>
 
+<div class="product-meta">
+<span>App control</span>
+<span>Adjustable color</span>
+<span>Smart home ready</span>
+</div>
+
+<div class="product-actions">
 <button
-class="product-action"
+class="product-action secondary"
 type="button"
 data-add-library
 data-product-id="smart-wifi-lamp"
 data-product-name="Smart WiFi Lamp"
 data-product-price="40 PLN"
+data-product-image="images/lamp2.jpg"
+data-product-tag="Smart home"
+data-product-description="Smart lamp controlled via mobile phone. Adjust brightness and color."
 >
 Add to library
 </button>
+
+<button
+class="product-action"
+type="button"
+data-buy-product
+data-product-id="smart-wifi-lamp"
+data-product-name="Smart WiFi Lamp"
+data-product-price="40 PLN"
+data-product-image="images/lamp2.jpg"
+data-product-tag="Smart home"
+data-product-description="Smart lamp controlled via mobile phone. Adjust brightness and color."
+>
+Buy now
+</button>
+</div>
+</div>
+</article>
+
+<article class="product" data-product-card>
+<img src="images/lamp3.jpg" class="product-image" alt="Minimal Table Lamp">
+
+<div class="product-info">
+<div class="product-topline">
+<h3>Minimal Table Lamp</h3>
+<span class="product-tag">Studio glow</span>
+</div>
+
+<p class="description">
+Compact premium lamp with a calm golden tone.
+Excellent for desks, reading corners, and focused evening work.
+</p>
+
+<p class="price">32 PLN</p>
+
+<div class="product-meta">
+<span>Compact format</span>
+<span>Premium finish</span>
+<span>Perfect for workspaces</span>
+</div>
+
+<div class="product-actions">
+<button
+class="product-action secondary"
+type="button"
+data-add-library
+data-product-id="minimal-table-lamp"
+data-product-name="Minimal Table Lamp"
+data-product-price="32 PLN"
+data-product-image="images/lamp3.jpg"
+data-product-tag="Studio glow"
+data-product-description="Compact premium lamp with a calm golden tone. Excellent for desks, reading corners, and focused evening work."
+>
+Add to library
+</button>
+
+<button
+class="product-action"
+type="button"
+data-buy-product
+data-product-id="minimal-table-lamp"
+data-product-name="Minimal Table Lamp"
+data-product-price="32 PLN"
+data-product-image="images/lamp3.jpg"
+data-product-tag="Studio glow"
+data-product-description="Compact premium lamp with a calm golden tone. Excellent for desks, reading corners, and focused evening work."
+>
+Buy now
+</button>
+</div>
+</div>
+</article>
+
+<article class="product" data-product-card>
+<img src="images/lamp4.jpg" class="product-image" alt="Nordic Glass Lamp">
+
+<div class="product-info">
+<div class="product-topline">
+<h3>Nordic Glass Lamp</h3>
+<span class="product-tag">Premium decor</span>
+</div>
+
+<p class="description">
+Elegant glass body with a decorative filament feel.
+Designed to become a visual accent in a living room or lounge zone.
+</p>
+
+<p class="price">54 PLN</p>
+
+<div class="product-meta">
+<span>Decorative filament</span>
+<span>Premium ambiance</span>
+<span>Living room accent</span>
+</div>
+
+<div class="product-actions">
+<button
+class="product-action secondary"
+type="button"
+data-add-library
+data-product-id="nordic-glass-lamp"
+data-product-name="Nordic Glass Lamp"
+data-product-price="54 PLN"
+data-product-image="images/lamp4.jpg"
+data-product-tag="Premium decor"
+data-product-description="Elegant glass body with a decorative filament feel. Designed to become a visual accent in a living room or lounge zone."
+>
+Add to library
+</button>
+
+<button
+class="product-action"
+type="button"
+data-buy-product
+data-product-id="nordic-glass-lamp"
+data-product-name="Nordic Glass Lamp"
+data-product-price="54 PLN"
+data-product-image="images/lamp4.jpg"
+data-product-tag="Premium decor"
+data-product-description="Elegant glass body with a decorative filament feel. Designed to become a visual accent in a living room or lounge zone."
+>
+Buy now
+</button>
+</div>
 </div>
 </article>
 </div>
+
+</section>
+
+<section class="experience-section reveal-on-scroll" aria-labelledby="experienceTitle">
+<div class="section-head">
+<div>
+<p class="section-kicker">Quality</p>
+<h3 class="section-title" id="experienceTitle">Why these lamps feel premium</h3>
+</div>
+<p class="section-text">This block improves the diploma presentation by explaining product value, visual quality, and interaction logic for users.</p>
+</div>
+
+<div class="experience-grid">
+<article class="experience-card">
+<span class="experience-number">01</span>
+<h4>Refined materials</h4>
+<p>Glass, metal, and warm filament styling create a more believable premium catalog with stronger product perception.</p>
+</article>
+
+<article class="experience-card">
+<span class="experience-number">02</span>
+<h4>Interactive shopping flow</h4>
+<p>Users can save products, open the library, and trigger a pseudo-purchase without needing a backend payment system.</p>
+</article>
+
+<article class="experience-card">
+<span class="experience-number">03</span>
+<h4>Smooth presentation</h4>
+<p>Scroll reveal animations, hover effects, and richer cards make the site feel more polished during defense or demo.</p>
+</article>
+</div>
+</section>
+
+<section class="gallery-section reveal-on-scroll" aria-labelledby="galleryTitle">
+<div class="section-head">
+<div>
+<p class="section-kicker">Gallery</p>
+<h3 class="section-title" id="galleryTitle">Product inspiration</h3>
+</div>
+<p class="section-text">A visual gallery adds depth to the page and makes the site long enough for natural wheel scrolling.</p>
+</div>
+
+<div class="gallery-grid">
+<figure class="gallery-card large">
+<img src="images/lamp4.jpg" alt="Nordic glass lamp close-up">
+<figcaption>Warm atmospheric lighting for premium interiors.</figcaption>
+</figure>
+
+<figure class="gallery-card">
+<img src="images/lamp3.jpg" alt="Minimal table lamp on dark background">
+<figcaption>Compact elegance for a modern workspace.</figcaption>
+</figure>
+
+<figure class="gallery-card">
+<img src="images/lamp2.jpg" alt="Smart lamp with amber light">
+<figcaption>Smart control paired with a decorative filament look.</figcaption>
+</figure>
+
+<figure class="gallery-card wide">
+<img src="images/lamp1.jpg" alt="LED lamp studio shot">
+<figcaption>Energy-saving lighting that still looks premium in the catalog.</figcaption>
+</figure>
+</div>
+</section>
 </div>
 </main>
 
