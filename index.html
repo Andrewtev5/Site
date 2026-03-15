@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Lamp Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="background-light"></div>
+
+<!-- MENU TAB -->
+<div class="menu-tab" onclick="toggleMenu()">
+<div class="tab-icon">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+
+<header class="header">
+
+<h1 class="logo-title">
+<span>L</span>
+<span>A</span>
+<span>M</span>
+<span>P</span>
+<span class="space"></span>
+<span>S</span>
+<span>T</span>
+<span>O</span>
+<span>R</span>
+<span>E</span>
+</h1>
+
+</header>
+
+<!-- SIDE MENU -->
+
+<div class="side-menu" id="sideMenu">
+
+<h3>Menu</h3>
+
+<ul>
+<li>Zaloguj się</li>
+<li>Zarejestruj się</li>
+<li>Moje zamówienia</li>
+<li>Zwróć produkt</li>
+<li>Kontakt</li>
+</ul>
+
+</div>
+
+<main class="container">
+
+<div class="inner-panel">
+
+<h2 class="title">Our Lamps</h2>
+
+<div class="products">
+
+<div class="product">
+
+<img src="images/lamp1.jpg" class="product-image">
+
+<div class="product-info">
+
+<h3>LED Lamp 10W</h3>
+
+<p class="description">
+Energy-efficient LED lamp for home lighting.
+Long lifespan and low power consumption.
+</p>
+
+<p class="price">15 zł</p>
+
+<button>Add to cart</button>
+
+</div>
+
+</div>
+
+<div class="product">
+
+<img src="images/lamp2.jpg" class="product-image">
+
+<div class="product-info">
+
+<h3>Smart WiFi Lamp</h3>
+
+<p class="description">
+Smart lamp controlled via mobile phone.
+Adjust brightness and color.
+</p>
+
+<p class="price">40 zł</p>
+
+<button>Add to cart</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<!-- CHAT BUTTON -->
+
+<div class="chat-button" onclick="toggleChat()">
+<img src="images/botlog.png">
+</div>
+
+<!-- CHAT WINDOW -->
+
+<div class="chat-window" id="chatWindow">
+
+<div class="chat-header">
+Lamp Assistant
+<span class="close-chat" onclick="toggleChat()">✕</span>
+</div>
+
+<div class="chat-messages">
+
+<div class="bot-message">
+Cześć! Jestem Lamp Assistant. Jak mogę pomóc?
+</div>
+
+</div>
+
+<div class="chat-input">
+
+<input type="text" placeholder="Napisz wiadomość...">
+
+<button>Wyślij</button>
+
+</div>
+
+</div>
+
+<footer>
+<p>© 2026 Lamp Store</p>
+</footer>
+
+<script>
+
+function toggleMenu(){
+
+const menu = document.getElementById("sideMenu");
+
+menu.classList.toggle("active");
+
+document.body.classList.toggle("menu-open");
+
+}
+
+function toggleChat(){
+
+const chat = document.getElementById("chatWindow");
+
+chat.classList.toggle("active");
+
+}
+
+</script>
+
+</body>
+</html>
