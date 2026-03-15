@@ -3,6 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lamp Store</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -44,11 +45,11 @@
 <h3>Menu</h3>
 
 <ul>
-<li>Zaloguj się</li>
-<li>Zarejestruj się</li>
-<li>Moje zamówienia</li>
-<li>Zwróć produkt</li>
-<li>Kontakt</li>
+<li>Log in</li>
+<li>Create account</li>
+<li>My orders</li>
+<li>Return product</li>
+<li>Contact</li>
 </ul>
 
 </div>
@@ -63,7 +64,7 @@
 
 <div class="product">
 
-<img src="images/lamp1.jpg" class="product-image">
+<img src="images/lamp1.jpg" class="product-image" alt="LED Lamp 10W">
 
 <div class="product-info">
 
@@ -74,9 +75,9 @@ Energy-efficient LED lamp for home lighting.
 Long lifespan and low power consumption.
 </p>
 
-<p class="price">15 zł</p>
+<p class="price">15 PLN</p>
 
-<button>Add to cart</button>
+<button type="button">Add to cart</button>
 
 </div>
 
@@ -84,7 +85,7 @@ Long lifespan and low power consumption.
 
 <div class="product">
 
-<img src="images/lamp2.jpg" class="product-image">
+<img src="images/lamp2.jpg" class="product-image" alt="Smart WiFi Lamp">
 
 <div class="product-info">
 
@@ -95,9 +96,9 @@ Smart lamp controlled via mobile phone.
 Adjust brightness and color.
 </p>
 
-<p class="price">40 zł</p>
+<p class="price">40 PLN</p>
 
-<button>Add to cart</button>
+<button type="button">Add to cart</button>
 
 </div>
 
@@ -111,62 +112,50 @@ Adjust brightness and color.
 
 <!-- CHAT BUTTON -->
 
-<div class="chat-button" onclick="toggleChat()">
-<img src="images/botlog.png">
+<button class="chat-button" type="button" onclick="toggleChat()" aria-label="Open assistant">
+<img src="images/botlog.png" alt="Assistant robot">
+</button>
+
+<div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
+
+<!-- CHAT MODAL -->
+
+<section class="chat-modal" id="chatWindow" aria-hidden="true" aria-label="Lamp Assistant window">
+
+<div class="chat-badge">Lamp Assistant</div>
+
+<h3 class="chat-title">Hi! I am ready to help you.</h3>
+
+<p class="chat-text">
+I can help you choose a lamp, learn about delivery, and quickly find the right model for your home.
+</p>
+
+<div class="chat-cards">
+<div class="chat-card">
+<span class="chat-card-title">Choose a lamp</span>
+<p>Get help with selecting the best lamp for your room and style.</p>
 </div>
 
-<!-- CHAT WINDOW -->
-
-<div class="chat-window" id="chatWindow">
-
-<div class="chat-header">
-Lamp Assistant
-<span class="close-chat" onclick="toggleChat()">✕</span>
+<div class="chat-card">
+<span class="chat-card-title">Fast support</span>
+<p>Find quick answers about orders, delivery, and product details.</p>
 </div>
 
-<div class="chat-messages">
-
-<div class="bot-message">
-Cześć! Jestem Lamp Assistant. Jak mogę pomóc?
+<div class="chat-card">
+<span class="chat-card-title">Ready now</span>
+<p>The assistant is online and prepared to guide you right away.</p>
+</div>
 </div>
 
-</div>
+<p class="chat-tip">Click outside the window or press the robot button again to close it.</p>
 
-<div class="chat-input">
-
-<input type="text" placeholder="Napisz wiadomość...">
-
-<button>Wyślij</button>
-
-</div>
-
-</div>
+</section>
 
 <footer>
-<p>© 2026 Lamp Store</p>
+<p>&copy; 2026 Lamp Store</p>
 </footer>
 
-<script>
-
-function toggleMenu(){
-
-const menu = document.getElementById("sideMenu");
-
-menu.classList.toggle("active");
-
-document.body.classList.toggle("menu-open");
-
-}
-
-function toggleChat(){
-
-const chat = document.getElementById("chatWindow");
-
-chat.classList.toggle("active");
-
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
