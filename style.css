@@ -111,24 +111,30 @@ pointer-events:auto;
 }
 
 .header{
-display:flex;
-justify-content:center;
-align-items:center;
 padding:25px;
 background:rgba(18,18,18,0.72);
 backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,0.04);
 }
 
+.header-inner{
+width:min(1200px, calc(100% - 24px));
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
 .logo-title{
 display:flex;
-justify-content:center;
 align-items:center;
 font-size:28px;
 letter-spacing:6px;
 }
 
-.logo-title span{
+.logo-title span,
+.logo-brand{
 background:linear-gradient(120deg, #ffffff, #ffd700, #ffcc33, #ffffff);
 background-size:200%;
 -webkit-background-clip:text;
@@ -136,6 +142,50 @@ background-clip:text;
 -webkit-text-fill-color:transparent;
 animation:floatLetters 6s ease-in-out infinite, goldShine 4s linear infinite;
 text-shadow:0 0 10px rgba(255,215,0,0.4), 0 0 25px rgba(255,215,0,0.2);
+}
+
+.logo-brand{
+letter-spacing:0.2em;
+text-transform:uppercase;
+}
+
+.header-tools{
+display:flex;
+align-items:center;
+justify-content:flex-end;
+}
+
+.lang-switch{
+display:inline-flex;
+align-items:center;
+gap:4px;
+padding:4px;
+border-radius:999px;
+background:rgba(255,193,7,0.14);
+border:1px solid rgba(255,193,7,0.24);
+box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.lang-option{
+min-width:58px;
+height:38px;
+padding:0 16px;
+border-radius:999px;
+background:transparent;
+color:#f9e9a3;
+font-weight:bold;
+letter-spacing:0.06em;
+transition:background 0.24s ease, color 0.24s ease, transform 0.24s ease;
+}
+
+.lang-option:hover{
+transform:translateY(-1px);
+}
+
+.lang-option.active{
+background:linear-gradient(145deg, #ffd74a, var(--gold));
+color:#151515;
+box-shadow:0 10px 18px rgba(255,193,7,0.18);
 }
 
 @keyframes floatLetters{
@@ -624,6 +674,11 @@ transform:translateX(0);
 .menu-item:hover{
 background:rgba(255,193,7,0.08);
 border-color:rgba(255,193,7,0.28);
+}
+
+.menu-item.is-current{
+background:rgba(255,193,7,0.12);
+border-color:rgba(255,193,7,0.36);
 }
 
 .menu-item span{
@@ -1250,6 +1305,21 @@ padding:18px;
 .logo-title{
 font-size:22px;
 letter-spacing:4px;
+}
+
+.header-inner{
+width:100%;
+}
+
+.logo-brand{
+letter-spacing:0.12em;
+}
+
+.lang-option{
+min-width:52px;
+height:34px;
+padding:0 12px;
+font-size:13px;
 }
 
 .title{

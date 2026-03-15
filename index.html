@@ -1,373 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lamp Store</title>
+<title>Katalog | Sklep Lamp</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-
-<div class="background-light"></div>
-
-<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-<div class="modal-overlay" id="modalOverlay" onclick="closeActiveModal()"></div>
-
-<!-- MENU TAB -->
-<button class="menu-tab" type="button" onclick="toggleMenu()" aria-label="Open menu">
-<div class="tab-icon">
-<span></span>
-<span></span>
-<span></span>
-</div>
-</button>
-
-<header class="header">
-<h1 class="logo-title">
-<span>L</span>
-<span>A</span>
-<span>M</span>
-<span>P</span>
-<span class="space"></span>
-<span>S</span>
-<span>T</span>
-<span>O</span>
-<span>R</span>
-<span>E</span>
-</h1>
-</header>
-
-<!-- SIDE MENU -->
-
-<aside class="side-menu" id="sideMenu" aria-hidden="true">
-<div class="side-menu-head">
-<div>
-<p class="menu-eyebrow">Lamp Store</p>
-<h3>Menu</h3>
-</div>
-<button class="menu-close" type="button" onclick="closeMenu()" aria-label="Close menu">&times;</button>
-</div>
-
-<div class="menu-account-card" id="menuAccountCard">
-<span class="menu-account-label" id="menuAccountLabel">Guest mode</span>
-<strong class="menu-account-name" id="menuAccountName">Sign in to save lamps in your personal library.</strong>
-</div>
-
-<nav class="menu-nav">
-<button class="menu-item" type="button" onclick="goToPage('index.html')">
-<span>Catalog</span>
-<small>Browse the full lamp collection</small>
-</button>
-
-<button class="menu-item" id="menuAuthPrimary" type="button" onclick="openAuthModal('login')">
-<span>Log in</span>
-<small>Access your account securely</small>
-</button>
-
-<button class="menu-item" id="menuAuthSecondary" type="button" onclick="openAuthModal('register')">
-<span>Create account</span>
-<small>Create a new protected profile</small>
-</button>
-
-<button class="menu-item" id="menuLibraryButton" type="button" onclick="openLibraryModal()">
-<span>Library</span>
-<small>Saved lamps and favorites</small>
-</button>
-
-<button class="menu-item" type="button" onclick="openInfoModal('return')">
-<span>Return product</span>
-<small>Return and warranty guidance</small>
-</button>
-
-<button class="menu-item" type="button" onclick="openInfoModal('contact')">
-<span>Contact</span>
-<small>Support and communication</small>
-</button>
-</nav>
-</aside>
+<body data-page="catalog">
 
 <main class="container">
 <div class="inner-panel">
 <div class="hero-copy">
-<p class="hero-kicker">Modern lighting with a premium touch</p>
-<h2 class="title">Our Lamps</h2>
-<p class="hero-text">Choose a lamp, save it to your personal library, or complete a demo purchase. Your collection and purchase status stay available after sign in.</p>
+<p class="hero-kicker" data-i18n="catalog.heroKicker">Nowoczesne oswietlenie z premium charakterem</p>
+<h2 class="title" data-i18n="catalog.title">Nasze lampy</h2>
+<p class="hero-text" data-i18n="catalog.text">Wybierz lampe, zapisz ja w bibliotece lub wykonaj zakup demonstracyjny. Kolekcja i status zakupu pozostaja dostepne po zalogowaniu.</p>
 </div>
 
 <section class="hero-stats reveal-on-scroll" aria-label="Store highlights">
 <article class="stat-card">
 <span class="stat-value">4</span>
-<span class="stat-label">designer lamps in the catalog</span>
+<span class="stat-label" data-i18n="catalog.stat1">designerskie lampy w katalogu</span>
 </article>
 
 <article class="stat-card">
 <span class="stat-value">24/7</span>
-<span class="stat-label">smart home inspiration</span>
+<span class="stat-label" data-i18n="catalog.stat2">inspiracje dla smart home</span>
 </article>
 
 <article class="stat-card">
 <span class="stat-value">Demo</span>
-<span class="stat-label">instant pseudo-purchase flow for diploma defense</span>
+<span class="stat-label" data-i18n="catalog.stat3">natychmiastowy pseudo-zakup na obrone dyplomu</span>
 </article>
 </section>
 
 <section class="catalog-section reveal-on-scroll" aria-labelledby="catalogTitle">
 <div class="section-head">
 <div>
-<p class="section-kicker">Catalog</p>
-<h3 class="section-title" id="catalogTitle">Featured collection</h3>
+<p class="section-kicker" data-i18n="catalog.sectionKicker">Katalog</p>
+<h3 class="section-title" id="catalogTitle" data-i18n="catalog.sectionTitle">Wyróżniona kolekcja</h3>
 </div>
-<p class="section-text">Each product card now supports two actions: saving to the library and a demo purchase button for your project presentation.</p>
+<p class="section-text" data-i18n="catalog.sectionText">Kazda karta produktu ma teraz dwa dzialania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.</p>
 </div>
 
 <div class="products">
-<article class="product" data-product-card>
-<img src="images/lamp1.jpg" class="product-image" alt="LED Lamp 10W">
+<article class="product" data-product-card data-product-id="led-lamp-10w">
+<img src="images/lamp1.jpg" class="product-image" alt="">
 
 <div class="product-info">
 <div class="product-topline">
-<h3>LED Lamp 10W</h3>
-<span class="product-tag">Warm light</span>
+<h3 data-product-field="name"></h3>
+<span class="product-tag" data-product-field="tag"></span>
 </div>
 
-<p class="description">
-Energy-efficient LED lamp for home lighting.
-Long lifespan and low power consumption.
-</p>
-
-<p class="price">15 PLN</p>
+<p class="description" data-product-field="description"></p>
+<p class="price" data-product-field="price"></p>
 
 <div class="product-meta">
-<span>Soft warm spectrum</span>
-<span>Low power consumption</span>
-<span>Best for bedrooms</span>
+<span data-product-meta="0"></span>
+<span data-product-meta="1"></span>
+<span data-product-meta="2"></span>
 </div>
 
 <div class="product-actions">
-<button
-class="product-action secondary"
-type="button"
-data-add-library
-data-product-id="led-lamp-10w"
-data-product-name="LED Lamp 10W"
-data-product-price="15 PLN"
-data-product-image="images/lamp1.jpg"
-data-product-tag="Warm light"
-data-product-description="Energy-efficient LED lamp for home lighting. Long lifespan and low power consumption."
->
-Add to library
-</button>
-
-<button
-class="product-action"
-type="button"
-data-buy-product
-data-product-id="led-lamp-10w"
-data-product-name="LED Lamp 10W"
-data-product-price="15 PLN"
-data-product-image="images/lamp1.jpg"
-data-product-tag="Warm light"
-data-product-description="Energy-efficient LED lamp for home lighting. Long lifespan and low power consumption."
->
-Buy now
-</button>
+<button class="product-action secondary" type="button" data-add-library data-product-id="led-lamp-10w"></button>
+<button class="product-action" type="button" data-buy-product data-product-id="led-lamp-10w"></button>
 </div>
 </div>
 </article>
 
-<article class="product" data-product-card>
-<img src="images/lamp2.jpg" class="product-image" alt="Smart WiFi Lamp">
+<article class="product" data-product-card data-product-id="smart-wifi-lamp">
+<img src="images/lamp2.jpg" class="product-image" alt="">
 
 <div class="product-info">
 <div class="product-topline">
-<h3>Smart WiFi Lamp</h3>
-<span class="product-tag">Smart home</span>
+<h3 data-product-field="name"></h3>
+<span class="product-tag" data-product-field="tag"></span>
 </div>
 
-<p class="description">
-Smart lamp controlled via mobile phone.
-Adjust brightness and color.
-</p>
-
-<p class="price">40 PLN</p>
+<p class="description" data-product-field="description"></p>
+<p class="price" data-product-field="price"></p>
 
 <div class="product-meta">
-<span>App control</span>
-<span>Adjustable color</span>
-<span>Smart home ready</span>
+<span data-product-meta="0"></span>
+<span data-product-meta="1"></span>
+<span data-product-meta="2"></span>
 </div>
 
 <div class="product-actions">
-<button
-class="product-action secondary"
-type="button"
-data-add-library
-data-product-id="smart-wifi-lamp"
-data-product-name="Smart WiFi Lamp"
-data-product-price="40 PLN"
-data-product-image="images/lamp2.jpg"
-data-product-tag="Smart home"
-data-product-description="Smart lamp controlled via mobile phone. Adjust brightness and color."
->
-Add to library
-</button>
-
-<button
-class="product-action"
-type="button"
-data-buy-product
-data-product-id="smart-wifi-lamp"
-data-product-name="Smart WiFi Lamp"
-data-product-price="40 PLN"
-data-product-image="images/lamp2.jpg"
-data-product-tag="Smart home"
-data-product-description="Smart lamp controlled via mobile phone. Adjust brightness and color."
->
-Buy now
-</button>
+<button class="product-action secondary" type="button" data-add-library data-product-id="smart-wifi-lamp"></button>
+<button class="product-action" type="button" data-buy-product data-product-id="smart-wifi-lamp"></button>
 </div>
 </div>
 </article>
 
-<article class="product" data-product-card>
-<img src="images/lamp3.jpg" class="product-image" alt="Minimal Table Lamp">
+<article class="product" data-product-card data-product-id="minimal-table-lamp">
+<img src="images/lamp3.jpg" class="product-image" alt="">
 
 <div class="product-info">
 <div class="product-topline">
-<h3>Minimal Table Lamp</h3>
-<span class="product-tag">Studio glow</span>
+<h3 data-product-field="name"></h3>
+<span class="product-tag" data-product-field="tag"></span>
 </div>
 
-<p class="description">
-Compact premium lamp with a calm golden tone.
-Excellent for desks, reading corners, and focused evening work.
-</p>
-
-<p class="price">32 PLN</p>
+<p class="description" data-product-field="description"></p>
+<p class="price" data-product-field="price"></p>
 
 <div class="product-meta">
-<span>Compact format</span>
-<span>Premium finish</span>
-<span>Perfect for workspaces</span>
+<span data-product-meta="0"></span>
+<span data-product-meta="1"></span>
+<span data-product-meta="2"></span>
 </div>
 
 <div class="product-actions">
-<button
-class="product-action secondary"
-type="button"
-data-add-library
-data-product-id="minimal-table-lamp"
-data-product-name="Minimal Table Lamp"
-data-product-price="32 PLN"
-data-product-image="images/lamp3.jpg"
-data-product-tag="Studio glow"
-data-product-description="Compact premium lamp with a calm golden tone. Excellent for desks, reading corners, and focused evening work."
->
-Add to library
-</button>
-
-<button
-class="product-action"
-type="button"
-data-buy-product
-data-product-id="minimal-table-lamp"
-data-product-name="Minimal Table Lamp"
-data-product-price="32 PLN"
-data-product-image="images/lamp3.jpg"
-data-product-tag="Studio glow"
-data-product-description="Compact premium lamp with a calm golden tone. Excellent for desks, reading corners, and focused evening work."
->
-Buy now
-</button>
+<button class="product-action secondary" type="button" data-add-library data-product-id="minimal-table-lamp"></button>
+<button class="product-action" type="button" data-buy-product data-product-id="minimal-table-lamp"></button>
 </div>
 </div>
 </article>
 
-<article class="product" data-product-card>
-<img src="images/lamp4.jpg" class="product-image" alt="Nordic Glass Lamp">
+<article class="product" data-product-card data-product-id="nordic-glass-lamp">
+<img src="images/lamp4.jpg" class="product-image" alt="">
 
 <div class="product-info">
 <div class="product-topline">
-<h3>Nordic Glass Lamp</h3>
-<span class="product-tag">Premium decor</span>
+<h3 data-product-field="name"></h3>
+<span class="product-tag" data-product-field="tag"></span>
 </div>
 
-<p class="description">
-Elegant glass body with a decorative filament feel.
-Designed to become a visual accent in a living room or lounge zone.
-</p>
-
-<p class="price">54 PLN</p>
+<p class="description" data-product-field="description"></p>
+<p class="price" data-product-field="price"></p>
 
 <div class="product-meta">
-<span>Decorative filament</span>
-<span>Premium ambiance</span>
-<span>Living room accent</span>
+<span data-product-meta="0"></span>
+<span data-product-meta="1"></span>
+<span data-product-meta="2"></span>
 </div>
 
 <div class="product-actions">
-<button
-class="product-action secondary"
-type="button"
-data-add-library
-data-product-id="nordic-glass-lamp"
-data-product-name="Nordic Glass Lamp"
-data-product-price="54 PLN"
-data-product-image="images/lamp4.jpg"
-data-product-tag="Premium decor"
-data-product-description="Elegant glass body with a decorative filament feel. Designed to become a visual accent in a living room or lounge zone."
->
-Add to library
-</button>
-
-<button
-class="product-action"
-type="button"
-data-buy-product
-data-product-id="nordic-glass-lamp"
-data-product-name="Nordic Glass Lamp"
-data-product-price="54 PLN"
-data-product-image="images/lamp4.jpg"
-data-product-tag="Premium decor"
-data-product-description="Elegant glass body with a decorative filament feel. Designed to become a visual accent in a living room or lounge zone."
->
-Buy now
-</button>
+<button class="product-action secondary" type="button" data-add-library data-product-id="nordic-glass-lamp"></button>
+<button class="product-action" type="button" data-buy-product data-product-id="nordic-glass-lamp"></button>
 </div>
 </div>
 </article>
 </div>
-
 </section>
 
 <section class="experience-section reveal-on-scroll" aria-labelledby="experienceTitle">
 <div class="section-head">
 <div>
-<p class="section-kicker">Quality</p>
-<h3 class="section-title" id="experienceTitle">Why these lamps feel premium</h3>
+<p class="section-kicker" data-i18n="catalog.qualityKicker">Jakosc</p>
+<h3 class="section-title" id="experienceTitle" data-i18n="catalog.qualityTitle">Dlaczego te lampy wygladaja premium</h3>
 </div>
-<p class="section-text">This block improves the diploma presentation by explaining product value, visual quality, and interaction logic for users.</p>
+<p class="section-text" data-i18n="catalog.qualityText">Ten blok wzmacnia prezentacje dyplomowa, bo pokazuje wartosc produktu, estetyke i logike interakcji uzytkownika.</p>
 </div>
 
 <div class="experience-grid">
 <article class="experience-card">
 <span class="experience-number">01</span>
-<h4>Refined materials</h4>
-<p>Glass, metal, and warm filament styling create a more believable premium catalog with stronger product perception.</p>
+<h4 data-i18n="catalog.experience1Title">Dopracowane materialy</h4>
+<p data-i18n="catalog.experience1Text">Szklo, metal i cieply filament buduja bardziej wiarygodny katalog premium i lepszy odbior produktu.</p>
 </article>
 
 <article class="experience-card">
 <span class="experience-number">02</span>
-<h4>Interactive shopping flow</h4>
-<p>Users can save products, open the library, and trigger a pseudo-purchase without needing a backend payment system.</p>
+<h4 data-i18n="catalog.experience2Title">Interaktywny proces zakupu</h4>
+<p data-i18n="catalog.experience2Text">Uzytkownik moze zapisac produkt, otworzyc biblioteke i wykonac pseudo-zakup bez systemu platnosci.</p>
 </article>
 
 <article class="experience-card">
 <span class="experience-number">03</span>
-<h4>Smooth presentation</h4>
-<p>Scroll reveal animations, hover effects, and richer cards make the site feel more polished during defense or demo.</p>
+<h4 data-i18n="catalog.experience3Title">Plynna prezentacja</h4>
+<p data-i18n="catalog.experience3Text">Animacje przy scrollu, efekty hover i bogatsze karty sprawiaja, ze witryna wyglada lepiej podczas obrony.</p>
 </article>
 </div>
 </section>
@@ -375,96 +180,38 @@ Buy now
 <section class="gallery-section reveal-on-scroll" aria-labelledby="galleryTitle">
 <div class="section-head">
 <div>
-<p class="section-kicker">Gallery</p>
-<h3 class="section-title" id="galleryTitle">Product inspiration</h3>
+<p class="section-kicker" data-i18n="catalog.galleryKicker">Galeria</p>
+<h3 class="section-title" id="galleryTitle" data-i18n="catalog.galleryTitle">Inspiracje produktowe</h3>
 </div>
-<p class="section-text">A visual gallery adds depth to the page and makes the site long enough for natural wheel scrolling.</p>
+<p class="section-text" data-i18n="catalog.galleryText">Galeria dodaje glebi stronie i sprawia, ze serwis naturalnie przewija sie kolkiem myszy.</p>
 </div>
 
 <div class="gallery-grid">
 <figure class="gallery-card large">
-<img src="images/lamp4.jpg" alt="Nordic glass lamp close-up">
-<figcaption>Warm atmospheric lighting for premium interiors.</figcaption>
+<img src="images/lamp4.jpg" data-i18n-alt="catalog.gallery1Alt" alt="">
+<figcaption data-i18n="catalog.gallery1Caption">Nastrojowe swiatlo do premium wnetrz.</figcaption>
 </figure>
 
 <figure class="gallery-card">
-<img src="images/lamp3.jpg" alt="Minimal table lamp on dark background">
-<figcaption>Compact elegance for a modern workspace.</figcaption>
+<img src="images/lamp3.jpg" data-i18n-alt="catalog.gallery2Alt" alt="">
+<figcaption data-i18n="catalog.gallery2Caption">Kompaktowa elegancja do nowoczesnej przestrzeni roboczej.</figcaption>
 </figure>
 
 <figure class="gallery-card">
-<img src="images/lamp2.jpg" alt="Smart lamp with amber light">
-<figcaption>Smart control paired with a decorative filament look.</figcaption>
+<img src="images/lamp2.jpg" data-i18n-alt="catalog.gallery3Alt" alt="">
+<figcaption data-i18n="catalog.gallery3Caption">Sterowanie smart i dekoracyjny wyglad filamentu.</figcaption>
 </figure>
 
 <figure class="gallery-card wide">
-<img src="images/lamp1.jpg" alt="LED lamp studio shot">
-<figcaption>Energy-saving lighting that still looks premium in the catalog.</figcaption>
+<img src="images/lamp1.jpg" data-i18n-alt="catalog.gallery4Alt" alt="">
+<figcaption data-i18n="catalog.gallery4Caption">Energooszczedna lampa, ktora nadal wyglada premium.</figcaption>
 </figure>
 </div>
 </section>
 </div>
 </main>
 
-<!-- INFO MODAL -->
-
-<section class="modal-window info-modal" id="infoModal" aria-hidden="true" aria-label="Information window">
-<div class="modal-head">
-<div>
-<p class="modal-kicker" id="infoKicker">Support</p>
-<h3 class="modal-title" id="infoTitle">Information</h3>
-</div>
-<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close information window">&times;</button>
-</div>
-
-<p class="info-text" id="infoText"></p>
-</section>
-
-<!-- CHAT BUTTON -->
-
-<button class="chat-button" type="button" onclick="toggleChat()" aria-label="Open assistant">
-<img src="images/botlog.png" alt="Assistant robot">
-</button>
-
-<div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
-
-<!-- CHAT MODAL -->
-
-<section class="chat-modal" id="chatWindow" aria-hidden="true" aria-label="Lamp Assistant window">
-<div class="chat-badge">Lamp Assistant</div>
-
-<h3 class="chat-title">Hi! I am ready to help you.</h3>
-
-<p class="chat-text">
-I can help you choose a lamp, learn about delivery, and quickly find the right model for your home.
-</p>
-
-<div class="chat-cards">
-<div class="chat-card">
-<span class="chat-card-title">Choose a lamp</span>
-<p>Get help with selecting the best lamp for your room and style.</p>
-</div>
-
-<div class="chat-card">
-<span class="chat-card-title">Fast support</span>
-<p>Find quick answers about orders, delivery, and product details.</p>
-</div>
-
-<div class="chat-card">
-<span class="chat-card-title">Ready now</span>
-<p>The assistant is online and prepared to guide you right away.</p>
-</div>
-</div>
-
-<p class="chat-tip">Click outside the window or press the robot button again to close it.</p>
-</section>
-
-<div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
-
-<footer>
-<p>&copy; 2026 Lamp Store</p>
-</footer>
-
+<script src="i18n.js"></script>
 <script src="script.js"></script>
 
 </body>
