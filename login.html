@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Lamp Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page-body">
+
+<div class="background-light"></div>
+
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeActiveModal()"></div>
+
+<button class="menu-tab" type="button" onclick="toggleMenu()" aria-label="Open menu">
+<div class="tab-icon">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</button>
+
+<header class="header">
+<h1 class="logo-title">
+<span>L</span>
+<span>A</span>
+<span>M</span>
+<span>P</span>
+<span class="space"></span>
+<span>S</span>
+<span>T</span>
+<span>O</span>
+<span>R</span>
+<span>E</span>
+</h1>
+</header>
+
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+<div class="side-menu-head">
+<div>
+<p class="menu-eyebrow">Lamp Store</p>
+<h3>Menu</h3>
+</div>
+<button class="menu-close" type="button" onclick="closeMenu()" aria-label="Close menu">&times;</button>
+</div>
+
+<div class="menu-account-card" id="menuAccountCard">
+<span class="menu-account-label" id="menuAccountLabel">Guest mode</span>
+<strong class="menu-account-name" id="menuAccountName">Sign in to save lamps in your personal library.</strong>
+</div>
+
+<nav class="menu-nav">
+<button class="menu-item" type="button" onclick="goToPage('index.html')">
+<span>Catalog</span>
+<small>Browse the full lamp collection</small>
+</button>
+
+<button class="menu-item" id="menuAuthPrimary" type="button" onclick="openAuthModal('login')">
+<span>Log in</span>
+<small>Access your account securely</small>
+</button>
+
+<button class="menu-item" id="menuAuthSecondary" type="button" onclick="openAuthModal('register')">
+<span>Create account</span>
+<small>Create a new protected profile</small>
+</button>
+
+<button class="menu-item" id="menuLibraryButton" type="button" onclick="openLibraryModal()">
+<span>Library</span>
+<small>Saved lamps and favorites</small>
+</button>
+
+<button class="menu-item" type="button" onclick="openInfoModal('return')">
+<span>Return product</span>
+<small>Return and warranty guidance</small>
+</button>
+
+<button class="menu-item" type="button" onclick="openInfoModal('contact')">
+<span>Contact</span>
+<small>Support and communication</small>
+</button>
+</nav>
+</aside>
+
+<main class="container page-shell">
+<section class="page-card auth-page-card reveal-on-scroll">
+<div class="page-heading">
+<p class="hero-kicker">Protected access</p>
+<h2 class="title">Log In</h2>
+<p class="hero-text">Use your profile to save lamps, open the library, and complete demo purchases for the diploma project.</p>
+</div>
+
+<div class="auth-tabs">
+<button class="auth-tab active" type="button">Log in</button>
+<button class="auth-tab" type="button" onclick="goToPage('register.html')">Create account</button>
+</div>
+
+<form class="auth-panel active standalone-form" id="loginPanel" novalidate>
+<label class="field">
+<span>Email</span>
+<input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+</label>
+
+<label class="field">
+<span>Password</span>
+<input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+</label>
+
+<button class="form-submit" id="loginSubmit" type="submit">Log in</button>
+</form>
+
+<p class="security-note">Local demo auth with browser-side password hashing. For true production security a backend can be connected later.</p>
+
+<div class="page-link-row">
+<button class="product-action secondary" type="button" onclick="goToPage('index.html')">Back to catalog</button>
+<button class="product-action" type="button" onclick="goToPage('register.html')">Need an account?</button>
+</div>
+</section>
+</main>
+
+<section class="modal-window info-modal" id="infoModal" aria-hidden="true" aria-label="Information window">
+<div class="modal-head">
+<div>
+<p class="modal-kicker" id="infoKicker">Support</p>
+<h3 class="modal-title" id="infoTitle">Information</h3>
+</div>
+<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close information window">&times;</button>
+</div>
+
+<p class="info-text" id="infoText"></p>
+</section>
+
+<button class="chat-button" type="button" onclick="toggleChat()" aria-label="Open assistant">
+<img src="images/botlog.png" alt="Assistant robot">
+</button>
+
+<div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
+
+<section class="chat-modal" id="chatWindow" aria-hidden="true" aria-label="Lamp Assistant window">
+<div class="chat-badge">Lamp Assistant</div>
+
+<h3 class="chat-title">Hi! I am ready to help you.</h3>
+
+<p class="chat-text">
+I can help you choose a lamp, learn about delivery, and quickly find the right model for your home.
+</p>
+
+<div class="chat-cards">
+<div class="chat-card">
+<span class="chat-card-title">Choose a lamp</span>
+<p>Get help with selecting the best lamp for your room and style.</p>
+</div>
+
+<div class="chat-card">
+<span class="chat-card-title">Fast support</span>
+<p>Find quick answers about orders, delivery, and product details.</p>
+</div>
+
+<div class="chat-card">
+<span class="chat-card-title">Ready now</span>
+<p>The assistant is online and prepared to guide you right away.</p>
+</div>
+</div>
+
+<p class="chat-tip">Click outside the window or press the robot button again to close it.</p>
+</section>
+
+<div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+<footer>
+<p>&copy; 2026 Lamp Store</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -23,6 +23,22 @@ text: "Lamp Store support can help with product questions, delivery details, and
 }
 };
 
+function getCurrentPageName(){
+const path = window.location.pathname.replace(/\\/g, "/");
+return path.split("/").pop().toLowerCase() || "index.html";
+}
+
+function goToPage(path){
+if(!path){
+return;
+}
+
+closeMenu();
+closeChat();
+closeActiveModal();
+window.location.href = path;
+}
+
 function toggleMenu(){
 const menu = document.getElementById("sideMenu");
 const overlay = document.getElementById("menuOverlay");
@@ -344,13 +360,22 @@ state.activeModal = null;
 }
 
 function openAuthModal(tab = "login"){
-switchAuthTab(tab);
-openModal("authModal");
+const targetPage = tab === "register" ? "register.html" : "login.html";
+
+if(getCurrentPageName() === targetPage){
+return;
+}
+
+goToPage(targetPage);
 }
 
 function openLibraryModal(){
+if(getCurrentPageName() === "library.html"){
 renderLibrary();
-openModal("libraryModal");
+return;
+}
+
+goToPage("library.html");
 }
 
 function openInfoModal(type){
@@ -401,7 +426,7 @@ const purchasedCount = currentUser.library.filter((item) => item.purchasedAt).le
 
 menuAccountLabel.textContent = "Signed in";
 menuAccountName.textContent = `${currentUser.name}, ${savedCount} lamp${savedCount === 1 ? "" : "s"} in library${purchasedCount ? `, ${purchasedCount} purchased.` : "."}`;
-setMenuButtonContent(menuAuthPrimary, "Account", "Stay signed in and manage your access", "openAuthModal('login')");
+setMenuButtonContent(menuAuthPrimary, "Open library", "Review saved and purchased lamps", "openLibraryModal()");
 setMenuButtonContent(menuAuthSecondary, "Log out", "Securely close the current session", "logoutUser()");
 return;
 }

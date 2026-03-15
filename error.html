@@ -4,11 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register | Lamp Store</title>
+<title>404 | Lamp Store</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="page-body">
+<body class="page-body error-page-body">
 
 <div class="background-light"></div>
 
@@ -85,50 +85,23 @@
 </nav>
 </aside>
 
-<main class="container page-shell">
-<section class="page-card auth-page-card reveal-on-scroll">
-<div class="page-heading">
-<p class="hero-kicker">Protected access</p>
-<h2 class="title">Create Account</h2>
-<p class="hero-text">Create a profile to keep your products in the library, save purchase status, and present the diploma demo more cleanly.</p>
+<main class="container error-shell">
+<section class="error-card reveal-on-scroll">
+<div class="error-media">
+<img src="images/error.png" alt="Robot on a broken light bulb for 404 page">
 </div>
 
-<div class="auth-tabs">
-<button class="auth-tab" type="button" onclick="goToPage('login.html')">Log in</button>
-<button class="auth-tab active" type="button">Create account</button>
+<div class="error-copy">
+<p class="hero-kicker">Page not found</p>
+<h2 class="error-code">404</h2>
+<h3 class="error-title">The page broke like a light bulb</h3>
+<p class="error-text">The address you opened does not exist or was moved. Use the buttons below to return to the catalog, open the library, or sign in again.</p>
+
+<div class="error-actions">
+<button class="product-action" type="button" onclick="goToPage('index.html')">Back to catalog</button>
+<button class="product-action secondary" type="button" onclick="goToPage('library.html')">Open library</button>
+<button class="product-action secondary" type="button" onclick="goToPage('login.html')">Open login</button>
 </div>
-
-<form class="auth-panel active standalone-form" id="registerPanel" novalidate>
-<label class="field">
-<span>Full name</span>
-<input id="registerName" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
-</label>
-
-<label class="field">
-<span>Email</span>
-<input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
-</label>
-
-<label class="field">
-<span>Password</span>
-<input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required>
-</label>
-
-<label class="field">
-<span>Repeat password</span>
-<input id="registerPasswordRepeat" name="passwordRepeat" type="password" autocomplete="new-password" placeholder="Repeat your password" required>
-</label>
-
-<p class="password-hint">Use at least 8 characters, upper and lower case letters, and one digit.</p>
-
-<button class="form-submit" id="registerSubmit" type="submit">Create account</button>
-</form>
-
-<p class="security-note">Local demo auth with browser-side password hashing. For true production security a backend can be connected later.</p>
-
-<div class="page-link-row">
-<button class="product-action secondary" type="button" onclick="goToPage('index.html')">Back to catalog</button>
-<button class="product-action" type="button" onclick="goToPage('login.html')">Already have account?</button>
 </div>
 </section>
 </main>

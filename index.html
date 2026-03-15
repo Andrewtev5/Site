@@ -56,6 +56,11 @@
 </div>
 
 <nav class="menu-nav">
+<button class="menu-item" type="button" onclick="goToPage('index.html')">
+<span>Catalog</span>
+<small>Browse the full lamp collection</small>
+</button>
+
 <button class="menu-item" id="menuAuthPrimary" type="button" onclick="openAuthModal('login')">
 <span>Log in</span>
 <small>Access your account securely</small>
@@ -400,88 +405,6 @@ Buy now
 </section>
 </div>
 </main>
-
-<!-- AUTH MODAL -->
-
-<section class="modal-window auth-modal" id="authModal" aria-hidden="true" aria-label="Authentication">
-<div class="modal-head">
-<div>
-<p class="modal-kicker">Protected access</p>
-<h3 class="modal-title">Account</h3>
-</div>
-<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close account window">&times;</button>
-</div>
-
-<div class="auth-tabs">
-<button class="auth-tab active" id="loginTabButton" type="button" onclick="switchAuthTab('login')">Log in</button>
-<button class="auth-tab" id="registerTabButton" type="button" onclick="switchAuthTab('register')">Create account</button>
-</div>
-
-<div class="auth-panels">
-<form class="auth-panel active" id="loginPanel" novalidate>
-<label class="field">
-<span>Email</span>
-<input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
-</label>
-
-<label class="field">
-<span>Password</span>
-<input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
-</label>
-
-<button class="form-submit" id="loginSubmit" type="submit">Log in</button>
-</form>
-
-<form class="auth-panel" id="registerPanel" novalidate>
-<label class="field">
-<span>Full name</span>
-<input id="registerName" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
-</label>
-
-<label class="field">
-<span>Email</span>
-<input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
-</label>
-
-<label class="field">
-<span>Password</span>
-<input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required>
-</label>
-
-<label class="field">
-<span>Repeat password</span>
-<input id="registerPasswordRepeat" name="passwordRepeat" type="password" autocomplete="new-password" placeholder="Repeat your password" required>
-</label>
-
-<p class="password-hint">Use at least 8 characters, upper and lower case letters, and one digit.</p>
-
-<button class="form-submit" id="registerSubmit" type="submit">Create account</button>
-</form>
-</div>
-
-<p class="security-note">Local demo auth with browser-side password hashing. For true production security we will need a backend next.</p>
-</section>
-
-<!-- LIBRARY MODAL -->
-
-<section class="modal-window library-modal" id="libraryModal" aria-hidden="true" aria-label="Saved lamp library">
-<div class="modal-head">
-<div>
-<p class="modal-kicker">Personal space</p>
-<h3 class="modal-title">Your Library</h3>
-</div>
-<button class="modal-close" type="button" onclick="closeActiveModal()" aria-label="Close library window">&times;</button>
-</div>
-
-<p class="library-intro" id="libraryIntro">Sign in to keep your saved lamps here.</p>
-
-<div class="library-list" id="libraryList"></div>
-
-<div class="library-empty" id="libraryEmptyState">
-<strong>Your library is empty.</strong>
-<p>Add products from the catalog and they will appear here.</p>
-</div>
-</section>
 
 <!-- INFO MODAL -->
 

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register | Lamp Store</title>
+<title>Library | Lamp Store</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -86,49 +86,25 @@
 </aside>
 
 <main class="container page-shell">
-<section class="page-card auth-page-card reveal-on-scroll">
+<section class="page-card library-page-card reveal-on-scroll">
 <div class="page-heading">
-<p class="hero-kicker">Protected access</p>
-<h2 class="title">Create Account</h2>
-<p class="hero-text">Create a profile to keep your products in the library, save purchase status, and present the diploma demo more cleanly.</p>
+<p class="hero-kicker">Personal space</p>
+<h2 class="title">Your Library</h2>
+<p class="hero-text">Here are your saved products, their images, and the demo purchase status for the diploma presentation.</p>
 </div>
 
-<div class="auth-tabs">
-<button class="auth-tab" type="button" onclick="goToPage('login.html')">Log in</button>
-<button class="auth-tab active" type="button">Create account</button>
+<p class="library-intro" id="libraryIntro">Sign in to keep your saved lamps here.</p>
+
+<div class="library-list" id="libraryList"></div>
+
+<div class="library-empty" id="libraryEmptyState">
+<strong>Your library is empty.</strong>
+<p>Add products from the catalog and they will appear here with images and buy buttons.</p>
 </div>
-
-<form class="auth-panel active standalone-form" id="registerPanel" novalidate>
-<label class="field">
-<span>Full name</span>
-<input id="registerName" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
-</label>
-
-<label class="field">
-<span>Email</span>
-<input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
-</label>
-
-<label class="field">
-<span>Password</span>
-<input id="registerPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required>
-</label>
-
-<label class="field">
-<span>Repeat password</span>
-<input id="registerPasswordRepeat" name="passwordRepeat" type="password" autocomplete="new-password" placeholder="Repeat your password" required>
-</label>
-
-<p class="password-hint">Use at least 8 characters, upper and lower case letters, and one digit.</p>
-
-<button class="form-submit" id="registerSubmit" type="submit">Create account</button>
-</form>
-
-<p class="security-note">Local demo auth with browser-side password hashing. For true production security a backend can be connected later.</p>
 
 <div class="page-link-row">
 <button class="product-action secondary" type="button" onclick="goToPage('index.html')">Back to catalog</button>
-<button class="product-action" type="button" onclick="goToPage('login.html')">Already have account?</button>
+<button class="product-action" type="button" onclick="goToPage('login.html')">Open login page</button>
 </div>
 </section>
 </main>
