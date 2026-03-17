@@ -89,9 +89,12 @@ aria: {
 openMenu: "Open menu",
 closeMenu: "Close menu",
 closeInfo: "Close information window",
+openSearch: "Open product search",
+closeSearch: "Close product search",
 openAssistant: "Open assistant",
 assistantWindow: "Lamp Assistant window",
 infoWindow: "Information window",
+searchWindow: "Product search window",
 languageSwitch: "Language switch"
 },
 common: {
@@ -153,6 +156,21 @@ tip: "Click outside the window or press the robot button again to close it."
 },
 footer: {
 copyright: "© 2026 Lamp Store"
+},
+search: {
+trigger: "Search",
+kicker: "Search",
+title: "Find a lamp",
+text: "Type an exact or approximate product name and matching lamps will appear right away.",
+inputLabel: "Product name",
+placeholder: "Type a lamp name",
+initialState: "Start typing to see matching products.",
+initialTitle: "Search products",
+initialText: "The results list will update live while you type.",
+resultsCount: "Matching products: {count}",
+noResultsMeta: "No products found for: {query}",
+noResultsTitle: "Nothing matched this query",
+noResultsText: "Try a shorter phrase or a product name close to: {query}."
 },
 buttons: {
 addToLibrary: "Add to library",
@@ -285,9 +303,12 @@ aria: {
 openMenu: "Otworz menu",
 closeMenu: "Zamknij menu",
 closeInfo: "Zamknij okno informacji",
+openSearch: "Otworz wyszukiwanie produktow",
+closeSearch: "Zamknij wyszukiwanie produktow",
 openAssistant: "Otworz asystenta",
 assistantWindow: "Okno asystenta lamp",
 infoWindow: "Okno informacji",
+searchWindow: "Okno wyszukiwania produktow",
 languageSwitch: "Przelacznik jezyka"
 },
 common: {
@@ -349,6 +370,21 @@ tip: "Kliknij poza oknem lub ponownie nacisnij robota, aby zamknac okno."
 },
 footer: {
 copyright: "© 2026 Sklep Lamp"
+},
+search: {
+trigger: "Szukaj",
+kicker: "Wyszukiwanie",
+title: "Znajdz lampe",
+text: "Wpisz przyblizona albo dokladna nazwe produktu, a podobne lampy pojawia sie od razu ponizej.",
+inputLabel: "Nazwa produktu",
+placeholder: "Wpisz nazwe lampy",
+initialState: "Zacznij wpisywac, aby zobaczyc pasujace produkty.",
+initialTitle: "Wyszukaj produkty",
+initialText: "Lista wynikow bedzie aktualizowac sie na zywo podczas wpisywania.",
+resultsCount: "Pasujace produkty: {count}",
+noResultsMeta: "Brak produktow dla zapytania: {query}",
+noResultsTitle: "Nie znaleziono podobnych produktow",
+noResultsText: "Sprobuj krotszej frazy albo nazwy zblizonej do: {query}."
 },
 buttons: {
 addToLibrary: "Dodaj do biblioteki",
