@@ -172,6 +172,16 @@ noResultsMeta: "No products found for: {query}",
 noResultsTitle: "Nothing matched this query",
 noResultsText: "Try a shorter phrase or a product name close to: {query}."
 },
+cart: {
+trigger: "Cart",
+kicker: "Shopping cart",
+title: "Your cart",
+add: "Add to cart",
+added: "{name} was added to the cart.",
+emptyTitle: "Your cart is empty.",
+emptyText: "Add products from the catalog and they will appear here.",
+total: "Total"
+},
 buttons: {
 addToLibrary: "Add to library",
 savedInLibrary: "Saved in library",
@@ -386,6 +396,16 @@ noResultsMeta: "Brak produktow dla zapytania: {query}",
 noResultsTitle: "Nie znaleziono podobnych produktow",
 noResultsText: "Sprobuj krotszej frazy albo nazwy zblizonej do: {query}."
 },
+cart: {
+trigger: "Koszyk",
+kicker: "Koszyk",
+title: "Twoj koszyk",
+add: "Dodaj do koszyka",
+added: "{name} dodano do koszyka.",
+emptyTitle: "Koszyk jest pusty.",
+emptyText: "Dodaj produkty z katalogu, a pojawia sie tutaj.",
+total: "Suma"
+},
 buttons: {
 addToLibrary: "Dodaj do biblioteki",
 savedInLibrary: "Zapisano w bibliotece",
@@ -506,3 +526,79 @@ loginFailed: "Nie udalo sie zalogowac."
 }
 }
 };
+
+window.LampI18n = (() => {
+const state = () => window.LampStorage?.state || { language: window.LAMP_I18N.defaultLanguage };
+
+function getTranslationValue(key){
+return key.split(".").reduce((accumulator, part) => {
+if(accumulator && Object.prototype.hasOwnProperty.call(accumulator, part)){
+return accumulator[part];
+}
+
+return null;
+}, window.LAMP_I18N.translations[state().language]);
+}
+
+function t(key, params = {}){
+const template = getTranslationValue(key);
+
+if(typeof template !== "string"){
+return key;
+}
+
+return template.replace(/\{(\w+)\}/g, (match, token) => {
+return Object.prototype.hasOwnProperty.call(params, token) ? String(params[token]) : match;
+});
+}
+
+function getLanguage(){
+const savedLanguage = localStorage.getItem(window.LampStorage?.STORAGE_KEYS.language || "lamp_store_language_v1");
+return window.LAMP_I18N.supportedLanguages.includes(savedLanguage) ? savedLanguage : window.LAMP_I18N.defaultLanguage;
+}
+
+function setLanguage(language){
+if(!window.LAMP_I18N.supportedLanguages.includes(language)){
+return;
+}
+
+state().language = language;
+localStorage.setItem(window.LampStorage.STORAGE_KEYS.language, language);
+applyTranslations();
+window.LampProducts?.syncUi();
+}
+
+function getLocale(){
+return state().language === "pl" ? "pl-PL" : "en-GB";
+}
+
+function applyTranslations(){
+document.documentElement.lang = state().language;
+document.title = t(`titles.${window.LampUI.getPageType()}`);
+
+document.querySelectorAll("[data-i18n]").forEach((element) => {
+element.textContent = t(element.dataset.i18n);
+});
+
+document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
+});
+
+document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
+element.setAttribute("alt", t(element.dataset.i18nAlt));
+});
+
+document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+});
+
+document.querySelectorAll("[data-lang-option]").forEach((button) => {
+button.classList.toggle("active", button.dataset.langOption === state().language);
+});
+
+window.LampUI?.refreshActiveInfoModal?.();
+window.LampSearch?.renderSearchResults?.();
+}
+
+return { t, getLanguage, setLanguage, getLocale, applyTranslations };
+})();

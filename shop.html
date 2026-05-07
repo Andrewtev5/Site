@@ -1,45 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
+
 <head>
 <meta charset="UTF-8">
-<title>Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="0; url=index.html">
+<title>Katalog | Sklep Lamp</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-
-<header>
-    <h1>Lamp Store</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="cart.html">Cart</a>
-    </nav>
-</header>
-
-<h2 class="title">Our Lamps</h2>
-
-<section class="products">
-
-    <div class="product">
-        <img src="images/lamp.png">
-        <h3>Lamp Name</h3>
-        <p>Price: 0 zł</p>
-        <button>Add to cart</button>
-    </div>
-
-    <div class="product">
-        <img src="images/lamp.png">
-        <h3>Lamp Name</h3>
-        <p>Price: 0 zł</p>
-        <button>Add to cart</button>
-    </div>
-
+<body data-page="catalog">
+<main class="container page-shell">
+<section class="page-card reveal-on-scroll">
+<p class="hero-kicker" data-i18n="catalog.sectionKicker">Katalog</p>
+<h2 class="title" data-i18n="catalog.title">Nasze lampy</h2>
+<p class="hero-text" data-i18n="catalog.text">Katalog zostal przeniesiony na glowna strone projektu.</p>
+<div class="page-link-row">
+<button class="product-action" type="button" onclick="goToPage('index.html')" data-i18n="common.backToCatalog">Powrot do katalogu</button>
+</div>
 </section>
+</main>
 
-<footer>
-<p>© 2026 Lamp Store</p>
-</footer>
-
+<script src="i18n.js"></script>
+<script src="storage.js"></script>
+<script src="ui.js"></script>
+<script src="products.js"></script>
+<script src="search.js"></script>
+<script src="auth.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

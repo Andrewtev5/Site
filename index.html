@@ -44,107 +44,7 @@
 <p class="section-text" data-i18n="catalog.sectionText">Kazda karta produktu ma teraz dwa dzialania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.</p>
 </div>
 
-<div class="products">
-<article class="product" data-product-card data-product-id="led-lamp-10w">
-<img src="images/lamp1.jpg" class="product-image" alt="">
-
-<div class="product-info">
-<div class="product-topline">
-<h3 data-product-field="name"></h3>
-<span class="product-tag" data-product-field="tag"></span>
-</div>
-
-<p class="description" data-product-field="description"></p>
-<p class="price" data-product-field="price"></p>
-
-<div class="product-meta">
-<span data-product-meta="0"></span>
-<span data-product-meta="1"></span>
-<span data-product-meta="2"></span>
-</div>
-
-<div class="product-actions">
-<button class="product-action secondary" type="button" data-add-library data-product-id="led-lamp-10w"></button>
-<button class="product-action" type="button" data-buy-product data-product-id="led-lamp-10w"></button>
-</div>
-</div>
-</article>
-
-<article class="product" data-product-card data-product-id="smart-wifi-lamp">
-<img src="images/lamp2.jpg" class="product-image" alt="">
-
-<div class="product-info">
-<div class="product-topline">
-<h3 data-product-field="name"></h3>
-<span class="product-tag" data-product-field="tag"></span>
-</div>
-
-<p class="description" data-product-field="description"></p>
-<p class="price" data-product-field="price"></p>
-
-<div class="product-meta">
-<span data-product-meta="0"></span>
-<span data-product-meta="1"></span>
-<span data-product-meta="2"></span>
-</div>
-
-<div class="product-actions">
-<button class="product-action secondary" type="button" data-add-library data-product-id="smart-wifi-lamp"></button>
-<button class="product-action" type="button" data-buy-product data-product-id="smart-wifi-lamp"></button>
-</div>
-</div>
-</article>
-
-<article class="product" data-product-card data-product-id="minimal-table-lamp">
-<img src="images/lamp3.jpg" class="product-image" alt="">
-
-<div class="product-info">
-<div class="product-topline">
-<h3 data-product-field="name"></h3>
-<span class="product-tag" data-product-field="tag"></span>
-</div>
-
-<p class="description" data-product-field="description"></p>
-<p class="price" data-product-field="price"></p>
-
-<div class="product-meta">
-<span data-product-meta="0"></span>
-<span data-product-meta="1"></span>
-<span data-product-meta="2"></span>
-</div>
-
-<div class="product-actions">
-<button class="product-action secondary" type="button" data-add-library data-product-id="minimal-table-lamp"></button>
-<button class="product-action" type="button" data-buy-product data-product-id="minimal-table-lamp"></button>
-</div>
-</div>
-</article>
-
-<article class="product" data-product-card data-product-id="nordic-glass-lamp">
-<img src="images/lamp4.jpg" class="product-image" alt="">
-
-<div class="product-info">
-<div class="product-topline">
-<h3 data-product-field="name"></h3>
-<span class="product-tag" data-product-field="tag"></span>
-</div>
-
-<p class="description" data-product-field="description"></p>
-<p class="price" data-product-field="price"></p>
-
-<div class="product-meta">
-<span data-product-meta="0"></span>
-<span data-product-meta="1"></span>
-<span data-product-meta="2"></span>
-</div>
-
-<div class="product-actions">
-<button class="product-action secondary" type="button" data-add-library data-product-id="nordic-glass-lamp"></button>
-<button class="product-action" type="button" data-buy-product data-product-id="nordic-glass-lamp"></button>
-</div>
-</div>
-</article>
-</div>
+<div class="products" id="productsGrid"></div>
 </section>
 
 <section class="experience-section reveal-on-scroll" aria-labelledby="experienceTitle">
@@ -212,6 +112,11 @@
 </main>
 
 <script src="i18n.js"></script>
+<script src="storage.js"></script>
+<script src="ui.js"></script>
+<script src="products.js"></script>
+<script src="search.js"></script>
+<script src="auth.js"></script>
 <script src="script.js"></script>
 
 </body>
