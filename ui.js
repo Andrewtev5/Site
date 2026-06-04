@@ -100,11 +100,18 @@ main.insertAdjacentHTML("afterend", `
 </button>
 <div class="chat-overlay" id="chatOverlay" data-close-chat></div>
 <section class="chat-modal" id="chatWindow" aria-hidden="true" data-i18n-aria-label="aria.assistantWindow" aria-label="Lamp Assistant window">
-<div class="chat-badge" data-i18n="chat.badge">Asystent Lamp</div>
-<h3 class="chat-title" data-i18n="chat.title">Czesc! Jestem gotowy, aby pomoc.</h3>
-<p class="chat-text" data-i18n="chat.text">Pomoge wybrac lampe, dowiedziec sie wiecej o dostawie i szybko znalezc model odpowiedni do Twojego domu.</p>
-<div class="chat-cards"><div class="chat-card"><span class="chat-card-title" data-i18n="chat.card1Title">Wybierz lampe</span><p data-i18n="chat.card1Text">Otrzymaj pomoc przy wyborze najlepszej lampy do pomieszczenia i stylu.</p></div><div class="chat-card"><span class="chat-card-title" data-i18n="chat.card2Title">Szybkie wsparcie</span><p data-i18n="chat.card2Text">Znajdz szybkie odpowiedzi o zamowieniach, dostawie i szczegolach produktow.</p></div><div class="chat-card"><span class="chat-card-title" data-i18n="chat.card3Title">Juz teraz</span><p data-i18n="chat.card3Text">Asystent jest online i gotowy, aby poprowadzic Cie od razu.</p></div></div>
-<p class="chat-tip" data-i18n="chat.tip">Kliknij poza oknem lub ponownie nacisnij robota, aby zamknac okno.</p>
+<div class="chat-head">
+<div class="chat-avatar"><img src="images/botlog.png" data-i18n-alt="chat.robotAlt" alt="Assistant robot"></div>
+<div><div class="chat-badge" data-i18n="chat.badge">Asystent Lamp</div><h3 class="chat-title" data-i18n="chat.title">Chat</h3></div>
+</div>
+<div class="chat-messages" id="chatMessages" aria-live="polite">
+<div class="chat-message assistant"><span data-i18n="chat.placeholderMessage">Napisz wiadomosc, a pozniej podlaczymy tutaj odpowiedzi bota.</span></div>
+</div>
+<form class="chat-form" data-chat-form>
+<label class="sr-only" for="chatInput" data-i18n="chat.inputLabel">Message</label>
+<input class="chat-input" id="chatInput" name="message" type="text" autocomplete="off" data-i18n-placeholder="chat.placeholder" placeholder="Napisz wiadomosc...">
+<button class="chat-send" type="submit" data-i18n="chat.send">Send</button>
+</form>
 </section>
 <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 <footer><p data-i18n="footer.copyright">&copy; 2026 Sklep Lamp</p></footer>
@@ -139,6 +146,14 @@ if(target.closest("[data-open-library]")) openLibraryModal();
 
 const infoButton = target.closest("[data-open-info]");
 if(infoButton) openInfoModal(infoButton.dataset.openInfo);
+});
+
+document.addEventListener("submit", (event) => {
+const form = event.target.closest("[data-chat-form]");
+if(!form) return;
+
+event.preventDefault();
+sendLocalChatMessage(form);
 });
 
 document.addEventListener("keydown", (event) => {
@@ -204,6 +219,10 @@ chat.classList.toggle("active", willOpen);
 overlay.classList.toggle("active", willOpen);
 document.body.classList.toggle("chat-open", willOpen);
 chat.setAttribute("aria-hidden", String(!willOpen));
+
+if(willOpen){
+setTimeout(() => document.getElementById("chatInput")?.focus(), 80);
+}
 }
 
 function closeChat(){
@@ -215,6 +234,20 @@ chat.classList.remove("active");
 overlay.classList.remove("active");
 document.body.classList.remove("chat-open");
 chat.setAttribute("aria-hidden", "true");
+}
+
+function sendLocalChatMessage(form){
+const input = form.querySelector(".chat-input");
+const messages = document.getElementById("chatMessages");
+const text = input?.value.trim();
+if(!input || !messages || !text) return;
+
+const message = document.createElement("div");
+message.className = "chat-message user";
+message.textContent = text;
+messages.appendChild(message);
+input.value = "";
+messages.scrollTop = messages.scrollHeight;
 }
 
 function openModal(modalId){

@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS user_library (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    product_id TEXT NOT NULL,
+    product_id TEXT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     saved_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     purchased_at TIMESTAMPTZ,
     PRIMARY KEY (user_id, product_id)
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS user_library (
 
 CREATE TABLE IF NOT EXISTS user_cart (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    product_id TEXT NOT NULL,
+    product_id TEXT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity > 0),
     added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (user_id, product_id)
@@ -183,6 +183,11 @@ def product_row_to_public(item: dict) -> dict:
         "purchasedAt": item.get("purchased_at").isoformat() if item.get("purchased_at") else None,
         "quantity": item.get("quantity", 1),
     }
+
+
+def product_exists(cursor, product_id: str) -> bool:
+    cursor.execute("SELECT 1 FROM products WHERE id = %s;", (product_id,))
+    return cursor.fetchone() is not None
 
 
 class DiplomaRequestHandler(SimpleHTTPRequestHandler):
@@ -360,6 +365,10 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
             with connect() as connection:
                 with connection.cursor() as cursor:
+                    if not product_id or not product_exists(cursor, product_id):
+                        self.serve_json({"error": "Product not found."}, status=404)
+                        return
+
                     cursor.execute(
                         """
                         INSERT INTO user_library (user_id, product_id, purchased_at)
@@ -437,6 +446,10 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
             with connect() as connection:
                 with connection.cursor() as cursor:
+                    if not product_id or not product_exists(cursor, product_id):
+                        self.serve_json({"error": "Product not found."}, status=404)
+                        return
+
                     cursor.execute(
                         """
                         INSERT INTO user_cart (user_id, product_id, quantity)
@@ -484,6 +497,10 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             product_id = str(read_json(self).get("productId", "")).strip()
             with connect() as connection:
                 with connection.cursor() as cursor:
+                    if not product_id or not product_exists(cursor, product_id):
+                        self.serve_json({"error": "Product not found."}, status=404)
+                        return
+
                     cursor.execute(
                         """
                         INSERT INTO user_library (user_id, product_id, purchased_at)

@@ -1303,6 +1303,18 @@ filter:saturate(1.18);
 width:min(520px, calc(100vw - 32px));
 }
 
+.sr-only{
+position:absolute;
+width:1px;
+height:1px;
+padding:0;
+margin:-1px;
+overflow:hidden;
+clip:rect(0, 0, 0, 0);
+white-space:nowrap;
+border:0;
+}
+
 .chat-button{
 position:fixed;
 right:30px;
@@ -1335,10 +1347,11 @@ object-fit:contain;
 position:fixed;
 right:30px;
 bottom:108px;
-width:min(420px, calc(100vw - 32px));
-padding:28px;
-border-radius:24px;
-background:linear-gradient(180deg, rgba(31,31,31,0.96), rgba(14,14,14,0.96));
+width:min(430px, calc(100vw - 32px));
+height:min(610px, calc(100vh - 132px));
+padding:0;
+border-radius:22px;
+background:rgba(18,18,18,0.98);
 border:1px solid rgba(255,255,255,0.08);
 box-shadow:0 25px 60px rgba(0,0,0,0.45), 0 0 25px rgba(255,193,7,0.16);
 opacity:0;
@@ -1347,6 +1360,9 @@ transform-origin:bottom right;
 pointer-events:none;
 transition:opacity 0.35s ease, transform 0.35s ease;
 z-index:2106;
+overflow:hidden;
+display:grid;
+grid-template-rows:auto 1fr auto;
 }
 
 .chat-modal.active{
@@ -1355,55 +1371,126 @@ transform:translateY(0) scale(1);
 pointer-events:auto;
 }
 
+.chat-head{
+display:flex;
+align-items:center;
+gap:14px;
+padding:18px;
+background:linear-gradient(180deg, rgba(255,193,7,0.12), rgba(255,255,255,0.03));
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.chat-avatar{
+width:48px;
+height:48px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(145deg, #ffe04d, var(--gold));
+box-shadow:0 0 14px rgba(255,215,0,0.35);
+flex-shrink:0;
+}
+
+.chat-avatar img{
+width:32px;
+height:32px;
+object-fit:contain;
+}
+
 .chat-badge{
 display:inline-flex;
 align-items:center;
-padding:8px 14px;
+padding:0;
 border-radius:999px;
-background:rgba(255,193,7,0.14);
 color:#ffd24c;
-font-size:13px;
+font-size:12px;
 letter-spacing:0.08em;
 text-transform:uppercase;
-margin-bottom:18px;
+margin-bottom:4px;
 }
 
 .chat-title{
-font-size:28px;
-line-height:1.15;
-margin-bottom:14px;
+font-size:22px;
+line-height:1.2;
+margin:0;
 }
 
-.chat-cards{
-display:grid;
+.chat-messages{
+padding:18px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
 gap:12px;
+background:
+radial-gradient(circle at top right, rgba(255,193,7,0.08), transparent 34%),
+rgba(255,255,255,0.01);
 }
 
-.chat-card{
-padding:16px;
-border-radius:16px;
-background:rgba(255,255,255,0.04);
+.chat-message{
+max-width:82%;
+padding:12px 14px;
+border-radius:18px;
+font-size:15px;
+line-height:1.5;
+overflow-wrap:anywhere;
+}
+
+.chat-message.assistant{
+align-self:flex-start;
+border-bottom-left-radius:6px;
+background:rgba(255,255,255,0.06);
+color:#e7e7e7;
 border:1px solid rgba(255,255,255,0.07);
-transition:transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.chat-card:hover{
-transform:translateY(-3px);
-border-color:rgba(255,193,7,0.5);
-background:rgba(255,193,7,0.08);
+.chat-message.user{
+align-self:flex-end;
+border-bottom-right-radius:6px;
+background:linear-gradient(145deg, #f6c21a, #d9a900);
+color:#171717;
+font-weight:700;
 }
 
-.chat-card-title{
-display:block;
-font-weight:bold;
-margin-bottom:6px;
-color:#fff4bf;
+.chat-form{
+display:grid;
+grid-template-columns:1fr auto;
+gap:10px;
+padding:14px;
+background:rgba(10,10,10,0.96);
+border-top:1px solid rgba(255,255,255,0.08);
 }
 
-.chat-tip{
-margin-top:18px;
-font-size:14px;
-color:#9d9d9d;
+.chat-input{
+min-width:0;
+height:48px;
+padding:0 14px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.05);
+color:#fff;
+outline:none;
+}
+
+.chat-input:focus{
+border-color:rgba(255,193,7,0.55);
+box-shadow:0 0 0 4px rgba(255,193,7,0.1);
+}
+
+.chat-send{
+height:48px;
+padding:0 18px;
+border-radius:14px;
+background:linear-gradient(145deg, #ffe04d, var(--gold));
+color:#1b1600;
+font-weight:800;
+box-shadow:0 8px 18px rgba(255,193,7,0.16);
+transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-send:hover{
+transform:translateY(-1px);
+box-shadow:0 12px 24px rgba(255,193,7,0.22);
 }
 
 .toast-stack{
@@ -1809,12 +1896,13 @@ right:16px;
 left:16px;
 bottom:92px;
 width:auto;
-padding:22px;
+height:min(580px, calc(100vh - 116px));
+padding:0;
 border-radius:20px;
 }
 
 .chat-title{
-font-size:24px;
+font-size:20px;
 }
 
 .toast-stack{

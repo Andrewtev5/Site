@@ -73,6 +73,204 @@ description: "Eleganckie szklane body z dekoracyjnym filamentem. Zostala zaproje
 meta: ["Dekoracyjny filament", "Atmosfera premium", "Akcent do salonu"],
 imageAlt: "Nordycka lampa szklana"
 }
+},
+"arc-floor-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_10_05.png",
+price: "89 PLN",
+en: {
+name: "Arc Floor Lamp",
+tag: "Reading zone",
+description: "Tall floor lamp with a curved arm for sofas, reading corners, and soft evening lighting.",
+meta: ["Curved metal arm", "Floor format", "Best near sofas"],
+imageAlt: "Arc Floor Lamp"
+},
+pl: {
+name: "Lampa podlogowa Arc",
+tag: "Strefa czytania",
+description: "Wysoka lampa podlogowa z lukowym ramieniem do sofy, kacika czytania i miekkiego wieczornego swiatla.",
+meta: ["Lukowe metalowe ramie", "Format podlogowy", "Najlepsza przy sofie"],
+imageAlt: "Lampa podlogowa Arc"
+}
+},
+"ceramic-bedside-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_19_20.png",
+price: "47 PLN",
+en: {
+name: "Ceramic Bedside Lamp",
+tag: "Bedroom calm",
+description: "Small ceramic lamp with a textile shade for nightstands and calm bedroom interiors.",
+meta: ["Ceramic base", "Textile shade", "Nightstand size"],
+imageAlt: "Ceramic Bedside Lamp"
+},
+pl: {
+name: "Ceramiczna lampa nocna",
+tag: "Spokojna sypialnia",
+description: "Mala ceramiczna lampa z tekstylnym kloszem na szafke nocna i spokojne wnetrza sypialni.",
+meta: ["Ceramiczna podstawa", "Tekstylny klosz", "Rozmiar na szafke"],
+imageAlt: "Ceramiczna lampa nocna"
+}
+},
+"industrial-cage-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_21_32.png",
+price: "62 PLN",
+en: {
+name: "Industrial Cage Lamp",
+tag: "Loft style",
+description: "Metal cage lamp with a visible bulb for loft rooms, studios, and expressive interiors.",
+meta: ["Metal cage shade", "Visible bulb", "Loft interior"],
+imageAlt: "Industrial Cage Lamp"
+},
+pl: {
+name: "Industrialna lampa klatkowa",
+tag: "Styl loftowy",
+description: "Metalowa lampa z klatkowym kloszem i widoczna zarowka do loftow, studiow i wyrazistych wnetrz.",
+meta: ["Metalowy klosz klatkowy", "Widoczna zarowka", "Wnetrze loftowe"],
+imageAlt: "Industrialna lampa klatkowa"
+}
+},
+"wireless-mushroom-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_22_22.png",
+price: "58 PLN",
+en: {
+name: "Wireless Mushroom Lamp",
+tag: "Portable glow",
+description: "Rechargeable mushroom-shaped lamp for bedside tables, shelves, and cozy ambient light.",
+meta: ["Rechargeable battery", "Portable body", "Ambient glow"],
+imageAlt: "Wireless Mushroom Lamp"
+},
+pl: {
+name: "Bezprzewodowa lampa Mushroom",
+tag: "Przenosny blask",
+description: "Ladowalna lampa w ksztalcie grzybka na stolik nocny, polke i przytulne swiatlo dekoracyjne.",
+meta: ["Akumulator", "Przenosna obudowa", "Swiatlo ambientowe"],
+imageAlt: "Bezprzewodowa lampa Mushroom"
+}
+},
+"brass-reading-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_23_09.png",
+price: "73 PLN",
+en: {
+name: "Brass Reading Lamp",
+tag: "Focused light",
+description: "Adjustable brass lamp with directed warm light for desks, books, and evening work.",
+meta: ["Adjustable head", "Brass finish", "Focused beam"],
+imageAlt: "Brass Reading Lamp"
+},
+pl: {
+name: "Mosiezna lampa do czytania",
+tag: "Skupione swiatlo",
+description: "Regulowana mosiezna lampa z kierunkowym cieplym swiatlem do biurka, ksiazek i wieczornej pracy.",
+meta: ["Regulowana glowica", "Mosiezne wykonczenie", "Skupiona wiazka"],
+imageAlt: "Mosiezna lampa do czytania"
+}
+},
+"opal-pendant-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_24_21.png",
+price: "96 PLN",
+en: {
+name: "Opal Pendant Lamp",
+tag: "Dining room",
+description: "Suspended opal glass lamp that spreads balanced light over dining tables and kitchen islands.",
+meta: ["Opal glass shade", "Pendant mount", "Even table light"],
+imageAlt: "Opal Pendant Lamp"
+},
+pl: {
+name: "Lampa wiszaca Opal",
+tag: "Jadalnia",
+description: "Wiszaca lampa z opalowego szkla, ktora rowno rozprasza swiatlo nad stolem i wyspa kuchenna.",
+meta: ["Klosz ze szkla opalowego", "Mocowanie wiszace", "Rowne swiatlo nad stolem"],
+imageAlt: "Lampa wiszaca Opal"
+}
+},
+"portable-lantern-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_25_16.png",
+price: "51 PLN",
+en: {
+name: "Portable Lantern Lamp",
+tag: "Indoor outdoor",
+description: "Compact lantern lamp with a handle for terraces, shelves, and flexible accent lighting.",
+meta: ["Carry handle", "Compact lantern", "Terrace ready"],
+imageAlt: "Portable Lantern Lamp"
+},
+pl: {
+name: "Przenosna lampa Lantern",
+tag: "Dom i taras",
+description: "Kompaktowa lampa latarnia z uchwytem na taras, polke i elastyczne swiatlo akcentowe.",
+meta: ["Uchwyt do przenoszenia", "Kompaktowa latarnia", "Gotowa na taras"],
+imageAlt: "Przenosna lampa Lantern"
+}
+},
+"black-track-spotlight": {
+image: "images/ChatGPT Image 2 cze 2026, 17_28_07.png",
+price: "68 PLN",
+en: {
+name: "Black Track Spotlight",
+tag: "Directional light",
+description: "Modern black spotlight for highlighting shelves, pictures, and work surfaces.",
+meta: ["Directional head", "Modern black body", "Accent lighting"],
+imageAlt: "Black Track Spotlight"
+},
+pl: {
+name: "Czarny reflektor szynowy",
+tag: "Swiatlo kierunkowe",
+description: "Nowoczesny czarny reflektor do podkreslania polek, obrazow i powierzchni roboczych.",
+meta: ["Kierunkowa glowica", "Nowoczesna czarna obudowa", "Swiatlo akcentowe"],
+imageAlt: "Czarny reflektor szynowy"
+}
+},
+"rattan-table-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_29_47.png",
+price: "64 PLN",
+en: {
+name: "Rattan Table Lamp",
+tag: "Natural texture",
+description: "Warm table lamp with a woven rattan shade for natural, relaxed interiors.",
+meta: ["Woven rattan", "Warm diffusion", "Natural style"],
+imageAlt: "Rattan Table Lamp"
+},
+pl: {
+name: "Rattanowa lampa stolowa",
+tag: "Naturalna faktura",
+description: "Ciepla lampa stolowa z plecionym rattanowym kloszem do naturalnych i spokojnych wnetrz.",
+meta: ["Pleciony rattan", "Cieple rozproszenie", "Naturalny styl"],
+imageAlt: "Rattanowa lampa stolowa"
+}
+},
+"crystal-globe-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_30_38.png",
+price: "118 PLN",
+en: {
+name: "Crystal Globe Lamp",
+tag: "Elegant accent",
+description: "Decorative globe lamp with crystal detailing for premium rooms and evening atmosphere.",
+meta: ["Crystal details", "Globe diffuser", "Premium accent"],
+imageAlt: "Crystal Globe Lamp"
+},
+pl: {
+name: "Krysztalowa lampa Globe",
+tag: "Elegancki akcent",
+description: "Dekoracyjna lampa kulista z krysztalowym detalem do eleganckich pokoi i wieczornej atmosfery.",
+meta: ["Krysztalowe detale", "Kulisty dyfuzor", "Akcent premium"],
+imageAlt: "Krysztalowa lampa Globe"
+}
+},
+"kids-cloud-night-lamp": {
+image: "images/ChatGPT Image 2 cze 2026, 17_31_40.png",
+price: "39 PLN",
+en: {
+name: "Kids Cloud Night Lamp",
+tag: "Night comfort",
+description: "Soft cloud-shaped night lamp for children rooms, low brightness, and calm bedtime routines.",
+meta: ["Soft night light", "Child room design", "Low brightness"],
+imageAlt: "Kids Cloud Night Lamp"
+},
+pl: {
+name: "Dziecieca lampka Cloud",
+tag: "Komfort nocny",
+description: "Delikatna nocna lampka w ksztalcie chmurki do pokoju dziecka, niskiej jasnosci i spokojnego zasypiania.",
+meta: ["Delikatne swiatlo nocne", "Design do pokoju dziecka", "Niska jasnosc"],
+imageAlt: "Dziecieca lampka Cloud"
+}
 }
 },
 translations: {
@@ -143,16 +341,12 @@ text: "Lamp Store support can help with product questions, delivery details, and
 },
 chat: {
 badge: "Lamp Assistant",
-title: "Hi! I am ready to help you.",
-text: "I can help you choose a lamp, learn about delivery, and quickly find the right model for your home.",
+title: "Chat",
 robotAlt: "Assistant robot",
-card1Title: "Choose a lamp",
-card1Text: "Get help with selecting the best lamp for your room and style.",
-card2Title: "Fast support",
-card2Text: "Find quick answers about orders, delivery, and product details.",
-card3Title: "Ready now",
-card3Text: "The assistant is online and prepared to guide you right away.",
-tip: "Click outside the window or press the robot button again to close it."
+placeholderMessage: "Write a message. Bot replies can be connected here later.",
+inputLabel: "Message",
+placeholder: "Write a message...",
+send: "Send"
 },
 footer: {
 copyright: "© 2026 Lamp Store"
@@ -367,16 +561,12 @@ text: "Wsparcie Sklepu Lamp pomaga w pytaniach o produkty, dostawe i konto. Pozn
 },
 chat: {
 badge: "Asystent Lamp",
-title: "Czesc! Jestem gotowy, aby pomoc.",
-text: "Pomoge wybrac lampe, dowiedziec sie wiecej o dostawie i szybko znalezc model odpowiedni do Twojego domu.",
+title: "Chat",
 robotAlt: "Robot asystenta",
-card1Title: "Wybierz lampe",
-card1Text: "Otrzymaj pomoc przy wyborze najlepszej lampy do pomieszczenia i stylu.",
-card2Title: "Szybkie wsparcie",
-card2Text: "Znajdz szybkie odpowiedzi o zamowieniach, dostawie i szczegolach produktow.",
-card3Title: "Juz teraz",
-card3Text: "Asystent jest online i gotowy, aby poprowadzic Cie od razu.",
-tip: "Kliknij poza oknem lub ponownie nacisnij robota, aby zamknac okno."
+placeholderMessage: "Napisz wiadomosc. Odpowiedzi bota bedzie mozna podlaczyc tutaj pozniej.",
+inputLabel: "Wiadomosc",
+placeholder: "Napisz wiadomosc...",
+send: "Wyslij"
 },
 footer: {
 copyright: "© 2026 Sklep Lamp"
