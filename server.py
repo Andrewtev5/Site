@@ -521,7 +521,6 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
     def public_user(self, user: dict) -> dict:
         return {
-            "id": str(user["id"]),
             "name": user["name"],
             "email": user["email"],
             "createdAt": user["created_at"].isoformat() if user.get("created_at") else current_timestamp(),

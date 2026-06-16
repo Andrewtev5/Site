@@ -15,6 +15,14 @@ const hasDigit = /\d/.test(password);
 return hasMinLength && hasUppercase && hasLowercase && hasDigit;
 }
 
+function publicFallbackUser(user){
+return {
+name: user.name,
+email: user.email,
+createdAt: user.createdAt
+};
+}
+
 function createFallbackUser(name, email, password){
 const users = storage.getUsersFallback();
 
@@ -31,7 +39,7 @@ createdAt: new Date().toISOString()
 };
 
 storage.saveUsersFallback([...users, user]);
-return user;
+return publicFallbackUser(user);
 }
 
 function loginFallback(email, password){
@@ -45,7 +53,7 @@ if(user.password !== password){
 throw new Error(t("toasts.incorrectPassword"));
 }
 
-return user;
+return publicFallbackUser(user);
 }
 
 async function handleRegister(event){

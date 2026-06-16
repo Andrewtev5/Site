@@ -14,9 +14,9 @@ imageAlt: "LED Lamp 10W"
 },
 pl: {
 name: "Lampa LED 10W",
-tag: "Cieple swiatlo",
-description: "Energooszczedna lampa LED do oswietlenia domu. Dziala dlugo i zuzywa niewiele energii.",
-meta: ["Miekkie cieple swiatlo", "Niski pobor mocy", "Idealna do sypialni"],
+tag: "Ciepłe światło",
+description: "Energooszczędna lampa LED do oświetlenia domu. Działa długo i zużywa niewiele energii.",
+meta: ["Miękkie ciepłe światło", "Niski pobór mocy", "Idealna do sypialni"],
 imageAlt: "Lampa LED 10W"
 }
 },
@@ -33,8 +33,8 @@ imageAlt: "Smart WiFi Lamp"
 pl: {
 name: "Lampa Smart WiFi",
 tag: "Smart home",
-description: "Inteligentna lampa sterowana telefonem. Pozwala zmieniac jasnosc i kolor swiatla.",
-meta: ["Sterowanie aplikacja", "Regulacja koloru", "Gotowa do smart home"],
+description: "Inteligentna lampa sterowana telefonem. Pozwala zmieniać jasność i kolor światła.",
+meta: ["Sterowanie aplikacją", "Regulacja koloru", "Gotowa do smart home"],
 imageAlt: "Lampa Smart WiFi"
 }
 },
@@ -49,11 +49,11 @@ meta: ["Compact format", "Premium finish", "Perfect for workspaces"],
 imageAlt: "Minimal Table Lamp"
 },
 pl: {
-name: "Minimalistyczna lampa stolowa",
+name: "Minimalistyczna lampa stołowa",
 tag: "Studyjny blask",
-description: "Kompaktowa lampa premium o spokojnej, zlotej barwie. Swietnie sprawdza sie na biurku, w kaciku do czytania i podczas wieczornej pracy.",
-meta: ["Kompaktowy format", "Wykonczenie premium", "Idealna do pracy"],
-imageAlt: "Minimalistyczna lampa stolowa"
+description: "Kompaktowa lampa premium o spokojnej, złotej barwie. Świetnie sprawdza się na biurku, w kąciku do czytania i podczas wieczornej pracy.",
+meta: ["Kompaktowy format", "Wykończenie premium", "Idealna do pracy"],
+imageAlt: "Minimalistyczna lampa stołowa"
 }
 },
 "nordic-glass-lamp": {
@@ -69,7 +69,7 @@ imageAlt: "Nordic Glass Lamp"
 pl: {
 name: "Nordycka lampa szklana",
 tag: "Dekor premium",
-description: "Eleganckie szklane body z dekoracyjnym filamentem. Zostala zaprojektowana jako mocny akcent salonu lub strefy wypoczynku.",
+description: "Elegancki szklany korpus z dekoracyjnym filamentem. Został zaprojektowany jako mocny akcent salonu lub strefy wypoczynku.",
 meta: ["Dekoracyjny filament", "Atmosfera premium", "Akcent do salonu"],
 imageAlt: "Nordycka lampa szklana"
 }
@@ -85,11 +85,11 @@ meta: ["Curved metal arm", "Floor format", "Best near sofas"],
 imageAlt: "Arc Floor Lamp"
 },
 pl: {
-name: "Lampa podlogowa Arc",
+name: "Lampa podłogowa Arc",
 tag: "Strefa czytania",
-description: "Wysoka lampa podlogowa z lukowym ramieniem do sofy, kacika czytania i miekkiego wieczornego swiatla.",
-meta: ["Lukowe metalowe ramie", "Format podlogowy", "Najlepsza przy sofie"],
-imageAlt: "Lampa podlogowa Arc"
+description: "Wysoka lampa podłogowa z łukowym ramieniem do sofy, kącika czytania i miękkiego wieczornego swiatla.",
+meta: ["Łukowe metalowe ramię", "Format podłogowy", "Najlepsza przy sofie"],
+imageAlt: "Lampa podłogowa Arc"
 }
 },
 "ceramic-bedside-lamp": {
@@ -105,8 +105,8 @@ imageAlt: "Ceramic Bedside Lamp"
 pl: {
 name: "Ceramiczna lampa nocna",
 tag: "Spokojna sypialnia",
-description: "Mala ceramiczna lampa z tekstylnym kloszem na szafke nocna i spokojne wnetrza sypialni.",
-meta: ["Ceramiczna podstawa", "Tekstylny klosz", "Rozmiar na szafke"],
+description: "Mała ceramiczna lampa z tekstylnym kloszem na szafkę nocną i spokojne wnętrza sypialni.",
+meta: ["Ceramiczna podstawa", "Tekstylny klosz", "Rozmiar na szafkę"],
 imageAlt: "Ceramiczna lampa nocna"
 }
 },
@@ -123,8 +123,8 @@ imageAlt: "Industrial Cage Lamp"
 pl: {
 name: "Industrialna lampa klatkowa",
 tag: "Styl loftowy",
-description: "Metalowa lampa z klatkowym kloszem i widoczna zarowka do loftow, studiow i wyrazistych wnetrz.",
-meta: ["Metalowy klosz klatkowy", "Widoczna zarowka", "Wnetrze loftowe"],
+description: "Metalowa lampa z klatkowym kloszem i widoczną żarówką do loftów, studiów i wyrazistych wnętrz.",
+meta: ["Metalowy klosz klatkowy", "Widoczna żarówka", "Wnętrze loftowe"],
 imageAlt: "Industrialna lampa klatkowa"
 }
 },
@@ -140,9 +140,9 @@ imageAlt: "Wireless Mushroom Lamp"
 },
 pl: {
 name: "Bezprzewodowa lampa Mushroom",
-tag: "Przenosny blask",
-description: "Ladowalna lampa w ksztalcie grzybka na stolik nocny, polke i przytulne swiatlo dekoracyjne.",
-meta: ["Akumulator", "Przenosna obudowa", "Swiatlo ambientowe"],
+tag: "Przenośny blask",
+description: "Ładowalna lampa w kształcie grzybka na stolik nocny, półkę i przytulne światło dekoracyjne.",
+meta: ["Akumulator", "Przenośna obudowa", "Światło ambientowe"],
 imageAlt: "Bezprzewodowa lampa Mushroom"
 }
 },
@@ -157,11 +157,11 @@ meta: ["Adjustable head", "Brass finish", "Focused beam"],
 imageAlt: "Brass Reading Lamp"
 },
 pl: {
-name: "Mosiezna lampa do czytania",
-tag: "Skupione swiatlo",
-description: "Regulowana mosiezna lampa z kierunkowym cieplym swiatlem do biurka, ksiazek i wieczornej pracy.",
-meta: ["Regulowana glowica", "Mosiezne wykonczenie", "Skupiona wiazka"],
-imageAlt: "Mosiezna lampa do czytania"
+name: "Mosiężna lampa do czytania",
+tag: "Skupione światło",
+description: "Regulowana mosiężna lampa z kierunkowym ciepłym światłem do biurka, książek i wieczornej pracy.",
+meta: ["Regulowana głowica", "Mosiężne wykończenie", "Skupiona wiązka"],
+imageAlt: "Mosiężna lampa do czytania"
 }
 },
 "opal-pendant-lamp": {
@@ -175,11 +175,11 @@ meta: ["Opal glass shade", "Pendant mount", "Even table light"],
 imageAlt: "Opal Pendant Lamp"
 },
 pl: {
-name: "Lampa wiszaca Opal",
+name: "Lampa wisząca Opal",
 tag: "Jadalnia",
-description: "Wiszaca lampa z opalowego szkla, ktora rowno rozprasza swiatlo nad stolem i wyspa kuchenna.",
-meta: ["Klosz ze szkla opalowego", "Mocowanie wiszace", "Rowne swiatlo nad stolem"],
-imageAlt: "Lampa wiszaca Opal"
+description: "Wisząca lampa z opalowego szkła, która równomiernie rozprasza światło nad stołem i wyspą kuchenną.",
+meta: ["Klosz ze szkła opalowego", "Mocowanie wiszące", "Równe światło nad stołem"],
+imageAlt: "Lampa wisząca Opal"
 }
 },
 "portable-lantern-lamp": {
@@ -193,11 +193,11 @@ meta: ["Carry handle", "Compact lantern", "Terrace ready"],
 imageAlt: "Portable Lantern Lamp"
 },
 pl: {
-name: "Przenosna lampa Lantern",
+name: "Przenośna lampa Lantern",
 tag: "Dom i taras",
-description: "Kompaktowa lampa latarnia z uchwytem na taras, polke i elastyczne swiatlo akcentowe.",
+description: "Kompaktowa lampa latarnia z uchwytem na taras, półkę i elastyczne światło akcentowe.",
 meta: ["Uchwyt do przenoszenia", "Kompaktowa latarnia", "Gotowa na taras"],
-imageAlt: "Przenosna lampa Lantern"
+imageAlt: "Przenośna lampa Lantern"
 }
 },
 "black-track-spotlight": {
@@ -212,9 +212,9 @@ imageAlt: "Black Track Spotlight"
 },
 pl: {
 name: "Czarny reflektor szynowy",
-tag: "Swiatlo kierunkowe",
-description: "Nowoczesny czarny reflektor do podkreslania polek, obrazow i powierzchni roboczych.",
-meta: ["Kierunkowa glowica", "Nowoczesna czarna obudowa", "Swiatlo akcentowe"],
+tag: "Światło kierunkowe",
+description: "Nowoczesny czarny reflektor do podkreślania półek, obrazów i powierzchni roboczych.",
+meta: ["Kierunkowa głowica", "Nowoczesna czarna obudowa", "Światło akcentowe"],
 imageAlt: "Czarny reflektor szynowy"
 }
 },
@@ -229,11 +229,11 @@ meta: ["Woven rattan", "Warm diffusion", "Natural style"],
 imageAlt: "Rattan Table Lamp"
 },
 pl: {
-name: "Rattanowa lampa stolowa",
+name: "Rattanowa lampa stołowa",
 tag: "Naturalna faktura",
-description: "Ciepla lampa stolowa z plecionym rattanowym kloszem do naturalnych i spokojnych wnetrz.",
-meta: ["Pleciony rattan", "Cieple rozproszenie", "Naturalny styl"],
-imageAlt: "Rattanowa lampa stolowa"
+description: "Ciepła lampa stołowa z plecionym rattanowym kloszem do naturalnych i spokojnych wnętrz.",
+meta: ["Pleciony rattan", "Ciepłe rozproszenie", "Naturalny styl"],
+imageAlt: "Rattanowa lampa stołowa"
 }
 },
 "crystal-globe-lamp": {
@@ -247,11 +247,11 @@ meta: ["Crystal details", "Globe diffuser", "Premium accent"],
 imageAlt: "Crystal Globe Lamp"
 },
 pl: {
-name: "Krysztalowa lampa Globe",
+name: "Kryształowa lampa Globe",
 tag: "Elegancki akcent",
-description: "Dekoracyjna lampa kulista z krysztalowym detalem do eleganckich pokoi i wieczornej atmosfery.",
-meta: ["Krysztalowe detale", "Kulisty dyfuzor", "Akcent premium"],
-imageAlt: "Krysztalowa lampa Globe"
+description: "Dekoracyjna lampa kulista z kryształowym detalem do eleganckich pokoi i wieczornej atmosfery.",
+meta: ["Kryształowe detale", "Kulisty dyfuzor", "Akcent premium"],
+imageAlt: "Kryształowa lampa Globe"
 }
 },
 "kids-cloud-night-lamp": {
@@ -265,11 +265,11 @@ meta: ["Soft night light", "Child room design", "Low brightness"],
 imageAlt: "Kids Cloud Night Lamp"
 },
 pl: {
-name: "Dziecieca lampka Cloud",
+name: "Dziecięca lampka Cloud",
 tag: "Komfort nocny",
-description: "Delikatna nocna lampka w ksztalcie chmurki do pokoju dziecka, niskiej jasnosci i spokojnego zasypiania.",
-meta: ["Delikatne swiatlo nocne", "Design do pokoju dziecka", "Niska jasnosc"],
-imageAlt: "Dziecieca lampka Cloud"
+description: "Delikatna nocna lampka w kształcie chmurki do pokoju dziecka, niskiej jasności i spokojnego zasypiania.",
+meta: ["Delikatne światło nocne", "Design do pokoju dziecka", "Niska jasność"],
+imageAlt: "Dziecięca lampka Cloud"
 }
 }
 },
@@ -504,32 +504,32 @@ library: "Biblioteka | Sklep Lamp",
 error: "404 | Sklep Lamp"
 },
 aria: {
-openMenu: "Otworz menu",
+openMenu: "Otwórz menu",
 closeMenu: "Zamknij menu",
 closeInfo: "Zamknij okno informacji",
-openSearch: "Otworz wyszukiwanie produktow",
-closeSearch: "Zamknij wyszukiwanie produktow",
-openAssistant: "Otworz asystenta",
+openSearch: "Otwórz wyszukiwanie produktów",
+closeSearch: "Zamknij wyszukiwanie produktów",
+openAssistant: "Otwórz asystenta",
 assistantWindow: "Okno asystenta lamp",
 infoWindow: "Okno informacji",
-searchWindow: "Okno wyszukiwania produktow",
-languageSwitch: "Przelacznik jezyka"
+searchWindow: "Okno wyszukiwania produktów",
+languageSwitch: "Przełącznik języka"
 },
 common: {
 email: "Email",
-password: "Haslo",
-fullName: "Imie i nazwisko",
-backToCatalog: "Powrot do katalogu"
+password: "Hasło",
+fullName: "Imię i nazwisko",
+backToCatalog: "Powrót do katalogu"
 },
 menu: {
 eyebrow: "Sklep Lamp",
 title: "Menu",
 catalogTitle: "Katalog",
 catalogDesc: "Przegladaj cala kolekcje lamp",
-loginTitle: "Zaloguj sie",
-loginDesc: "Uzyskaj bezpieczny dostep do konta",
-registerTitle: "Zaloz konto",
-registerDesc: "Utworz nowy profil",
+loginTitle: "Zaloguj się",
+loginDesc: "Uzyskaj bezpieczny dostęp do konta",
+registerTitle: "Załóż konto",
+registerDesc: "Utwórz nowy profil",
 libraryTitle: "Biblioteka",
 libraryDesc: "Zapisane lampy i ulubione",
 returnTitle: "Zwrot produktu",
@@ -539,10 +539,10 @@ contactDesc: "Wsparcie i komunikacja"
 },
 account: {
 guestLabel: "Tryb goscia",
-guestText: "Zaloguj sie, aby zapisywac lampy w swojej bibliotece i wykonywac zakup demonstracyjny.",
+guestText: "Zaloguj się, aby zapisywać lampy w swojej bibliotece i wykonywać zakup demonstracyjny.",
 signedInLabel: "Zalogowano",
 signedInText: "{name}, zapisane lampy: {savedCount}. Kupione: {purchasedCount}.",
-openLibraryTitle: "Otworz biblioteke",
+openLibraryTitle: "Otwórz bibliotekę",
 openLibraryDesc: "Przejrzyj zapisane i kupione lampy",
 logoutTitle: "Wyloguj sie",
 logoutDesc: "Bezpiecznie zakoncz biezaca sesje"
@@ -551,21 +551,21 @@ info: {
 return: {
 kicker: "Zwroty",
 title: "Zwrot produktu",
-text: "Po zalogowaniu mozna przygotowac wniosek zwrotu. Na potrzeby dyplomu sklep obsluguje juz zapis produktow, pseudo-zakupy i zarzadzanie biblioteka w jednym miejscu."
+text: "Po zalogowaniu można przygotować wniosek zwrotu. Na potrzeby dyplomu sklep obsługuje już zapis produktów, pseudo-zakupy i zarządzanie biblioteką w jednym miejscu."
 },
 contact: {
 kicker: "Kontakt",
 title: "Kontakt z obsluga",
-text: "Wsparcie Sklepu Lamp pomaga w pytaniach o produkty, dostawe i konto. Pozniej ten blok mozna polaczyc z formularzem, komunikatorem albo sekcja FAQ."
+text: "Wsparcie Sklepu Lamp pomaga w pytaniach o produkty, dostawę i konto. Później ten blok można połączyć z formularzem, komunikatorem albo sekcją FAQ."
 }
 },
 chat: {
 badge: "Asystent Lamp",
 title: "Chat",
 robotAlt: "Robot asystenta",
-placeholderMessage: "Napisz wiadomosc. Odpowiedzi bota bedzie mozna podlaczyc tutaj pozniej.",
+placeholderMessage: "Napisz wiadomość. Odpowiedzi bota będzie można podłączyć tutaj później.",
 inputLabel: "Wiadomosc",
-placeholder: "Napisz wiadomosc...",
+placeholder: "Napisz wiadomość...",
 send: "Wyslij"
 },
 footer: {
@@ -575,25 +575,25 @@ search: {
 trigger: "Szukaj",
 kicker: "Wyszukiwanie",
 title: "Znajdz lampe",
-text: "Wpisz przyblizona albo dokladna nazwe produktu, a podobne lampy pojawia sie od razu ponizej.",
+text: "Wpisz przybliżoną albo dokładną nazwę produktu, a podobne lampy pojawią się od razu poniżej.",
 inputLabel: "Nazwa produktu",
 placeholder: "Wpisz nazwe lampy",
-initialState: "Zacznij wpisywac, aby zobaczyc pasujace produkty.",
+initialState: "Zacznij wpisywać, aby zobaczyc pasujace produkty.",
 initialTitle: "Wyszukaj produkty",
-initialText: "Lista wynikow bedzie aktualizowac sie na zywo podczas wpisywania.",
-resultsCount: "Pasujace produkty: {count}",
-noResultsMeta: "Brak produktow dla zapytania: {query}",
-noResultsTitle: "Nie znaleziono podobnych produktow",
-noResultsText: "Sprobuj krotszej frazy albo nazwy zblizonej do: {query}."
+initialText: "Lista wyników będzie aktualizować się na zywo podczas wpisywania.",
+resultsCount: "Pasujące produkty: {count}",
+noResultsMeta: "Brak produktów dla zapytania: {query}",
+noResultsTitle: "Nie znaleziono podobnych produktów",
+noResultsText: "Spróbuj krótszej frazy albo nazwy zbliżonej do: {query}."
 },
 cart: {
 trigger: "Koszyk",
 kicker: "Koszyk",
-title: "Twoj koszyk",
+title: "Twój koszyk",
 add: "Dodaj do koszyka",
 added: "{name} dodano do koszyka.",
 emptyTitle: "Koszyk jest pusty.",
-emptyText: "Dodaj produkty z katalogu, a pojawia sie tutaj.",
+emptyText: "Dodaj produkty z katalogu, a pojawią się tutaj.",
 total: "Suma"
 },
 buttons: {
@@ -609,75 +609,75 @@ creating: "Tworzenie...",
 checking: "Sprawdzanie..."
 },
 catalog: {
-heroKicker: "Nowoczesne oswietlenie z premium charakterem",
+heroKicker: "Nowoczesne oświetlenie z premium charakterem",
 title: "Nasze lampy",
-text: "Wybierz lampe, zapisz ja w swojej bibliotece albo wykonaj zakup demonstracyjny. Kolekcja i status zakupu pozostaja dostepne po zalogowaniu.",
+text: "Wybierz lampę, zapisz ją w swojej bibliotece albo wykonaj zakup demonstracyjny. Kolekcja i status zakupu pozostają dostępne po zalogowaniu.",
 stat1: "designerskie lampy w katalogu",
 stat2: "inspiracje dla smart home",
-stat3: "natychmiastowy pseudo-zakup na obrone dyplomu",
+stat3: "natychmiastowy pseudo-zakup na obronę dyplomu",
 sectionKicker: "Katalog",
-sectionTitle: "Wyrozniona kolekcja",
-sectionText: "Kazda karta produktu ma teraz dwa dzialania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.",
-qualityKicker: "Jakosc",
-qualityTitle: "Dlaczego te lampy wygladaja premium",
-qualityText: "Ten blok wzmacnia prezentacje dyplomowa, bo pokazuje wartosc produktu, estetyke i logike interakcji uzytkownika.",
-experience1Title: "Dopracowane materialy",
-experience1Text: "Szklo, metal i cieply filament buduja bardziej wiarygodny katalog premium i lepszy odbior produktu.",
+sectionTitle: "Wyróżniona kolekcja",
+sectionText: "Kazda karta produktu ma teraz dwa działania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.",
+qualityKicker: "Jakość",
+qualityTitle: "Dlaczego te lampy wyglądają premium",
+qualityText: "Ten blok wzmacnia prezentację dyplomową, bo pokazuje wartość produktu, estetykę i logikę interakcji użytkownika.",
+experience1Title: "Dopracowane materiały",
+experience1Text: "Szkło, metal i ciepły filament budują bardziej wiarygodny katalog premium i lepszy odbiór produktu.",
 experience2Title: "Interaktywny proces zakupu",
-experience2Text: "Uzytkownik moze zapisac produkt, otworzyc biblioteke i wykonac pseudo-zakup bez systemu platnosci.",
-experience3Title: "Plynna prezentacja",
-experience3Text: "Animacje przy scrollu, efekty hover i bogatsze karty sprawiaja, ze witryna wyglada lepiej podczas obrony.",
+experience2Text: "Użytkownik może zapisać produkt, otworzyć bibliotekę i wykonać pseudo-zakup bez systemu płatności.",
+experience3Title: "Płynna prezentacja",
+experience3Text: "Animacje przy scrollu, efekty hover i bogatsze karty sprawiają, że witryna wygląda lepiej podczas obrony.",
 galleryKicker: "Galeria",
 galleryTitle: "Inspiracje produktowe",
-galleryText: "Galeria dodaje glebi stronie i sprawia, ze serwis naturalnie przewija sie kolkiem myszy.",
-gallery1Alt: "Zblizenie na nordycka lampe szklana",
-gallery1Caption: "Nastrojowe swiatlo do wnetrz premium.",
-gallery2Alt: "Minimalistyczna lampa stolowa na ciemnym tle",
+galleryText: "Galeria dodaje głębi stronie i sprawia, że serwis naturalnie przewija się kółkiem myszy.",
+gallery1Alt: "Zbliżenie na nordycką lampę szklaną",
+gallery1Caption: "Nastrojowe światło do wnetrz premium.",
+gallery2Alt: "Minimalistyczna lampa stołowa na ciemnym tle",
 gallery2Caption: "Kompaktowa elegancja do nowoczesnej przestrzeni roboczej.",
 gallery3Alt: "Inteligentna lampa z bursztynowym swiatlem",
-gallery3Caption: "Sterowanie smart i dekoracyjny wyglad filamentu.",
+gallery3Caption: "Sterowanie smart i dekoracyjny wygląd filamentu.",
 gallery4Alt: "Studyjne ujecie lampy LED",
-gallery4Caption: "Energooszczedna lampa, ktora nadal wyglada premium w katalogu."
+gallery4Caption: "Energooszczędna lampa, która nadal wygląda premium w katalogu."
 },
 login: {
-heroKicker: "Bezpieczny dostep",
+heroKicker: "Bezpieczny dostęp",
 title: "Logowanie",
-text: "Zaloguj sie do profilu, aby zapisywac lampy, otwierac biblioteke i wykonywac zakupy demonstracyjne do pracy dyplomowej.",
-tabLogin: "Zaloguj sie",
-tabRegister: "Zaloz konto",
+text: "Zaloguj się do profilu, aby zapisywać lampy, otwierać bibliotekę i wykonywać zakupy demonstracyjne do pracy dyplomowej.",
+tabLogin: "Zaloguj się",
+tabRegister: "Załóż konto",
 emailPlaceholder: "name@example.com",
-passwordPlaceholder: "Wpisz haslo",
-submit: "Zaloguj sie",
-securityNote: "To lokalne demo logowania z haszowaniem hasel po stronie przegladarki. Do pelnej wersji produkcyjnej mozna pozniej dodac backend.",
+passwordPlaceholder: "Wpisz hasło",
+submit: "Zaloguj się",
+securityNote: "To lokalne demo logowania z haszowaniem haseł po stronie przeglądarki. Do pełnej wersji produkcyjnej można później dodać backend.",
 needAccount: "Potrzebujesz konta?"
 },
 register: {
-heroKicker: "Bezpieczny dostep",
-title: "Utworz konto",
-text: "Stworz profil, aby przechowywac produkty w bibliotece, zapisywac status zakupu i czytelniej prezentowac projekt dyplomowy.",
-tabLogin: "Zaloguj sie",
-tabRegister: "Zaloz konto",
-repeatPassword: "Powtorz haslo",
-namePlaceholder: "Twoje imie i nazwisko",
+heroKicker: "Bezpieczny dostęp",
+title: "Utwórz konto",
+text: "Stwórz profil, aby przechowywać produkty w bibliotece, zapisywać status zakupu i czytelniej prezentować projekt dyplomowy.",
+tabLogin: "Zaloguj się",
+tabRegister: "Załóż konto",
+repeatPassword: "Powtórz hasło",
+namePlaceholder: "Twoje imię i nazwisko",
 emailPlaceholder: "name@example.com",
-passwordPlaceholder: "Minimum 8 znakow",
-repeatPasswordPlaceholder: "Powtorz haslo",
-passwordHint: "Uzyj co najmniej 8 znakow, malej i wielkiej litery oraz jednej cyfry.",
-submit: "Utworz konto",
-securityNote: "To lokalne demo logowania z haszowaniem hasel po stronie przegladarki. Do pelnej wersji produkcyjnej mozna pozniej dodac backend.",
-haveAccount: "Masz juz konto?"
+passwordPlaceholder: "Minimum 8 znaków",
+repeatPasswordPlaceholder: "Powtórz hasło",
+passwordHint: "Użyj co najmniej 8 znaków, małej i wielkiej litery oraz jednej cyfry.",
+submit: "Utwórz konto",
+securityNote: "To lokalne demo logowania z haszowaniem haseł po stronie przeglądarki. Do pełnej wersji produkcyjnej można później dodać backend.",
+haveAccount: "Masz już konto?"
 },
 libraryPage: {
 heroKicker: "Strefa prywatna",
 title: "Twoja biblioteka",
-text: "Tutaj znajduja sie zapisane produkty, ich zdjecia i status zakupu demonstracyjnego do prezentacji dyplomu.",
-loginButton: "Otworz strone logowania"
+text: "Tutaj znajdują się zapisane produkty, ich zdjęcia i status zakupu demonstracyjnego do prezentacji dyplomu.",
+loginButton: "Otwórz stronę logowania"
 },
 library: {
 authRequiredTitle: "Wymagane logowanie.",
-authRequiredText: "Zaloguj sie lub utworz konto, aby budowac prywatna biblioteke lamp i korzystac z przyciskow zakupu demonstracyjnego.",
+authRequiredText: "Zaloguj się lub utwórz konto, aby budować prywatną bibliotekę lamp i korzystać z przycisków zakupu demonstracyjnego.",
 emptyTitle: "Twoja biblioteka jest pusta.",
-emptyText: "Dodaj produkty z katalogu, a pojawia sie tutaj razem ze zdjeciami i przyciskami zakupu.",
+emptyText: "Dodaj produkty z katalogu, a pojawią się tutaj razem ze zdjęciami i przyciskami zakupu.",
 intro: "{name}, to Twoja prywatna biblioteka. Zapisane: {savedCount}. Kupione: {purchasedCount}.",
 savedOn: "{price} - zapisano {date}",
 readyForPurchase: "Gotowe do zakupu demonstracyjnego",
@@ -685,33 +685,33 @@ purchasedOn: "Kupiono {date}"
 },
 error: {
 heroKicker: "Nie znaleziono strony",
-title: "Ta strona pekla jak zarowka",
-text: "Adres, ktory otwarto, nie istnieje albo zostal przeniesiony. Skorzystaj z przyciskow ponizej, aby wrocic do katalogu, otworzyc biblioteke lub przejsc do logowania.",
-openLibrary: "Otworz biblioteke",
-openLogin: "Otworz logowanie",
-imageAlt: "Robot stojacy na rozbitej zarowce na stronie bledu 404"
+title: "Ta strona pękła jak żarówka",
+text: "Adres, który otwarto, nie istnieje albo został przeniesiony. Skorzystaj z przycisków poniżej, aby wrócić do katalogu, otworzyć bibliotekę lub przejść do logowania.",
+openLibrary: "Otwórz bibliotekę",
+openLogin: "Otwórz logowanie",
+imageAlt: "Robot stojący na rozbitej żarówce na stronie błędu 404"
 },
 toasts: {
-signInFirstSave: "Najpierw zaloguj sie, aby zapisywac produkty w bibliotece.",
-signInFirstPurchase: "Najpierw zaloguj sie, aby wykonac zakup demonstracyjny.",
-alreadyInLibrary: "Ta lampa jest juz w Twojej bibliotece.",
-addedToLibrary: "{name} zostala dodana do biblioteki.",
-purchaseComplete: "Zakup demonstracyjny produktu {name} zakonczony.",
-alreadyPurchased: "Ta lampa zostala juz kupiona w trybie demonstracyjnym.",
-removedFromLibrary: "Lampa zostala usunieta z biblioteki.",
-enterFullName: "Wpisz imie i nazwisko.",
+signInFirstSave: "Najpierw zaloguj się, aby zapisywać produkty w bibliotece.",
+signInFirstPurchase: "Najpierw zaloguj się, aby wykonac zakup demonstracyjny.",
+alreadyInLibrary: "Ta lampa jest już w Twojej bibliotece.",
+addedToLibrary: "{name} została dodana do biblioteki.",
+purchaseComplete: "Zakup demonstracyjny produktu {name} zakończony.",
+alreadyPurchased: "Ta lampa została już kupiona w trybie demonstracyjnym.",
+removedFromLibrary: "Lampa została usunięta z biblioteki.",
+enterFullName: "Wpisz imię i nazwisko.",
 invalidEmail: "Wpisz poprawny adres email.",
-weakPassword: "Haslo musi byc mocniejsze: minimum 8 znakow, mala i wielka litera oraz jedna cyfra.",
-passwordsMismatch: "Hasla nie sa takie same.",
-accountExists: "Konto z tym adresem email juz istnieje.",
-accountCreated: "Konto zostalo utworzone i od razu zalogowane.",
+weakPassword: "Hasło musi byc mocniejsze: minimum 8 znakow, mała i wielka litera oraz jedna cyfra.",
+passwordsMismatch: "Hasła nie są takie same.",
+accountExists: "Konto z tym adresem email już istnieje.",
+accountCreated: "Konto zostało utworzone i od razu zalogowane.",
 accountNotFound: "Nie znaleziono konta.",
-incorrectPassword: "Niepoprawne haslo.",
+incorrectPassword: "Niepoprawne hasło.",
 welcomeBack: "Witaj ponownie, {name}.",
-loggedOut: "Zostales wylogowany.",
-secureBrowserUnavailable: "Bezpieczne funkcje crypto przegladarki sa niedostepne. Otworz projekt przez localhost albo Live Server.",
-createFailed: "Nie udalo sie utworzyc konta.",
-loginFailed: "Nie udalo sie zalogowac."
+loggedOut: "Zostałeś wylogowany.",
+secureBrowserUnavailable: "Bezpieczne funkcje crypto przeglądarki są niedostępne. Otwórz projekt przez localhost albo Live Server.",
+createFailed: "Nie udało się utworzyc konta.",
+loginFailed: "Nie udało się zalogowac."
 }
 }
 }

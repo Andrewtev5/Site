@@ -56,12 +56,12 @@ main.insertAdjacentHTML("beforebegin", `
 </div>
 <div class="menu-account-card" id="menuAccountCard">
 <span class="menu-account-label" id="menuAccountLabel">Tryb goscia</span>
-<strong class="menu-account-name" id="menuAccountName">Zaloguj sie, aby zapisywac lampy w swojej bibliotece.</strong>
+<strong class="menu-account-name" id="menuAccountName">Zaloguj się, aby zapisywać lampy w swojej bibliotece.</strong>
 </div>
 <nav class="menu-nav">
 <button class="menu-item" id="menuCatalogButton" type="button" data-go-page="index.html"><span data-i18n="menu.catalogTitle">Katalog</span><small data-i18n="menu.catalogDesc">Przegladaj cala kolekcje lamp</small></button>
-<button class="menu-item" id="menuAuthPrimary" type="button" data-open-auth="login"><span data-i18n="menu.loginTitle">Zaloguj sie</span><small data-i18n="menu.loginDesc">Uzyskaj bezpieczny dostep do konta</small></button>
-<button class="menu-item" id="menuAuthSecondary" type="button" data-open-auth="register"><span data-i18n="menu.registerTitle">Zaloz konto</span><small data-i18n="menu.registerDesc">Utworz nowy profil</small></button>
+<button class="menu-item" id="menuAuthPrimary" type="button" data-open-auth="login"><span data-i18n="menu.loginTitle">Zaloguj się</span><small data-i18n="menu.loginDesc">Uzyskaj bezpieczny dostęp do konta</small></button>
+<button class="menu-item" id="menuAuthSecondary" type="button" data-open-auth="register"><span data-i18n="menu.registerTitle">Załóż konto</span><small data-i18n="menu.registerDesc">Utwórz nowy profil</small></button>
 <button class="menu-item" id="menuLibraryButton" type="button" data-open-library><span data-i18n="menu.libraryTitle">Biblioteka</span><small data-i18n="menu.libraryDesc">Zapisane lampy i ulubione</small></button>
 <button class="menu-item" type="button" data-open-info="return"><span data-i18n="menu.returnTitle">Zwrot produktu</span><small data-i18n="menu.returnDesc">Wskazowki zwrotu i gwarancji</small></button>
 <button class="menu-item" type="button" data-open-info="contact"><span data-i18n="menu.contactTitle">Kontakt</span><small data-i18n="menu.contactDesc">Wsparcie i komunikacja</small></button>
@@ -105,11 +105,11 @@ main.insertAdjacentHTML("afterend", `
 <div><div class="chat-badge" data-i18n="chat.badge">Asystent Lamp</div><h3 class="chat-title" data-i18n="chat.title">Chat</h3></div>
 </div>
 <div class="chat-messages" id="chatMessages" aria-live="polite">
-<div class="chat-message assistant"><span data-i18n="chat.placeholderMessage">Napisz wiadomosc, a pozniej podlaczymy tutaj odpowiedzi bota.</span></div>
+<div class="chat-message assistant"><span data-i18n="chat.placeholderMessage">Napisz wiadomość, a później podłączymy tutaj odpowiedzi bota.</span></div>
 </div>
 <form class="chat-form" data-chat-form>
 <label class="sr-only" for="chatInput" data-i18n="chat.inputLabel">Message</label>
-<input class="chat-input" id="chatInput" name="message" type="text" autocomplete="off" data-i18n-placeholder="chat.placeholder" placeholder="Napisz wiadomosc...">
+<input class="chat-input" id="chatInput" name="message" type="text" autocomplete="off" data-i18n-placeholder="chat.placeholder" placeholder="Napisz wiadomość...">
 <button class="chat-send" type="submit" data-i18n="chat.send">Send</button>
 </form>
 </section>
