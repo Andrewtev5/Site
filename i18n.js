@@ -346,7 +346,10 @@ robotAlt: "Assistant robot",
 placeholderMessage: "Write a message. Bot replies can be connected here later.",
 inputLabel: "Message",
 placeholder: "Write a message...",
-send: "Send"
+send: "Send",
+loading: "Checking matching lamps...",
+emptyReply: "I did not receive a reply from the assistant.",
+connectionError: "The assistant is not available. Start the bot backend and try again."
 },
 footer: {
 copyright: "© 2026 Lamp Store"
@@ -564,9 +567,12 @@ badge: "Asystent Lamp",
 title: "Chat",
 robotAlt: "Robot asystenta",
 placeholderMessage: "Napisz wiadomość. Odpowiedzi bota będzie można podłączyć tutaj później.",
-inputLabel: "Wiadomosc",
+inputLabel: "Wiadomość",
 placeholder: "Napisz wiadomość...",
-send: "Wyslij"
+send: "Wyślij",
+loading: "Sprawdzam pasujące lampy...",
+emptyReply: "Nie otrzymano odpowiedzi od asystenta.",
+connectionError: "Asystent jest niedostępny. Uruchom backend bota i spróbuj ponownie."
 },
 footer: {
 copyright: "© 2026 Sklep Lamp"

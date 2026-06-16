@@ -1,6 +1,8 @@
 window.LampUI = (() => {
 const { state, escapeHtml } = window.LampStorage;
 const t = (...args) => window.LampI18n.t(...args);
+const CHAT_API_BASE_URL = window.LAMP_BOT_API_BASE || "http://127.0.0.1:8001/api/v1";
+const CHAT_SESSION_KEY = "lamp_store_chat_session_v1";
 
 function getCurrentPageName(){
 const path = window.location.pathname.replace(/\\/g, "/");
@@ -153,7 +155,7 @@ const form = event.target.closest("[data-chat-form]");
 if(!form) return;
 
 event.preventDefault();
-sendLocalChatMessage(form);
+sendChatMessage(form);
 });
 
 document.addEventListener("keydown", (event) => {
@@ -236,18 +238,107 @@ document.body.classList.remove("chat-open");
 chat.setAttribute("aria-hidden", "true");
 }
 
-function sendLocalChatMessage(form){
+function appendChatMessage(messages, text, role = "assistant"){
+const message = document.createElement("div");
+message.className = `chat-message ${role}`;
+message.textContent = text;
+messages.appendChild(message);
+messages.scrollTop = messages.scrollHeight;
+return message;
+}
+
+function formatChatPrice(product){
+const amount = Number(product?.price || 0);
+const price = Number.isFinite(amount) ? amount.toFixed(0) : "0";
+return `${price} ${product?.currency || "PLN"}`;
+}
+
+function appendChatProducts(messages, products){
+if(!Array.isArray(products) || products.length === 0) return;
+
+const group = document.createElement("div");
+group.className = "chat-products";
+group.innerHTML = products.map((product) => {
+const productId = escapeHtml(product.id || "");
+const name = escapeHtml(product.name || "Lampa");
+const description = escapeHtml(product.description || "");
+const price = escapeHtml(formatChatPrice(product));
+const image = escapeHtml(product.image_url || "images/lamp1.jpg");
+
+return `
+<article class="chat-product-card">
+<img class="chat-product-image" src="${image}" alt="${name}">
+<div class="chat-product-copy">
+<strong>${name}</strong>
+<span>${price}</span>
+<p>${description}</p>
+</div>
+<div class="chat-product-actions">
+<button class="product-action secondary" type="button" data-add-cart data-product-id="${productId}">${escapeHtml(t("cart.add"))}</button>
+<button class="product-action secondary" type="button" data-add-library data-product-id="${productId}">${escapeHtml(t("buttons.addToLibrary"))}</button>
+<button class="product-action" type="button" data-buy-product data-product-id="${productId}">${escapeHtml(t("buttons.buyNow"))}</button>
+</div>
+</article>
+`;
+}).join("");
+
+messages.appendChild(group);
+messages.scrollTop = messages.scrollHeight;
+}
+
+function getChatSessionId(){
+return sessionStorage.getItem(CHAT_SESSION_KEY);
+}
+
+function saveChatSessionId(sessionId){
+if(sessionId){
+sessionStorage.setItem(CHAT_SESSION_KEY, sessionId);
+}
+}
+
+async function sendChatMessage(form){
 const input = form.querySelector(".chat-input");
+const button = form.querySelector(".chat-send");
 const messages = document.getElementById("chatMessages");
 const text = input?.value.trim();
 if(!input || !messages || !text) return;
 
-const message = document.createElement("div");
-message.className = "chat-message user";
-message.textContent = text;
-messages.appendChild(message);
+appendChatMessage(messages, text, "user");
 input.value = "";
+
+input.disabled = true;
+if(button) button.disabled = true;
+const loadingMessage = appendChatMessage(messages, t("chat.loading"));
+
+try{
+const response = await fetch(`${CHAT_API_BASE_URL}/chat/messages`, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+session_id: getChatSessionId(),
+language: state.language || "pl",
+text,
+metadata: { source: "site-widget" }
+})
+});
+const payload = await response.json().catch(() => ({}));
+
+if(!response.ok){
+throw new Error(payload.detail || payload.error || `Bot API ${response.status}`);
+}
+
+saveChatSessionId(payload.session?.id);
+loadingMessage.textContent = payload.reply?.text || t("chat.emptyReply");
+appendChatProducts(messages, payload.matched_products || []);
+}catch(error){
+loadingMessage.textContent = t("chat.connectionError");
+console.warn("Chat bot unavailable.", error);
+}finally{
+input.disabled = false;
+if(button) button.disabled = false;
+input.focus();
 messages.scrollTop = messages.scrollHeight;
+}
 }
 
 function openModal(modalId){
