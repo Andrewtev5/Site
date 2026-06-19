@@ -67,7 +67,10 @@ return state.apiToken ? { Authorization: `Bearer ${state.apiToken}` } : {};
 }
 
 async function apiFetch(path, options = {}){
-const response = await fetch(path, {
+let response;
+
+try{
+response = await fetch(path, {
 ...options,
 headers: {
 "Content-Type": "application/json",
@@ -75,14 +78,30 @@ headers: {
 ...(options.headers || {})
 }
 });
+}catch(error){
+error.isNetworkError = true;
+throw error;
+}
 
 const payload = await response.json().catch(() => ({}));
 
 if(!response.ok){
-throw new Error(payload.error || payload.message || `API ${response.status}`);
+const error = new Error(payload.error || payload.message || `API ${response.status}`);
+error.status = response.status;
+error.payload = payload;
+throw error;
 }
 
 return payload;
+}
+
+async function apiAvailable(){
+try{
+await apiFetch("/api/health", { method: "GET" });
+return true;
+}catch(error){
+return false;
+}
 }
 
 function getUsersFallback(){
@@ -138,6 +157,7 @@ formatDate,
 loadSession,
 saveSession,
 apiFetch,
+apiAvailable,
 getUsersFallback,
 saveUsersFallback,
 getLocalCart,

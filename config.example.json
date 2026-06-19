@@ -1,8 +1,4 @@
 {
-  "host": "localhost",
-  "port": 5432,
-  "user": "postgres",
-  "password": "",
-  "database": "diploma_store",
-  "connect_timeout": 2
+  "sql_server_connection_string": "DRIVER={ODBC Driver 18 for SQL Server};SERVER=(localdb)\\MSSQLLocalDB;DATABASE=DiplomaStore;Trusted_Connection=yes;TrustServerCertificate=yes;",
+  "connect_timeout": 3
 }
