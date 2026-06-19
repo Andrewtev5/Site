@@ -5,10 +5,14 @@ const t = (...args) => window.LampI18n.t(...args);
 
 let libraryItems = [];
 let cartItems = storage.getLocalCart();
+let selectedThemeId = getThemeFromHash();
 
 async function loadCatalogProducts(){
+const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+const timeout = controller ? window.setTimeout(() => controller.abort(), 900) : null;
+
 try{
-const payload = await storage.apiFetch("/api/products", { method: "GET" });
+const payload = await storage.apiFetch("/api/products", { method: "GET", signal: controller?.signal });
 
 if(!payload || typeof payload.products !== "object"){
 throw new Error("Invalid API payload");
@@ -19,7 +23,32 @@ state.catalogSource = payload.source || "postgresql";
 }catch(error){
 state.catalogSource = "local";
 console.warn("Catalog API unavailable. Falling back to local products.", error);
+}finally{
+if(timeout) window.clearTimeout(timeout);
 }
+}
+
+function getThemeFromHash(){
+const match = window.location.hash.match(/theme=([\w-]+)/);
+return match ? match[1] : null;
+}
+
+function getProductThemes(){
+return window.LAMP_I18N.productThemes || {};
+}
+
+function getTheme(themeId = selectedThemeId){
+return getProductThemes()[themeId] || null;
+}
+
+function localizeTheme(theme){
+if(!theme) return null;
+return theme[state.language] || theme.en || theme.pl;
+}
+
+function getSelectedThemeProductIds(){
+const theme = getTheme();
+return Array.isArray(theme?.products) ? theme.products : [];
 }
 
 async function loadUserData(){
@@ -146,13 +175,64 @@ const item = getLibrary().find((entry) => entry.id === productId);
 return { saved: Boolean(item), purchased: Boolean(item?.purchasedAt) };
 }
 
+function renderProductThemes(){
+const themesRoot = document.getElementById("productThemes");
+if(!themesRoot) return;
+
+const themes = getProductThemes();
+themesRoot.innerHTML = Object.entries(themes).map(([themeId, theme]) => {
+const localized = localizeTheme(theme);
+const count = Array.isArray(theme.products) ? theme.products.length : 0;
+const isActive = themeId === selectedThemeId;
+
+return `
+<button class="theme-card${isActive ? " active" : ""}" type="button" data-product-theme="${escapeHtml(themeId)}" aria-pressed="${String(isActive)}">
+<span class="theme-media"><img src="${escapeHtml(theme.image)}" alt="${escapeHtml(localized.title)}" decoding="async"></span>
+<span class="theme-copy">
+<span class="theme-kicker">${escapeHtml(localized.kicker)}</span>
+<strong>${escapeHtml(localized.title)}</strong>
+<span>${escapeHtml(localized.description)}</span>
+<span class="theme-meta">${escapeHtml(t("themes.count", { count }))}</span>
+</span>
+<span class="theme-cta">${escapeHtml(localized.cta)}</span>
+</button>
+`;
+}).join("");
+}
+
 function renderCatalogProducts(){
 const productsGrid = document.getElementById("productsGrid");
-const productIds = Object.keys(window.LAMP_I18N.products || {});
+const catalogSection = document.querySelector(".catalog-section");
+const catalogTitle = document.getElementById("catalogTitle");
+const catalogText = document.getElementById("catalogSectionText");
+const allProductIds = Object.keys(window.LAMP_I18N.products || {});
+const selectedTheme = getTheme();
+const localizedTheme = localizeTheme(selectedTheme);
+const productIds = selectedTheme ? getSelectedThemeProductIds().filter((productId) => window.LAMP_I18N.products[productId]) : [];
 const firstStatValue = document.querySelector(".hero-stats .stat-card .stat-value");
 
-if(firstStatValue) firstStatValue.textContent = String(productIds.length);
+if(firstStatValue) firstStatValue.textContent = String(allProductIds.length);
 if(!productsGrid) return;
+
+catalogSection?.classList.toggle("catalog-waiting", !selectedTheme);
+
+if(catalogTitle){
+catalogTitle.textContent = localizedTheme?.title || t("catalog.sectionTitle");
+}
+
+if(catalogText){
+catalogText.textContent = localizedTheme?.description || t("catalog.sectionText");
+}
+
+if(!selectedTheme){
+productsGrid.innerHTML = `
+<div class="catalog-empty">
+<strong>${escapeHtml(t("themes.emptyTitle"))}</strong>
+<p>${escapeHtml(t("themes.emptyText"))}</p>
+</div>
+`;
+return;
+}
 
 productsGrid.innerHTML = productIds.map((productId) => {
 const product = getCatalogProduct(productId);
@@ -160,7 +240,7 @@ if(!product) return "";
 
 return `
 <article class="product" data-product-card data-product-id="${escapeHtml(product.id)}">
-<img src="${escapeHtml(product.image)}" class="product-image" alt="${escapeHtml(product.imageAlt)}">
+<img src="${escapeHtml(product.image)}" class="product-image" alt="${escapeHtml(product.imageAlt)}" loading="lazy" decoding="async">
 <div class="product-info">
 <div class="product-topline"><h3>${escapeHtml(product.name)}</h3><span class="product-tag">${escapeHtml(product.tag)}</span></div>
 <p class="description">${escapeHtml(product.description)}</p>
@@ -175,6 +255,16 @@ return `
 </article>
 `;
 }).join("");
+}
+
+function selectProductTheme(themeId){
+if(!getProductThemes()[themeId]) return;
+selectedThemeId = themeId;
+window.location.hash = `theme=${themeId}`;
+renderProductThemes();
+renderCatalogProducts();
+renderProductActions();
+document.querySelector(".catalog-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function renderProductActions(){
@@ -401,7 +491,9 @@ const buyButton = event.target.closest("[data-buy-product], [data-library-buy], 
 const addCart = event.target.closest("[data-add-cart]");
 const removeLibrary = event.target.closest("[data-library-remove]");
 const removeCart = event.target.closest("[data-cart-remove]");
+const themeButton = event.target.closest("[data-product-theme]");
 
+if(themeButton) selectProductTheme(themeButton.dataset.productTheme || "");
 if(addLibrary) addToLibrary(buildProductPayload(addLibrary.dataset.productId || ""));
 if(addCart) addToCart(buildProductPayload(addCart.dataset.productId || ""));
 if(buyButton){
@@ -415,6 +507,7 @@ if(removeCart) removeFromCart(removeCart.dataset.cartRemove || "");
 
 function syncUi(){
 window.LampUI.renderMenuAccount();
+renderProductThemes();
 renderCatalogProducts();
 renderLibrary();
 renderCart();
@@ -432,6 +525,7 @@ getLibrary,
 getCart,
 getUserStats,
 getProductState,
+renderProductThemes,
 renderCatalogProducts,
 renderLibrary,
 renderCart,

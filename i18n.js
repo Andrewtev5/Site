@@ -273,8 +273,51 @@ imageAlt: "Dziecięca lampka Cloud"
 }
 }
 },
+productThemes: {
+functional: {
+products: ["led-lamp-10w", "smart-wifi-lamp", "minimal-table-lamp", "opal-pendant-lamp", "black-track-spotlight", "kids-cloud-night-lamp"],
+image: "images/ChatGPT Image 2 cze 2026, 17_24_21.png",
+en: {
+title: "Functional lamps",
+kicker: "Clear white light",
+description: "Simple, brighter lamps for daily tasks, desks, bathrooms, corridors, and practical home lighting.",
+cta: "Show functional lamps"
+},
+pl: {
+title: "Lampy funkcjonalne",
+kicker: "Czyste białe światło",
+description: "Prostsze i jaśniejsze lampy do codziennych zadań, biurka, łazienki, korytarza oraz praktycznego oświetlenia domu.",
+cta: "Pokaż lampy funkcjonalne"
+}
+},
+mood: {
+products: ["nordic-glass-lamp", "arc-floor-lamp", "ceramic-bedside-lamp", "industrial-cage-lamp", "wireless-mushroom-lamp", "brass-reading-lamp", "portable-lantern-lamp", "rattan-table-lamp", "crystal-globe-lamp"],
+image: "images/ChatGPT Image 2 cze 2026, 17_22_22.png",
+en: {
+title: "Mood lamps",
+kicker: "Warm relaxing glow",
+description: "Decorative, warmer lamps for bedrooms, shelves, evening relaxation, atmospheric interiors, and softer light.",
+cta: "Show mood lamps"
+},
+pl: {
+title: "Lampy nastrojowe",
+kicker: "Ciepły relaksujący blask",
+description: "Dekoracyjne i cieplejsze lampy do sypialni, półek, wieczornego odpoczynku, nastrojowych wnętrz oraz miękkiego światła.",
+cta: "Pokaż lampy nastrojowe"
+}
+}
+},
 translations: {
 en: {
+themes: {
+kicker: "Product themes",
+title: "Choose a lighting type",
+text: "Start with a product theme. The catalog will show only lamps assigned to the selected group.",
+count: "{count} products",
+selected: "Selected theme",
+emptyTitle: "Choose a theme above",
+emptyText: "Products will appear after selecting one of the product themes."
+},
 brand: "Lamp Store",
 titles: {
 catalog: "Catalog | Lamp Store",
@@ -498,6 +541,15 @@ loginFailed: "Unable to log in."
 }
 },
 pl: {
+themes: {
+kicker: "Tematy produktów",
+title: "Wybierz typ oświetlenia",
+text: "Zacznij od tematu produktów. Katalog pokaże tylko lampy przypisane do wybranej grupy.",
+count: "{count} produktów",
+selected: "Wybrany temat",
+emptyTitle: "Wybierz temat powyżej",
+emptyText: "Produkty pojawią się po wybraniu jednego z tematów produktów."
+},
 brand: "Sklep Lamp",
 titles: {
 catalog: "Katalog | Sklep Lamp",
@@ -528,7 +580,7 @@ menu: {
 eyebrow: "Sklep Lamp",
 title: "Menu",
 catalogTitle: "Katalog",
-catalogDesc: "Przegladaj cala kolekcje lamp",
+catalogDesc: "Przeglądaj całą kolekcję lamp",
 loginTitle: "Zaloguj się",
 loginDesc: "Uzyskaj bezpieczny dostęp do konta",
 registerTitle: "Załóż konto",
@@ -536,19 +588,19 @@ registerDesc: "Utwórz nowy profil",
 libraryTitle: "Biblioteka",
 libraryDesc: "Zapisane lampy i ulubione",
 returnTitle: "Zwrot produktu",
-returnDesc: "Wskazowki zwrotu i gwarancji",
+returnDesc: "Wskazówki dotyczące zwrotu i gwarancji",
 contactTitle: "Kontakt",
 contactDesc: "Wsparcie i komunikacja"
 },
 account: {
-guestLabel: "Tryb goscia",
+guestLabel: "Tryb gościa",
 guestText: "Zaloguj się, aby zapisywać lampy w swojej bibliotece i wykonywać zakup demonstracyjny.",
 signedInLabel: "Zalogowano",
 signedInText: "{name}, zapisane lampy: {savedCount}. Kupione: {purchasedCount}.",
 openLibraryTitle: "Otwórz bibliotekę",
 openLibraryDesc: "Przejrzyj zapisane i kupione lampy",
-logoutTitle: "Wyloguj sie",
-logoutDesc: "Bezpiecznie zakoncz biezaca sesje"
+logoutTitle: "Wyloguj się",
+logoutDesc: "Bezpiecznie zakończ bieżącą sesję"
 },
 info: {
 return: {
@@ -558,7 +610,7 @@ text: "Po zalogowaniu można przygotować wniosek zwrotu. Na potrzeby dyplomu sk
 },
 contact: {
 kicker: "Kontakt",
-title: "Kontakt z obsluga",
+title: "Kontakt z obsługą",
 text: "Wsparcie Sklepu Lamp pomaga w pytaniach o produkty, dostawę i konto. Później ten blok można połączyć z formularzem, komunikatorem albo sekcją FAQ."
 }
 },
@@ -580,13 +632,13 @@ copyright: "© 2026 Sklep Lamp"
 search: {
 trigger: "Szukaj",
 kicker: "Wyszukiwanie",
-title: "Znajdz lampe",
+title: "Znajdź lampę",
 text: "Wpisz przybliżoną albo dokładną nazwę produktu, a podobne lampy pojawią się od razu poniżej.",
 inputLabel: "Nazwa produktu",
-placeholder: "Wpisz nazwe lampy",
-initialState: "Zacznij wpisywać, aby zobaczyc pasujace produkty.",
+placeholder: "Wpisz nazwę lampy",
+initialState: "Zacznij wpisywać, aby zobaczyć pasujące produkty.",
 initialTitle: "Wyszukaj produkty",
-initialText: "Lista wyników będzie aktualizować się na zywo podczas wpisywania.",
+initialText: "Lista wyników będzie aktualizować się na żywo podczas wpisywania.",
 resultsCount: "Pasujące produkty: {count}",
 noResultsMeta: "Brak produktów dla zapytania: {query}",
 noResultsTitle: "Nie znaleziono podobnych produktów",
@@ -608,7 +660,7 @@ savedInLibrary: "Zapisano w bibliotece",
 buyNow: "Kup teraz",
 buy: "Kup",
 purchased: "Kupiono",
-remove: "Usun"
+remove: "Usuń"
 },
 busy: {
 creating: "Tworzenie...",
@@ -623,7 +675,7 @@ stat2: "inspiracje dla smart home",
 stat3: "natychmiastowy pseudo-zakup na obronę dyplomu",
 sectionKicker: "Katalog",
 sectionTitle: "Wyróżniona kolekcja",
-sectionText: "Kazda karta produktu ma teraz dwa działania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.",
+sectionText: "Każda karta produktu ma teraz dwa działania: zapis do biblioteki oraz przycisk zakupu demonstracyjnego do prezentacji dyplomu.",
 qualityKicker: "Jakość",
 qualityTitle: "Dlaczego te lampy wyglądają premium",
 qualityText: "Ten blok wzmacnia prezentację dyplomową, bo pokazuje wartość produktu, estetykę i logikę interakcji użytkownika.",
@@ -640,9 +692,9 @@ gallery1Alt: "Zbliżenie na nordycką lampę szklaną",
 gallery1Caption: "Nastrojowe światło do wnetrz premium.",
 gallery2Alt: "Minimalistyczna lampa stołowa na ciemnym tle",
 gallery2Caption: "Kompaktowa elegancja do nowoczesnej przestrzeni roboczej.",
-gallery3Alt: "Inteligentna lampa z bursztynowym swiatlem",
+gallery3Alt: "Inteligentna lampa z bursztynowym światłem",
 gallery3Caption: "Sterowanie smart i dekoracyjny wygląd filamentu.",
-gallery4Alt: "Studyjne ujecie lampy LED",
+gallery4Alt: "Studyjne ujęcie lampy LED",
 gallery4Caption: "Energooszczędna lampa, która nadal wygląda premium w katalogu."
 },
 login: {
@@ -699,7 +751,7 @@ imageAlt: "Robot stojący na rozbitej żarówce na stronie błędu 404"
 },
 toasts: {
 signInFirstSave: "Najpierw zaloguj się, aby zapisywać produkty w bibliotece.",
-signInFirstPurchase: "Najpierw zaloguj się, aby wykonac zakup demonstracyjny.",
+signInFirstPurchase: "Najpierw zaloguj się, aby wykonać zakup demonstracyjny.",
 alreadyInLibrary: "Ta lampa jest już w Twojej bibliotece.",
 addedToLibrary: "{name} została dodana do biblioteki.",
 purchaseComplete: "Zakup demonstracyjny produktu {name} zakończony.",
@@ -707,7 +759,7 @@ alreadyPurchased: "Ta lampa została już kupiona w trybie demonstracyjnym.",
 removedFromLibrary: "Lampa została usunięta z biblioteki.",
 enterFullName: "Wpisz imię i nazwisko.",
 invalidEmail: "Wpisz poprawny adres email.",
-weakPassword: "Hasło musi byc mocniejsze: minimum 8 znakow, mała i wielka litera oraz jedna cyfra.",
+weakPassword: "Hasło musi być mocniejsze: minimum 8 znaków, mała i wielka litera oraz jedna cyfra.",
 passwordsMismatch: "Hasła nie są takie same.",
 accountExists: "Konto z tym adresem email już istnieje.",
 accountCreated: "Konto zostało utworzone i od razu zalogowane.",
@@ -716,8 +768,8 @@ incorrectPassword: "Niepoprawne hasło.",
 welcomeBack: "Witaj ponownie, {name}.",
 loggedOut: "Zostałeś wylogowany.",
 secureBrowserUnavailable: "Bezpieczne funkcje crypto przeglądarki są niedostępne. Otwórz projekt przez localhost albo Live Server.",
-createFailed: "Nie udało się utworzyc konta.",
-loginFailed: "Nie udało się zalogowac."
+createFailed: "Nie udało się utworzyć konta.",
+loginFailed: "Nie udało się zalogować."
 }
 }
 }
