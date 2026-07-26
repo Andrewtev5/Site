@@ -286,6 +286,32 @@ messages.appendChild(group);
 messages.scrollTop = messages.scrollHeight;
 }
 
+async function handleChatAction(action, products){
+if(!action || !window.LampProducts) return;
+
+const items = Array.isArray(action.items)
+? action.items
+: (Array.isArray(action.product_ids) ? action.product_ids.map((productId) => ({ product_id: productId, quantity: 1 })) : []);
+
+for(const item of items){
+const productId = item.product_id || item.productId || item.id;
+if(!productId) continue;
+
+const product = products.find((entry) => entry.id === productId) || window.LampProducts.buildProductPayload(productId);
+const quantity = Math.max(1, Number(item.quantity || 1));
+
+if(action.type === "add_to_library"){
+await window.LampProducts.addToLibrary(product);
+}
+
+if(action.type === "add_to_cart"){
+for(let index = 0; index < quantity; index += 1){
+await window.LampProducts.addToCart(product);
+}
+}
+}
+}
+
 function getChatSessionId(){
 return sessionStorage.getItem(CHAT_SESSION_KEY);
 }
@@ -330,6 +356,7 @@ throw new Error(payload.detail || payload.error || `Bot API ${response.status}`)
 saveChatSessionId(payload.session?.id);
 loadingMessage.textContent = payload.reply?.text || t("chat.emptyReply");
 appendChatProducts(messages, payload.matched_products || []);
+await handleChatAction(payload.reply?.metadata?.action, payload.matched_products || []);
 }catch(error){
 loadingMessage.textContent = t("chat.connectionError");
 console.warn("Chat bot unavailable.", error);
