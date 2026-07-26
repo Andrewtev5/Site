@@ -247,6 +247,16 @@ messages.scrollTop = messages.scrollHeight;
 return message;
 }
 
+function appendChatTypingIndicator(messages){
+const message = document.createElement("div");
+message.className = "chat-message assistant typing-indicator";
+message.setAttribute("aria-label", t("chat.loading"));
+message.innerHTML = "<span></span><span></span><span></span>";
+messages.appendChild(message);
+messages.scrollTop = messages.scrollHeight;
+return message;
+}
+
 function formatChatPrice(product){
 const amount = Number(product?.price || 0);
 const price = Number.isFinite(amount) ? amount.toFixed(0) : "0";
@@ -334,7 +344,7 @@ input.value = "";
 
 input.disabled = true;
 if(button) button.disabled = true;
-const loadingMessage = appendChatMessage(messages, t("chat.loading"));
+const loadingMessage = appendChatTypingIndicator(messages);
 
 try{
 const response = await fetch(`${CHAT_API_BASE_URL}/chat/messages`, {
@@ -354,10 +364,12 @@ throw new Error(payload.detail || payload.error || `Bot API ${response.status}`)
 }
 
 saveChatSessionId(payload.session?.id);
+loadingMessage.className = "chat-message assistant";
 loadingMessage.textContent = payload.reply?.text || t("chat.emptyReply");
 appendChatProducts(messages, payload.matched_products || []);
 await handleChatAction(payload.reply?.metadata?.action, payload.matched_products || []);
 }catch(error){
+loadingMessage.className = "chat-message assistant";
 loadingMessage.textContent = t("chat.connectionError");
 console.warn("Chat bot unavailable.", error);
 }finally{
