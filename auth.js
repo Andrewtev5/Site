@@ -19,6 +19,11 @@ function publicFallbackUser(user){
 return {
 name: user.name,
 email: user.email,
+phone: user.phone || "",
+city: user.city || "",
+street: user.street || "",
+building: user.building || "",
+apartment: user.apartment || "",
 createdAt: user.createdAt
 };
 }
@@ -31,17 +36,16 @@ function shouldUseLocalFallback(error){
 return Boolean(error?.isNetworkError);
 }
 
-function createFallbackUser(name, email, password){
+function createFallbackUser(userData, password){
 const users = storage.getUsersFallback();
 
-if(users.some((user) => user.email === email)){
+if(users.some((user) => user.email === userData.email)){
 throw new Error(t("toasts.accountExists"));
 }
 
 const user = {
 id: window.crypto?.randomUUID ? window.crypto.randomUUID() : `user-${Date.now()}`,
-name,
-email,
+...userData,
 password,
 createdAt: new Date().toISOString()
 };
@@ -67,7 +71,16 @@ return publicFallbackUser(user);
 async function migrateFallbackUser(user, password){
 const payload = await storage.apiFetch("/api/register", {
 method: "POST",
-body: JSON.stringify({ name: user.name, email: user.email, password })
+body: JSON.stringify({
+name: user.name,
+email: user.email,
+password,
+phone: user.phone || "",
+city: user.city || "",
+street: user.street || "",
+building: user.building || "",
+apartment: user.apartment || ""
+})
 });
 
 return payload;
@@ -84,6 +97,11 @@ return;
 const submitButton = document.getElementById("registerSubmit");
 const name = escapeText(document.getElementById("registerName")?.value);
 const email = normalizeEmail(document.getElementById("registerEmail")?.value || "");
+const phone = escapeText(document.getElementById("registerPhone")?.value);
+const city = escapeText(document.getElementById("registerCity")?.value);
+const street = escapeText(document.getElementById("registerStreet")?.value);
+const building = escapeText(document.getElementById("registerBuilding")?.value);
+const apartment = escapeText(document.getElementById("registerApartment")?.value);
 const password = document.getElementById("registerPassword")?.value || "";
 const passwordRepeat = document.getElementById("registerPasswordRepeat")?.value || "";
 
@@ -94,6 +112,11 @@ return;
 
 if(!validateEmail(email)){
 window.LampUI.showToast(t("toasts.invalidEmail"), "error");
+return;
+}
+
+if(!phone || !city || !street || !building){
+window.LampUI.showToast(t("toasts.enterAddress"), "error");
 return;
 }
 
@@ -112,13 +135,13 @@ window.LampUI.setButtonBusy(submitButton, true, t("busy.creating"));
 try{
 const payload = await storage.apiFetch("/api/register", {
 method: "POST",
-body: JSON.stringify({ name, email, password })
+body: JSON.stringify({ name, email, password, phone, city, street, building, apartment })
 });
 
 storage.saveSession(payload.user, payload.token);
 await window.LampProducts.loadUserData();
 event.target.reset();
-window.LampUI.goToPage("library.html", { message: t("toasts.accountCreated"), type: "success" });
+window.LampUI.goToPage("account.html", { message: t("toasts.accountCreated"), type: "success" });
 }catch(error){
 if(error.status === 409){
 window.LampUI.showToast(t("toasts.accountExists"), "error");
@@ -131,10 +154,10 @@ return;
 }
 
 try{
-const user = createFallbackUser(name, email, password);
+const user = createFallbackUser({ name, email, phone, city, street, building, apartment }, password);
 storage.saveSession(user, null);
 event.target.reset();
-window.LampUI.goToPage("library.html", { message: t("toasts.accountCreated"), type: "success" });
+window.LampUI.goToPage("account.html", { message: t("toasts.accountCreated"), type: "success" });
 }catch(fallbackError){
 window.LampUI.showToast(fallbackError.message || error.message || t("toasts.createFailed"), "error");
 }
@@ -171,7 +194,7 @@ body: JSON.stringify({ email, password })
 storage.saveSession(payload.user, payload.token);
 await window.LampProducts.loadUserData();
 event.target.reset();
-window.LampUI.goToPage("library.html", { message: t("toasts.welcomeBack", { name: payload.user.name }), type: "success" });
+window.LampUI.goToPage("account.html", { message: t("toasts.welcomeBack", { name: payload.user.name }), type: "success" });
 }catch(error){
 if(error.status === 404){
 const fallbackUser = getFallbackUser(email);
@@ -182,7 +205,7 @@ const migrated = await migrateFallbackUser(fallbackUser, password);
 storage.saveSession(migrated.user, migrated.token);
 await window.LampProducts.loadUserData();
 event.target.reset();
-window.LampUI.goToPage("library.html", { message: t("toasts.accountMigrated", { name: migrated.user.name }), type: "success" });
+window.LampUI.goToPage("account.html", { message: t("toasts.accountMigrated", { name: migrated.user.name }), type: "success" });
 return;
 }catch(migrationError){
 window.LampUI.showToast(migrationError.status === 409 ? t("toasts.accountExists") : t("toasts.loginFailed"), "error");
@@ -208,7 +231,7 @@ try{
 const user = loginFallback(email, password);
 storage.saveSession(user, null);
 event.target.reset();
-window.LampUI.goToPage("library.html", { message: t("toasts.welcomeBack", { name: user.name }), type: "success" });
+window.LampUI.goToPage("account.html", { message: t("toasts.welcomeBack", { name: user.name }), type: "success" });
 }catch(fallbackError){
 window.LampUI.showToast(fallbackError.message || error.message || t("toasts.loginFailed"), "error");
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konto | Sklep Lamp</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="account">
+
+<main class="container page-shell">
+<section class="page-card account-page-card reveal-on-scroll">
+<div class="page-heading">
+<p class="hero-kicker">Konto</p>
+<h2 class="title">Dane użytkownika</h2>
+<p class="hero-text">Tutaj znajdują się dane podane przy rejestracji oraz szybki dostęp do biblioteki i historii zakupów.</p>
+</div>
+
+<div class="account-auth-required" id="accountAuthRequired">
+<strong>Wymagane logowanie</strong>
+<p>Zaloguj się lub załóż konto, aby zobaczyć dane profilu.</p>
+<button class="product-action" type="button" onclick="goToPage('login.html')">Zaloguj się</button>
+</div>
+
+<div class="account-layout" id="accountContent" hidden>
+<section class="account-panel">
+<div class="account-avatar" aria-hidden="true"><span id="accountInitials">K</span></div>
+<div>
+<p class="account-kicker">Profil</p>
+<h3 id="accountName">Użytkownik</h3>
+<p id="accountEmail">email@example.com</p>
+</div>
+</section>
+
+<section class="account-panel account-details">
+<h3>Dane kontaktowe</h3>
+<dl class="account-data-grid">
+<div><dt>Imię i nazwisko</dt><dd id="accountFullName">-</dd></div>
+<div><dt>Email</dt><dd id="accountEmailValue">-</dd></div>
+<div><dt>Telefon</dt><dd id="accountPhone">-</dd></div>
+<div><dt>Data utworzenia konta</dt><dd id="accountCreatedAt">-</dd></div>
+</dl>
+</section>
+
+<section class="account-panel account-details">
+<h3>Adres</h3>
+<dl class="account-data-grid">
+<div><dt>Miejscowość</dt><dd id="accountCity">-</dd></div>
+<div><dt>Ulica</dt><dd id="accountStreet">-</dd></div>
+<div><dt>Numer budynku</dt><dd id="accountBuilding">-</dd></div>
+<div><dt>Numer lokalu</dt><dd id="accountApartment">-</dd></div>
+</dl>
+</section>
+
+<section class="account-actions">
+<button class="product-action" type="button" onclick="goToPage('purchase-history.html')">Historia zakupów</button>
+<button class="product-action secondary" type="button" onclick="goToPage('library.html')">Otwórz bibliotekę</button>
+<button class="product-action secondary" type="button" onclick="goToPage('index.html')">Powrót do katalogu</button>
+</section>
+</div>
+</section>
+</main>
+
+<script src="i18n.js"></script>
+<script src="storage.js"></script>
+<script src="ui.js"></script>
+<script src="products.js"></script>
+<script src="search.js"></script>
+<script src="auth.js"></script>
+<script src="account.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

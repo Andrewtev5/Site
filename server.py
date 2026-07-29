@@ -65,6 +65,26 @@ SCHEMA_SQL = [
     END
     """,
     """
+    IF COL_LENGTH('dbo.users', 'phone') IS NULL
+        ALTER TABLE dbo.users ADD phone NVARCHAR(40) NULL;
+    """,
+    """
+    IF COL_LENGTH('dbo.users', 'city') IS NULL
+        ALTER TABLE dbo.users ADD city NVARCHAR(120) NULL;
+    """,
+    """
+    IF COL_LENGTH('dbo.users', 'street') IS NULL
+        ALTER TABLE dbo.users ADD street NVARCHAR(160) NULL;
+    """,
+    """
+    IF COL_LENGTH('dbo.users', 'building') IS NULL
+        ALTER TABLE dbo.users ADD building NVARCHAR(40) NULL;
+    """,
+    """
+    IF COL_LENGTH('dbo.users', 'apartment') IS NULL
+        ALTER TABLE dbo.users ADD apartment NVARCHAR(40) NULL;
+    """,
+    """
     IF OBJECT_ID('dbo.user_library', 'U') IS NULL
     BEGIN
         CREATE TABLE dbo.user_library (
@@ -295,7 +315,8 @@ def products_table_exists(cursor) -> bool:
 def get_user_by_email(cursor, email: str) -> dict | None:
     cursor.execute(
         """
-        SELECT id, name, email, password_hash, salt, iterations, created_at
+        SELECT id, name, email, password_hash, salt, iterations, created_at,
+               phone, city, street, building, apartment
         FROM dbo.users
         WHERE email = ?
         """,
@@ -385,6 +406,14 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             self.serve_cart()
             return
 
+        if path == "/api/account":
+            self.serve_account()
+            return
+
+        if path == "/api/purchases":
+            self.serve_purchases()
+            return
+
         super().do_GET()
 
     def do_POST(self) -> None:
@@ -471,6 +500,11 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             name = str(payload.get("name", "")).strip()
             email = str(payload.get("email", "")).strip().lower()
             password = str(payload.get("password", ""))
+            phone = str(payload.get("phone", "")).strip()
+            city = str(payload.get("city", "")).strip()
+            street = str(payload.get("street", "")).strip()
+            building = str(payload.get("building", "")).strip()
+            apartment = str(payload.get("apartment", "")).strip()
 
             if len(name) < 2 or "@" not in email or len(password) < 8:
                 self.serve_json({"error": "Invalid registration payload."}, status=400)
@@ -488,8 +522,11 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
                 cursor.execute(
                     """
-                    INSERT INTO dbo.users (id, name, email, password_hash, salt, iterations)
-                    VALUES (?, ?, ?, ?, ?, ?);
+                    INSERT INTO dbo.users (
+                        id, name, email, password_hash, salt, iterations,
+                        phone, city, street, building, apartment
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                     """,
                     user_id,
                     name,
@@ -497,6 +534,11 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                     password_hash,
                     salt,
                     iterations,
+                    phone,
+                    city,
+                    street,
+                    building,
+                    apartment,
                 )
                 connection.commit()
                 user = get_user_by_email(cursor, email)
@@ -506,6 +548,57 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             token = secrets.token_urlsafe(32)
             SESSIONS[token] = email
             self.serve_json({"token": token, "user": self.public_user(user)})
+        except Exception as error:
+            self.serve_json({"error": str(error)}, status=500)
+
+    def serve_account(self) -> None:
+        email = get_session_email(self.headers)
+        if not email:
+            self.serve_json({"error": "Unauthorized"}, status=401)
+            return
+
+        try:
+            connection = connect()
+            try:
+                cursor = connection.cursor()
+                user = get_user_by_email(cursor, email)
+            finally:
+                connection.close()
+
+            if not user:
+                self.serve_json({"error": "Account not found."}, status=404)
+                return
+
+            self.serve_json({"user": self.public_user(user)})
+        except Exception as error:
+            self.serve_json({"error": str(error)}, status=500)
+
+    def serve_purchases(self) -> None:
+        email = get_session_email(self.headers)
+        if not email:
+            self.serve_json({"items": []}, status=401)
+            return
+
+        try:
+            connection = connect()
+            try:
+                cursor = connection.cursor()
+                cursor.execute(
+                    """
+                    SELECT l.product_id, l.saved_at, l.purchased_at
+                    FROM dbo.user_library l
+                    JOIN dbo.users u ON u.id = l.user_id
+                    WHERE u.email = ?
+                      AND l.purchased_at IS NOT NULL
+                    ORDER BY l.purchased_at DESC;
+                    """,
+                    email,
+                )
+                items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
+            finally:
+                connection.close()
+
+            self.serve_json({"items": items})
         except Exception as error:
             self.serve_json({"error": str(error)}, status=500)
 
@@ -804,6 +897,11 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
         return {
             "name": user["name"],
             "email": user["email"],
+            "phone": user.get("phone") or "",
+            "city": user.get("city") or "",
+            "street": user.get("street") or "",
+            "building": user.get("building") or "",
+            "apartment": user.get("apartment") or "",
             "createdAt": to_iso(user.get("created_at")),
         }
 

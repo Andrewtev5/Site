@@ -1,4 +1,4 @@
-window.LampUI = (() => {
+﻿window.LampUI = (() => {
 const { state, escapeHtml } = window.LampStorage;
 const t = (...args) => window.LampI18n.t(...args);
 const CHAT_API_BASE_URL = window.LAMP_BOT_API_BASE || "http://127.0.0.1:8001/api/v1";
@@ -62,6 +62,7 @@ main.insertAdjacentHTML("beforebegin", `
 </div>
 <nav class="menu-nav">
 <button class="menu-item" id="menuCatalogButton" type="button" data-go-page="index.html"><span data-i18n="menu.catalogTitle">Katalog</span><small data-i18n="menu.catalogDesc">Przegladaj cala kolekcje lamp</small></button>
+<button class="menu-item" id="menuAccountButton" type="button" data-go-page="account.html"><span data-i18n="menu.accountTitle">Konto</span><small data-i18n="menu.accountDesc">Dane profilu i historia zakupów</small></button>
 <button class="menu-item" id="menuAuthPrimary" type="button" data-open-auth="login"><span data-i18n="menu.loginTitle">Zaloguj się</span><small data-i18n="menu.loginDesc">Uzyskaj bezpieczny dostęp do konta</small></button>
 <button class="menu-item" id="menuAuthSecondary" type="button" data-open-auth="register"><span data-i18n="menu.registerTitle">Załóż konto</span><small data-i18n="menu.registerDesc">Utwórz nowy profil</small></button>
 <button class="menu-item" id="menuLibraryButton" type="button" data-open-library><span data-i18n="menu.libraryTitle">Biblioteka</span><small data-i18n="menu.libraryDesc">Zapisane lampy i ulubione</small></button>
@@ -502,10 +503,12 @@ if(!button) return;
 
 button.querySelector("span").textContent = title;
 button.querySelector("small").textContent = description;
+delete button.dataset.goPage;
 delete button.dataset.openAuth;
 delete button.dataset.openLibrary;
 delete button.dataset.logout;
 
+if(actionName === "account") button.dataset.goPage = "account.html";
 if(actionName === "library") button.dataset.openLibrary = "true";
 if(actionName === "logout") button.dataset.logout = "true";
 if(actionName === "login" || actionName === "register") button.dataset.openAuth = actionName;
@@ -523,7 +526,7 @@ if(currentUser){
 const stats = window.LampProducts.getUserStats();
 menuAccountLabel.textContent = t("account.signedInLabel");
 menuAccountName.textContent = t("account.signedInText", { name: currentUser.name, savedCount: stats.savedCount, purchasedCount: stats.purchasedCount });
-setMenuButtonContent(menuAuthPrimary, t("account.openLibraryTitle"), t("account.openLibraryDesc"), "library");
+setMenuButtonContent(menuAuthPrimary, t("account.openAccountTitle"), t("account.openAccountDesc"), "account");
 setMenuButtonContent(menuAuthSecondary, t("account.logoutTitle"), t("account.logoutDesc"), "logout");
 return;
 }
@@ -538,6 +541,7 @@ function highlightCurrentPage(){
 document.querySelectorAll(".menu-item").forEach((button) => button.classList.remove("is-current"));
 
 if(getPageType() === "catalog") document.getElementById("menuCatalogButton")?.classList.add("is-current");
+if(getPageType() === "account" || getPageType() === "purchase-history") document.getElementById("menuAccountButton")?.classList.add("is-current");
 if(getPageType() === "library") document.getElementById("menuLibraryButton")?.classList.add("is-current");
 if(getPageType() === "login") document.getElementById("menuAuthPrimary")?.classList.add("is-current");
 if(getPageType() === "register") document.getElementById("menuAuthSecondary")?.classList.add("is-current");
@@ -597,3 +601,4 @@ refreshActiveInfoModal,
 exposeLegacyGlobals
 };
 })();
+

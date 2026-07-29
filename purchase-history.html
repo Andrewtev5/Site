@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historia zakupów | Sklep Lamp</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="purchase-history">
+
+<main class="container page-shell">
+<section class="page-card account-page-card reveal-on-scroll">
+<div class="page-heading">
+<p class="hero-kicker">Konto</p>
+<h2 class="title">Historia zakupów</h2>
+<p class="hero-text">Lista produktów kupionych w trybie demonstracyjnym. Dane są powiązane z zalogowanym użytkownikiem.</p>
+</div>
+
+<div class="account-auth-required" id="purchaseAuthRequired">
+<strong>Wymagane logowanie</strong>
+<p>Zaloguj się lub załóż konto, aby zobaczyć historię zakupów.</p>
+<button class="product-action" type="button" onclick="goToPage('login.html')">Zaloguj się</button>
+</div>
+
+<div id="purchaseHistoryContent" hidden>
+<p class="library-intro" id="purchaseHistoryIntro">Twoja historia zakupów.</p>
+<div class="purchase-history-list" id="purchaseHistoryList"></div>
+<div class="library-empty" id="purchaseHistoryEmpty">
+<strong>Historia zakupów jest pusta.</strong>
+<p>Kup produkt w trybie demonstracyjnym, a pojawi się tutaj.</p>
+</div>
+
+<div class="page-link-row">
+<button class="product-action secondary" type="button" onclick="goToPage('account.html')">Powrót do konta</button>
+<button class="product-action" type="button" onclick="goToPage('index.html')">Przejdź do katalogu</button>
+</div>
+</div>
+</section>
+</main>
+
+<script src="i18n.js"></script>
+<script src="storage.js"></script>
+<script src="ui.js"></script>
+<script src="products.js"></script>
+<script src="search.js"></script>
+<script src="auth.js"></script>
+<script src="account.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

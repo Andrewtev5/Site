@@ -35,6 +35,35 @@
 </label>
 
 <label class="field">
+<span data-i18n="common.phone">Telefon</span>
+<input id="registerPhone" name="phone" type="tel" autocomplete="tel" data-i18n-placeholder="register.phonePlaceholder" placeholder="+48 000 000 000" required>
+</label>
+
+<div class="form-grid two-columns">
+<label class="field">
+<span data-i18n="common.city">Miejscowość</span>
+<input id="registerCity" name="city" type="text" autocomplete="address-level2" data-i18n-placeholder="register.cityPlaceholder" placeholder="Warszawa" required>
+</label>
+
+<label class="field">
+<span data-i18n="common.street">Ulica</span>
+<input id="registerStreet" name="street" type="text" autocomplete="address-line1" data-i18n-placeholder="register.streetPlaceholder" placeholder="Marszałkowska" required>
+</label>
+</div>
+
+<div class="form-grid two-columns">
+<label class="field">
+<span data-i18n="common.building">Numer budynku</span>
+<input id="registerBuilding" name="building" type="text" autocomplete="address-line2" data-i18n-placeholder="register.buildingPlaceholder" placeholder="10A" required>
+</label>
+
+<label class="field">
+<span data-i18n="common.apartment">Numer lokalu</span>
+<input id="registerApartment" name="apartment" type="text" autocomplete="address-line3" data-i18n-placeholder="register.apartmentPlaceholder" placeholder="Opcjonalnie">
+</label>
+</div>
+
+<label class="field">
 <span data-i18n="common.password">Hasło</span>
 <input id="registerPassword" name="password" type="password" autocomplete="new-password" data-i18n-placeholder="register.passwordPlaceholder" placeholder="Minimum 8 znaków" required>
 </label>
@@ -49,7 +78,7 @@
 <button class="form-submit" id="registerSubmit" type="submit" data-i18n="register.submit">Utwórz konto</button>
 </form>
 
-<p class="security-note" data-i18n="register.securityNote">To lokalne demo logowania z haszowaniem haseł po stronie przeglądarki. Do pełnej wersji produkcyjnej można później dodać backend.</p>
+<p class="security-note" data-i18n="register.securityNote">To lokalne demo logowania z haszowaniem haseł i zapisem danych użytkownika w Microsoft SQL Server.</p>
 
 <div class="page-link-row">
 <button class="product-action secondary" type="button" onclick="goToPage('index.html')" data-i18n="common.backToCatalog">Powrót do katalogu</button>
