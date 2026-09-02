@@ -3,6 +3,10 @@ const { state, escapeHtml } = window.LampStorage;
 const t = (...args) => window.LampI18n.t(...args);
 const CHAT_API_BASE_URL = window.LAMP_BOT_API_BASE || "http://127.0.0.1:8001/api/v1";
 const CHAT_SESSION_KEY = "lamp_store_chat_session_v1";
+const BUTTON_SOUND_SRC = "audio/button-click.mp3";
+const BUTTON_SOUND_VOLUME = 0.18;
+let buttonSound = null;
+let lastButtonSoundAt = 0;
 
 function getCurrentPageName(){
 const path = window.location.pathname.replace(/\\/g, "/");
@@ -33,7 +37,16 @@ main.insertAdjacentHTML("beforebegin", `
 </button>
 <header class="header">
 <div class="header-inner">
-<h1 class="logo-title"><span class="logo-brand" data-i18n="brand">Sklep Lamp</span></h1>
+<h1 class="logo-title" aria-label="Sklep Lamp">
+<span class="logo-mark" aria-hidden="true"><span></span></span>
+<span class="logo-brand" data-i18n="brand">Sklep Lamp</span>
+</h1>
+<nav class="top-nav" aria-label="Primary navigation">
+<button class="top-nav-link" type="button" data-scroll-target=".theme-section" data-i18n="nav.newArrivals">Nowości</button>
+<button class="top-nav-link" type="button" data-scroll-target=".catalog-section" data-i18n="nav.premiumCollection">Kolekcja premium</button>
+<button class="top-nav-link" type="button" data-scroll-target=".gallery-section" data-i18n="nav.inspiration">Inspiracje</button>
+<button class="top-nav-link" type="button" data-open-info="contact" data-i18n="nav.contact">Kontakt</button>
+</nav>
 <div class="header-tools">
 <button class="cart-trigger" id="cartButton" type="button" data-open-cart aria-label="Open cart">
 <span class="cart-trigger-icon" aria-hidden="true"></span>
@@ -130,6 +143,7 @@ button.addEventListener("click", () => window.LampI18n.setLanguage(button.datase
 
 document.addEventListener("click", (event) => {
 const target = event.target;
+playButtonSoundForEvent(event);
 
 if(target.closest("[data-toggle-menu]")) toggleMenu();
 if(target.closest("[data-close-menu]")) closeMenu();
@@ -149,6 +163,12 @@ if(target.closest("[data-open-library]")) openLibraryModal();
 
 const infoButton = target.closest("[data-open-info]");
 if(infoButton) openInfoModal(infoButton.dataset.openInfo);
+
+const scrollButton = target.closest("[data-scroll-target]");
+if(scrollButton){
+const section = document.querySelector(scrollButton.dataset.scrollTarget || "");
+section?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 });
 
 document.addEventListener("submit", (event) => {
@@ -170,6 +190,34 @@ if(event.key === "Tab" && state.activeModal){
 trapFocus(event);
 }
 });
+}
+
+function playButtonSoundForEvent(event){
+const control = event.target.closest("button, a.gallery-view, [role='button']");
+if(!control || control.disabled || control.getAttribute("aria-disabled") === "true"){
+return;
+}
+
+const now = window.performance?.now?.() || Date.now();
+if(now - lastButtonSoundAt < 45){
+return;
+}
+lastButtonSoundAt = now;
+
+try{
+if(!buttonSound){
+buttonSound = new Audio(BUTTON_SOUND_SRC);
+buttonSound.preload = "auto";
+buttonSound.volume = BUTTON_SOUND_VOLUME;
+}
+
+const sound = buttonSound.cloneNode();
+sound.volume = BUTTON_SOUND_VOLUME;
+sound.currentTime = 0;
+sound.play().catch(() => {});
+}catch(error){
+console.warn("Button sound unavailable.", error);
+}
 }
 
 function goToPage(path, toastPayload = null){
@@ -286,8 +334,8 @@ return `
 </div>
 <div class="chat-product-actions">
 <button class="product-action secondary" type="button" data-add-cart data-product-id="${productId}">${escapeHtml(t("cart.add"))}</button>
-<button class="product-action secondary" type="button" data-add-library data-product-id="${productId}">${escapeHtml(t("buttons.addToLibrary"))}</button>
-<button class="product-action" type="button" data-buy-product data-product-id="${productId}">${escapeHtml(t("buttons.buyNow"))}</button>
+<button class="product-action ghost" type="button" data-add-library data-product-id="${productId}">${escapeHtml(t("buttons.addToLibrary"))}</button>
+<button class="product-action primary" type="button" data-buy-product data-product-id="${productId}">${escapeHtml(t("buttons.buyNow"))}</button>
 </div>
 </article>
 `;

@@ -20,6 +20,7 @@ except ImportError:  # pragma: no cover - local demo dependency hint
 SITE_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = SITE_ROOT.parent
 CONFIG_PATH = SITE_ROOT / "config.json"
+CANONICAL_SCHEMA_PATH = PROJECT_ROOT / "DataBace" / "02_init_schema.sql"
 ENV_PATHS = (SITE_ROOT / ".env", PROJECT_ROOT / "Bot" / ".env")
 PASSWORD_ITERATIONS = 120_000
 SESSIONS: dict[str, str] = {}
@@ -240,9 +241,30 @@ def ensure_schema() -> None:
         cursor = connection.cursor()
         for statement in SCHEMA_SQL:
             cursor.execute(statement)
+        if CANONICAL_SCHEMA_PATH.exists():
+            for statement in sql_batches_from_file(CANONICAL_SCHEMA_PATH):
+                cursor.execute(statement)
         connection.commit()
     finally:
         connection.close()
+
+
+def sql_batches_from_file(path: Path):
+    current_batch: list[str] = []
+
+    for raw_line in path.read_text(encoding="utf-8-sig").splitlines():
+        if raw_line.strip().upper() == "GO":
+            statement = "\n".join(current_batch).strip()
+            if statement and not statement.upper().startswith("USE "):
+                yield statement
+            current_batch = []
+            continue
+
+        current_batch.append(raw_line)
+
+    statement = "\n".join(current_batch).strip()
+    if statement and not statement.upper().startswith("USE "):
+        yield statement
 
 
 def read_json(handler: SimpleHTTPRequestHandler) -> dict:
@@ -387,6 +409,16 @@ def build_product_payload(row: dict, columns: set[str]) -> tuple[str, dict]:
 
 
 class DiplomaRequestHandler(SimpleHTTPRequestHandler):
+    def end_headers(self) -> None:
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        super().end_headers()
+
+    def do_OPTIONS(self) -> None:
+        self.send_response(204)
+        self.end_headers()
+
     def do_GET(self) -> None:
         path = urlparse(self.path).path
 
@@ -916,6 +948,7 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
 
 def main() -> None:
+    host = os.getenv("HOST", "127.0.0.1")
     port = int(os.getenv("PORT", "8000"))
 
     try:
@@ -925,9 +958,10 @@ def main() -> None:
         print(f"Database schema: skipped ({error})")
 
     handler = partial(DiplomaRequestHandler, directory=str(SITE_ROOT))
-    server = ThreadingHTTPServer(("127.0.0.1", port), handler)
-    print(f"Site: http://127.0.0.1:{port}")
-    print(f"API:  http://127.0.0.1:{port}/api/products")
+    server = ThreadingHTTPServer((host, port), handler)
+    display_host = "127.0.0.1" if host in {"", "0.0.0.0"} else host
+    print(f"Site: http://{display_host}:{port}")
+    print(f"API:  http://{display_host}:{port}/api/products")
     server.serve_forever()
 
 

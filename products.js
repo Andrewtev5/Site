@@ -9,7 +9,7 @@ let selectedThemeId = getThemeFromHash();
 
 async function loadCatalogProducts(){
 const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-const timeout = controller ? window.setTimeout(() => controller.abort(), 900) : null;
+const timeout = controller ? window.setTimeout(() => controller.abort(), 2500) : null;
 
 try{
 const payload = await storage.apiFetch("/api/products", { method: "GET", signal: controller?.signal });
@@ -19,7 +19,7 @@ throw new Error("Invalid API payload");
 }
 
 window.LAMP_I18N.products = payload.products;
-state.catalogSource = payload.source || "postgresql";
+state.catalogSource = payload.source || "mssql";
 }catch(error){
 state.catalogSource = "local";
 console.warn("Catalog API unavailable. Falling back to local products.", error);
@@ -154,6 +154,25 @@ function formatPrice(amount){
 return `${amount.toFixed(0)} PLN`;
 }
 
+function getProductRating(productId){
+const seed = [...String(productId || "")].reduce((sum, character) => sum + character.charCodeAt(0), 0);
+const score = (4.6 + (seed % 4) / 10).toFixed(1);
+const reviews = 42 + (seed % 86);
+return { score, reviews };
+}
+
+function renderRating(productId, compact = false){
+const rating = getProductRating(productId);
+const label = t("rating.label", { score: rating.score, reviews: rating.reviews });
+return `
+<div class="product-rating${compact ? " compact" : ""}" aria-label="${escapeHtml(label)}">
+<span class="rating-stars" aria-hidden="true">★★★★★</span>
+<strong>${escapeHtml(rating.score)}</strong>
+<span>${escapeHtml(t("rating.reviews", { count: rating.reviews }))}</span>
+</div>
+`;
+}
+
 function getLibrary(){
 return libraryItems.map(normalizeLibraryItem);
 }
@@ -239,22 +258,27 @@ const product = getCatalogProduct(productId);
 if(!product) return "";
 
 return `
-<article class="product" data-product-card data-product-id="${escapeHtml(product.id)}">
+<article class="product reveal-on-scroll" data-product-card data-product-id="${escapeHtml(product.id)}">
+<div class="product-media">
 <img src="${escapeHtml(product.image)}" class="product-image" alt="${escapeHtml(product.imageAlt)}" loading="lazy" decoding="async">
+<div class="product-media-overlay"><span>${escapeHtml(t("buttons.viewProduct"))}</span></div>
+</div>
 <div class="product-info">
 <div class="product-topline"><h3>${escapeHtml(product.name)}</h3><span class="product-tag">${escapeHtml(product.tag)}</span></div>
+${renderRating(product.id)}
 <p class="description">${escapeHtml(product.description)}</p>
 <p class="price">${escapeHtml(product.price)}</p>
 <div class="product-meta">${product.meta.slice(0, 3).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
 <div class="product-actions">
-<button class="product-action secondary" type="button" data-add-library data-product-id="${escapeHtml(product.id)}"></button>
+<button class="product-action ghost" type="button" data-add-library data-product-id="${escapeHtml(product.id)}"></button>
 <button class="product-action secondary" type="button" data-add-cart data-product-id="${escapeHtml(product.id)}"></button>
-<button class="product-action" type="button" data-buy-product data-product-id="${escapeHtml(product.id)}"></button>
+<button class="product-action primary" type="button" data-buy-product data-product-id="${escapeHtml(product.id)}"></button>
 </div>
 </div>
 </article>
 `;
 }).join("");
+window.LampUI?.initScrollReveal?.();
 }
 
 function selectProductTheme(themeId){
@@ -321,13 +345,14 @@ card.innerHTML = `
 <div class="library-card-copy">
 <span class="library-card-tag">${escapeHtml(item.tag)}</span>
 <strong>${escapeHtml(item.name)}</strong>
+${renderRating(item.id, true)}
 <span>${escapeHtml(t("library.savedOn", { price: item.price, date: formatDate(item.savedAt) }))}</span>
 <span>${escapeHtml(item.description)}</span>
 <span class="library-card-status${item.purchasedAt ? " purchased" : ""}">${escapeHtml(item.purchasedAt ? t("library.purchasedOn", { date: formatDate(item.purchasedAt) }) : t("library.readyForPurchase"))}</span>
 </div>
 <div class="library-card-actions">
-<button class="library-buy" type="button" data-library-buy="${escapeHtml(item.id)}"${item.purchasedAt ? " disabled" : ""}>${escapeHtml(item.purchasedAt ? t("buttons.purchased") : t("buttons.buy"))}</button>
-<button class="library-remove" type="button" data-library-remove="${escapeHtml(item.id)}">${escapeHtml(t("buttons.remove"))}</button>
+<button class="library-buy primary" type="button" data-library-buy="${escapeHtml(item.id)}"${item.purchasedAt ? " disabled" : ""}>${escapeHtml(item.purchasedAt ? t("buttons.purchased") : t("buttons.buy"))}</button>
+<button class="library-remove ghost" type="button" data-library-remove="${escapeHtml(item.id)}">${escapeHtml(t("buttons.remove"))}</button>
 </div>
 `;
 libraryList.appendChild(card);
@@ -359,8 +384,8 @@ cartList.innerHTML = items.map((item) => `
 <span>${escapeHtml(item.price)} x ${escapeHtml(item.quantity)}</span>
 </div>
 <div class="cart-item-actions">
-<button class="library-buy" type="button" data-cart-buy="${escapeHtml(item.id)}">${escapeHtml(t("buttons.buy"))}</button>
-<button class="library-remove" type="button" data-cart-remove="${escapeHtml(item.id)}">${escapeHtml(t("buttons.remove"))}</button>
+<button class="library-buy primary" type="button" data-cart-buy="${escapeHtml(item.id)}">${escapeHtml(t("buttons.buy"))}</button>
+<button class="library-remove ghost" type="button" data-cart-remove="${escapeHtml(item.id)}">${escapeHtml(t("buttons.remove"))}</button>
 </div>
 </article>
 `).join("");

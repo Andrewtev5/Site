@@ -68,9 +68,11 @@ return state.apiToken ? { Authorization: `Bearer ${state.apiToken}` } : {};
 
 async function apiFetch(path, options = {}){
 let response;
+const apiOrigin = window.LAMP_SITE_API_ORIGIN || "";
+const requestUrl = apiOrigin && path.startsWith("/") ? `${apiOrigin}${path}` : path;
 
 try{
-response = await fetch(path, {
+response = await fetch(requestUrl, {
 ...options,
 headers: {
 "Content-Type": "application/json",
