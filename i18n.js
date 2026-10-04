@@ -1,4 +1,4 @@
-window.LAMP_I18N = {
+﻿window.LAMP_I18N = {
 defaultLanguage: "pl",
 supportedLanguages: ["en", "pl"],
 products: {
@@ -10,9 +10,11 @@ products: {
     "tag": "Warm light",
     "description": "Energy-efficient LED lamp for home lighting. Long lifespan and low power consumption.",
     "meta": [
-      "Soft warm spectrum",
-      "Low power consumption",
-      "Best for bedrooms"
+      "LED filament bulb",
+      "smoked glass bulb",
+      "warm amber light",
+      "classic A60 shape",
+      "decorative light bulb"
     ],
     "imageAlt": "LED Lamp 10W"
   },
@@ -21,9 +23,11 @@ products: {
     "tag": "Ciepłe światło",
     "description": "Energooszczędna lampa LED do oświetlenia domu. Działa długo i zużywa niewiele energii.",
     "meta": [
-      "Miękkie ciepłe światło",
-      "Niski pobór mocy",
-      "Idealna do sypialni"
+      "żarówka LED filamentowa",
+      "przydymiona szklana bańka",
+      "ciepłe bursztynowe światło",
+      "klasyczny kształt A60",
+      "dekoracyjna żarówka"
     ],
     "imageAlt": "Lampa LED 10W"
   }
@@ -36,9 +40,11 @@ products: {
     "tag": "Smart home",
     "description": "Smart lamp controlled via mobile phone. Adjust brightness and color.",
     "meta": [
-      "App control",
-      "Adjustable color",
-      "Smart home ready"
+      "smart WiFi bulb",
+      "red green blue light",
+      "hanging decorative bulb",
+      "Edison glass bulb",
+      "app control"
     ],
     "imageAlt": "Smart WiFi Lamp"
   },
@@ -47,9 +53,11 @@ products: {
     "tag": "Smart home",
     "description": "Inteligentna lampa sterowana telefonem. Pozwala zmieniać jasność i kolor światła.",
     "meta": [
-      "Sterowanie aplikacją",
-      "Regulacja koloru",
-      "Gotowa do smart home"
+      "inteligentna żarówka WiFi",
+      "czerwone zielone niebieskie światło",
+      "wisząca żarówka dekoracyjna",
+      "szklana bańka Edison",
+      "sterowanie aplikacją"
     ],
     "imageAlt": "Lampa Smart WiFi"
   }
@@ -62,9 +70,11 @@ products: {
     "tag": "Studio glow",
     "description": "Compact premium lamp with a calm golden tone. Excellent for desks, reading corners, and focused evening work.",
     "meta": [
-      "Compact format",
-      "Premium finish",
-      "Perfect for workspaces"
+      "Edison filament bulb",
+      "amber glass bulb",
+      "warm decorative light",
+      "visible LED filament",
+      "retro style"
     ],
     "imageAlt": "Minimal Table Lamp"
   },
@@ -73,9 +83,11 @@ products: {
     "tag": "Studyjny blask",
     "description": "Kompaktowa lampa premium o spokojnej, złotej barwie. Świetnie sprawdza się na biurku, w kąciku do czytania i podczas wieczornej pracy.",
     "meta": [
-      "Kompaktowy format",
-      "Wykończenie premium",
-      "Idealna do pracy"
+      "żarówka filamentowa Edison",
+      "bursztynowa szklana bańka",
+      "ciepłe światło dekoracyjne",
+      "widoczny filament LED",
+      "styl retro"
     ],
     "imageAlt": "Minimalistyczna lampa stołowa"
   }
@@ -88,9 +100,11 @@ products: {
     "tag": "Premium decor",
     "description": "Elegant glass body with a decorative filament feel. Designed to become a visual accent in a living room or lounge zone.",
     "meta": [
-      "Decorative filament",
-      "Premium ambiance",
-      "Living room accent"
+      "decorative filament bulb",
+      "smoked glass",
+      "spiral filament",
+      "warm ambient light",
+      "vintage style"
     ],
     "imageAlt": "Nordic Glass Lamp"
   },
@@ -99,9 +113,11 @@ products: {
     "tag": "Dekor premium",
     "description": "Elegancki szklany korpus z dekoracyjnym filamentem. Został zaprojektowany jako mocny akcent salonu lub strefy wypoczynku.",
     "meta": [
-      "Dekoracyjny filament",
-      "Atmosfera premium",
-      "Akcent do salonu"
+      "dekoracyjna żarówka filamentowa",
+      "przydymione szkło",
+      "spiralny filament",
+      "ciepłe nastrojowe światło",
+      "styl vintage"
     ],
     "imageAlt": "Nordycka lampa szklana"
   }
@@ -114,9 +130,11 @@ products: {
     "tag": "Reading zone",
     "description": "Tall floor lamp with a curved arm for sofas, reading corners, and soft evening lighting.",
     "meta": [
-      "Curved metal arm",
-      "Floor format",
-      "Best near sofas"
+      "arc floor lamp",
+      "black metal frame",
+      "fabric shade",
+      "living room sofa lamp",
+      "warm reading light"
     ],
     "imageAlt": "Arc Floor Lamp"
   },
@@ -125,9 +143,11 @@ products: {
     "tag": "Strefa czytania",
     "description": "Wysoka lampa podłogowa z łukowym ramieniem do sofy, kącika czytania i miękkiego wieczornego światła.",
     "meta": [
-      "Łukowe metalowe ramię",
-      "Format podłogowy",
-      "Najlepsza przy sofie"
+      "łukowa lampa podłogowa",
+      "czarny metalowy stelaż",
+      "tekstylny klosz",
+      "do salonu przy sofie",
+      "ciepłe światło do czytania"
     ],
     "imageAlt": "Lampa podłogowa Arc"
   }
@@ -140,9 +160,11 @@ products: {
     "tag": "Bedroom calm",
     "description": "Small ceramic lamp with a textile shade for nightstands and calm bedroom interiors.",
     "meta": [
-      "Ceramic base",
-      "Textile shade",
-      "Nightstand size"
+      "ceramic bedside lamp",
+      "beige fabric shade",
+      "white ceramic base",
+      "nightstand lighting",
+      "soft warm light"
     ],
     "imageAlt": "Ceramic Bedside Lamp"
   },
@@ -151,9 +173,11 @@ products: {
     "tag": "Spokojna sypialnia",
     "description": "Mała ceramiczna lampa z tekstylnym kloszem na szafkę nocną i spokojne wnętrza sypialni.",
     "meta": [
-      "Ceramiczna podstawa",
-      "Tekstylny klosz",
-      "Rozmiar na szafkę"
+      "ceramiczna lampka nocna",
+      "beżowy tekstylny abażur",
+      "biała ceramiczna podstawa",
+      "na stolik nocny",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Ceramiczna lampa nocna"
   }
@@ -166,9 +190,11 @@ products: {
     "tag": "Loft style",
     "description": "Metal cage lamp with a visible bulb for loft rooms, studios, and expressive interiors.",
     "meta": [
-      "Metal cage shade",
-      "Visible bulb",
-      "Loft interior"
+      "industrial cage lamp",
+      "black metal cage",
+      "exposed Edison bulb",
+      "loft pendant light",
+      "warm light"
     ],
     "imageAlt": "Industrial Cage Lamp"
   },
@@ -177,9 +203,11 @@ products: {
     "tag": "Styl loftowy",
     "description": "Metalowa lampa z klatkowym kloszem i widoczną żarówką do loftów, studiów i wyrazistych wnętrz.",
     "meta": [
-      "Metalowy klosz klatkowy",
-      "Widoczna żarówka",
-      "Wnętrze loftowe"
+      "industrialna lampa klatkowa",
+      "czarny metalowy kosz",
+      "widoczna żarówka Edison",
+      "wisząca lampa loftowa",
+      "ciepłe światło"
     ],
     "imageAlt": "Industrialna lampa klatkowa"
   }
@@ -192,9 +220,11 @@ products: {
     "tag": "Portable glow",
     "description": "Rechargeable mushroom-shaped lamp for bedside tables, shelves, and cozy ambient light.",
     "meta": [
-      "Rechargeable battery",
-      "Portable body",
-      "Ambient glow"
+      "wireless mushroom lamp",
+      "opal white shade",
+      "gold metal base",
+      "bedroom night lamp",
+      "rechargeable ambient light"
     ],
     "imageAlt": "Wireless Mushroom Lamp"
   },
@@ -203,9 +233,11 @@ products: {
     "tag": "Przenośny blask",
     "description": "Ładowalna lampa w kształcie grzybka na stolik nocny, półkę i przytulne światło dekoracyjne.",
     "meta": [
-      "Akumulator",
-      "Przenośna obudowa",
-      "Światło ambientowe"
+      "bezprzewodowa lampka grzybek",
+      "opalowy biały klosz",
+      "złota metalowa podstawa",
+      "lampka nocna do sypialni",
+      "ładowalne światło nastrojowe"
     ],
     "imageAlt": "Bezprzewodowa lampa Mushroom"
   }
@@ -218,9 +250,11 @@ products: {
     "tag": "Focused light",
     "description": "Adjustable brass lamp with directed warm light for desks, books, and evening work.",
     "meta": [
-      "Adjustable head",
-      "Brass finish",
-      "Focused beam"
+      "brass desk lamp",
+      "adjustable jointed arm",
+      "directional metal shade",
+      "reading lamp",
+      "focused warm light"
     ],
     "imageAlt": "Brass Reading Lamp"
   },
@@ -229,9 +263,11 @@ products: {
     "tag": "Skupione światło",
     "description": "Regulowana mosiężna lampa z kierunkowym ciepłym światłem do biurka, książek i wieczornej pracy.",
     "meta": [
-      "Regulowana głowica",
-      "Mosiężne wykończenie",
-      "Skupiona wiązka"
+      "mosiężna lampa biurkowa",
+      "regulowane przegubowe ramię",
+      "metalowy klosz kierunkowy",
+      "lampka do czytania",
+      "skupione ciepłe światło"
     ],
     "imageAlt": "Mosiężna lampa do czytania"
   }
@@ -244,9 +280,11 @@ products: {
     "tag": "Dining room",
     "description": "Suspended opal glass lamp that spreads balanced light over dining tables and kitchen islands.",
     "meta": [
-      "Opal glass shade",
-      "Pendant mount",
-      "Even table light"
+      "opal pendant lamp",
+      "white glass globe shade",
+      "single ceiling pendant",
+      "over table or island",
+      "soft diffused light"
     ],
     "imageAlt": "Opal Pendant Lamp"
   },
@@ -255,9 +293,11 @@ products: {
     "tag": "Jadalnia",
     "description": "Wisząca lampa z opalowego szkła, która równomiernie rozprasza światło nad stołem i wyspą kuchenną.",
     "meta": [
-      "Klosz ze szkła opalowego",
-      "Mocowanie wiszące",
-      "Równe światło nad stołem"
+      "opalowa lampa wisząca",
+      "biały szklany klosz kula",
+      "pojedynczy zwis sufitowy",
+      "nad stół lub wyspę",
+      "miękkie rozproszone światło"
     ],
     "imageAlt": "Lampa wisząca Opal"
   }
@@ -270,9 +310,11 @@ products: {
     "tag": "Indoor outdoor",
     "description": "Compact lantern lamp with a handle for terraces, shelves, and flexible accent lighting.",
     "meta": [
-      "Carry handle",
-      "Compact lantern",
-      "Terrace ready"
+      "portable lantern lamp",
+      "black metal body",
+      "carry handle",
+      "patio and indoor lamp",
+      "warm diffused light"
     ],
     "imageAlt": "Portable Lantern Lamp"
   },
@@ -281,9 +323,11 @@ products: {
     "tag": "Dom i taras",
     "description": "Kompaktowa lampa latarnia z uchwytem na taras, półkę i elastyczne światło akcentowe.",
     "meta": [
-      "Uchwyt do przenoszenia",
-      "Kompaktowa latarnia",
-      "Gotowa na taras"
+      "przenośna lampa latarnia",
+      "czarna metalowa obudowa",
+      "uchwyt do przenoszenia",
+      "na taras i do domu",
+      "ciepłe rozproszone światło"
     ],
     "imageAlt": "Przenośna lampa Lantern"
   }
@@ -296,9 +340,11 @@ products: {
     "tag": "Directional light",
     "description": "Modern black spotlight for highlighting shelves, pictures, and work surfaces.",
     "meta": [
-      "Directional head",
-      "Modern black body",
-      "Accent lighting"
+      "black track spotlight",
+      "metal cylinder body",
+      "adjustable directional light",
+      "modern ceiling lighting",
+      "focused beam"
     ],
     "imageAlt": "Black Track Spotlight"
   },
@@ -307,9 +353,11 @@ products: {
     "tag": "Światło kierunkowe",
     "description": "Nowoczesny czarny reflektor do podkreślania półek, obrazów i powierzchni roboczych.",
     "meta": [
-      "Kierunkowa głowica",
-      "Nowoczesna czarna obudowa",
-      "Światło akcentowe"
+      "czarny reflektor szynowy",
+      "metalowy cylindryczny korpus",
+      "regulowane światło kierunkowe",
+      "nowoczesne oświetlenie sufitowe",
+      "skupiona wiązka"
     ],
     "imageAlt": "Czarny reflektor szynowy"
   }
@@ -322,9 +370,11 @@ products: {
     "tag": "Natural texture",
     "description": "Warm table lamp with a woven rattan shade for natural, relaxed interiors.",
     "meta": [
-      "Woven rattan",
-      "Warm diffusion",
-      "Natural style"
+      "rattan table lamp",
+      "woven cylinder shade",
+      "natural brown rattan",
+      "boho style",
+      "warm decorative light"
     ],
     "imageAlt": "Rattan Table Lamp"
   },
@@ -333,9 +383,11 @@ products: {
     "tag": "Naturalna faktura",
     "description": "Ciepła lampa stołowa z plecionym rattanowym kloszem do naturalnych i spokojnych wnętrz.",
     "meta": [
-      "Pleciony rattan",
-      "Ciepłe rozproszenie",
-      "Naturalny styl"
+      "rattanowa lampa stołowa",
+      "pleciony cylindryczny klosz",
+      "naturalny brązowy rattan",
+      "styl boho",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Rattanowa lampa stołowa"
   }
@@ -348,9 +400,11 @@ products: {
     "tag": "Elegant accent",
     "description": "Decorative globe lamp with crystal detailing for premium rooms and evening atmosphere.",
     "meta": [
-      "Crystal details",
-      "Globe diffuser",
-      "Premium accent"
+      "crystal table lamp",
+      "faceted glass globe",
+      "gold round base",
+      "elegant glamour style",
+      "sparkling warm light"
     ],
     "imageAlt": "Crystal Globe Lamp"
   },
@@ -359,9 +413,11 @@ products: {
     "tag": "Elegancki akcent",
     "description": "Dekoracyjna lampa kulista z kryształowym detalem do eleganckich pokoi i wieczornej atmosfery.",
     "meta": [
-      "Kryształowe detale",
-      "Kulisty dyfuzor",
-      "Akcent premium"
+      "kryształowa lampka stołowa",
+      "fasetowana szklana kula",
+      "złota okrągła podstawa",
+      "elegancki styl glamour",
+      "błyszczące ciepłe światło"
     ],
     "imageAlt": "Kryształowa lampa Globe"
   }
@@ -374,9 +430,11 @@ products: {
     "tag": "Night comfort",
     "description": "Soft cloud-shaped night lamp for children rooms, low brightness, and calm bedtime routines.",
     "meta": [
-      "Soft night light",
-      "Child room design",
-      "Low brightness"
+      "kids cloud night lamp",
+      "soft white shade",
+      "child bedroom night light",
+      "low brightness",
+      "calm bedtime lighting"
     ],
     "imageAlt": "Kids Cloud Night Lamp"
   },
@@ -385,9 +443,11 @@ products: {
     "tag": "Komfort nocny",
     "description": "Delikatna nocna lampka w kształcie chmurki do pokoju dziecka, niskiej jasności i spokojnego zasypiania.",
     "meta": [
-      "Delikatne światło nocne",
-      "Design do pokoju dziecka",
-      "Niska jasność"
+      "dziecięca lampka chmurka",
+      "biały miękki klosz",
+      "nocne światło do pokoju dziecka",
+      "niska jasność",
+      "spokojne zasypianie"
     ],
     "imageAlt": "Dziecięca lampka Cloud"
   }
@@ -400,9 +460,11 @@ products: {
     "tag": "Retro vibe",
     "description": "Pendant lamp made of tinted amber glass, emitting cozy glow for dining and kitchen areas.",
     "meta": [
-      "Amber glass",
-      "Retro aesthetic",
-      "Warm glow"
+      "amber glass pendant",
+      "vintage glass shade",
+      "exposed filament bulb",
+      "single ceiling pendant",
+      "warm over table light"
     ],
     "imageAlt": "Vintage Amber Pendant"
   },
@@ -411,9 +473,11 @@ products: {
     "tag": "Klimat retro",
     "description": "Lampa wisząca z barwionego szkła bursztynowego, emitująca przytulne światło do jadalni i kuchni.",
     "meta": [
-      "Bursztynowe szkło",
-      "Estetyka retro",
-      "Przytulne światło"
+      "bursztynowa lampa wisząca",
+      "szklany klosz vintage",
+      "widoczna żarówka filamentowa",
+      "pojedynczy zwis sufitowy",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Lampa wisząca Vintage Amber"
   }
@@ -426,9 +490,11 @@ products: {
     "tag": "Office focus",
     "description": "Ultra-thin LED desk lamp with touch controls and adjustable color temperature for productivity.",
     "meta": [
-      "Touch control",
-      "Color temp control",
-      "Minimalist design"
+      "linear LED desk lamp",
+      "slim black column",
+      "minimalist design",
+      "vertical task light",
+      "modern desk lighting"
     ],
     "imageAlt": "Modern Linear Desk Lamp"
   },
@@ -437,9 +503,11 @@ products: {
     "tag": "Skupienie w biurze",
     "description": "Liniowa lampa biurkowa LED ze sterowaniem dotykowym i regulacją temperatury barwowej do pracy.",
     "meta": [
-      "Dotykowy panel",
-      "Regulacja barwy",
-      "Minimalistyczny design"
+      "liniowa lampa biurkowa LED",
+      "smukły czarny słupek",
+      "minimalistyczna konstrukcja",
+      "pionowe światło robocze",
+      "do nowoczesnego biurka"
     ],
     "imageAlt": "Nowoczesna liniowa lampa biurkowa"
   }
@@ -452,9 +520,11 @@ products: {
     "tag": "Eco living",
     "description": "Handcrafted bamboo weave light fixture casting intricate shadow patterns on ceiling and walls.",
     "meta": [
-      "Handcrafted bamboo",
-      "Natural shadows",
-      "Eco friendly"
+      "bamboo pendant lamp",
+      "woven dome shade",
+      "natural light bamboo",
+      "boho style",
+      "warm over table light"
     ],
     "imageAlt": "Bamboo Pendant Light"
   },
@@ -463,9 +533,11 @@ products: {
     "tag": "Styl eko",
     "description": "Ręcznie wyplatana lampa bambusowa rzucająca efektowne wzory cieni na sufit i ściany.",
     "meta": [
-      "Ręcznie pleciony bambus",
-      "Naturalne cienie",
-      "Przyjazna środowisku"
+      "bambusowa lampa wisząca",
+      "pleciony klosz kopuła",
+      "naturalny jasny bambus",
+      "styl boho",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Pleciona lampa bambusowa"
   }
@@ -478,9 +550,11 @@ products: {
     "tag": "Corridor glow",
     "description": "Sleek matte black wall sconce providing indirect ambient lighting for hallways and bedrooms.",
     "meta": [
-      "Matte black finish",
-      "Indirect light",
-      "Sleek outline"
+      "minimalist wall sconce",
+      "black rectangular fixture",
+      "frosted square shade",
+      "modern hallway lighting",
+      "soft decorative light"
     ],
     "imageAlt": "Minimalist Wall Sconce"
   },
@@ -489,9 +563,11 @@ products: {
     "tag": "Światło korytarzowe",
     "description": "Smukły matowy kinkiet w kolorze czarnym dający pośrednie światło do przedpokoju i sypialni.",
     "meta": [
-      "Matowe czarne wykończenie",
-      "Światło odbite",
-      "Smukły profil"
+      "minimalistyczny kinkiet ścienny",
+      "czarna prostokątna oprawa",
+      "mleczny kwadratowy klosz",
+      "nowoczesne oświetlenie korytarza",
+      "miękkie światło dekoracyjne"
     ],
     "imageAlt": "Minimalistyczny kinkiet ścienny"
   }
@@ -504,9 +580,11 @@ products: {
     "tag": "Urban raw",
     "description": "Raw concrete base combined with a clear globe bulb for industrial and modern desk spaces.",
     "meta": [
-      "Concrete base",
-      "Industrial design",
-      "Compact footprint"
+      "concrete table lamp",
+      "gray cylinder base",
+      "clear glass globe",
+      "filament bulb",
+      "industrial decorative light"
     ],
     "imageAlt": "Concrete Base Table Lamp"
   },
@@ -515,9 +593,11 @@ products: {
     "tag": "Surowy styl",
     "description": "Podstawa z surowego betonu w połączeniu z przezroczystą żarówką kulistą do nowoczesnych wnętrz.",
     "meta": [
-      "Betonowa podstawa",
-      "Industrialny design",
-      "Kompaktowy rozmiar"
+      "lampa stołowa z betonu",
+      "szara cylindryczna podstawa",
+      "przezroczysta szklana kula",
+      "żarówka filamentowa",
+      "industrialne światło dekoracyjne"
     ],
     "imageAlt": "Lampa stołowa z betonową podstawą"
   }
@@ -530,9 +610,11 @@ products: {
     "tag": "Mood lighting",
     "description": "Rotatable projection lamp creating a warm sunset atmosphere for photography and ambient rooms.",
     "meta": [
-      "360 rotation",
-      "Photo background",
-      "Warm sunset aura"
+      "sunset projection lamp",
+      "compact black projector",
+      "orange wall glow",
+      "ambient mood light",
+      "bedroom decoration"
     ],
     "imageAlt": "Sunset Projection Lamp"
   },
@@ -541,9 +623,11 @@ products: {
     "tag": "Oświetlenie nastrojowe",
     "description": "Obrotowa lampa projekcyjna tworząca ciepłą atmosferę zachodu słońca do zdjęć i relaksu.",
     "meta": [
-      "Obrót 360 stopni",
-      "Tło do zdjęć",
-      "Efekt zachodu słońca"
+      "lampa projekcyjna zachodu słońca",
+      "czarny kompaktowy projektor",
+      "pomarańczowa poświata na ścianie",
+      "światło nastrojowe",
+      "dekoracja sypialni"
     ],
     "imageAlt": "Lampa projekcyjna Sunset"
   }
@@ -556,9 +640,11 @@ products: {
     "tag": "Soft geometry",
     "description": "Geometric folded paper shade providing diffused soft lighting for Scandinavian interiors.",
     "meta": [
-      "Folded paper shade",
-      "Soft diffusion",
-      "Scandi look"
+      "origami paper pendant",
+      "geometric white shade",
+      "single ceiling pendant",
+      "modern Scandinavian style",
+      "soft diffused light"
     ],
     "imageAlt": "Paper Origami Pendant"
   },
@@ -567,9 +653,11 @@ products: {
     "tag": "Miękka geometria",
     "description": "Klosz z geometrycznie składanego papieru dający rozproszone światło do wnętrz skandynawskich.",
     "meta": [
-      "Papierowy klosz origami",
-      "Miękkie rozproszenie",
-      "Styl skandynawski"
+      "papierowa lampa wisząca origami",
+      "geometryczny biały klosz",
+      "pojedynczy zwis sufitowy",
+      "nowoczesny styl skandynawski",
+      "miękkie rozproszone światło"
     ],
     "imageAlt": "Lampa wisząca Origami"
   }
@@ -582,9 +670,11 @@ products: {
     "tag": "Luxury decor",
     "description": "Heavy white marble base with brushed brass accents and a frosted globe diffuser.",
     "meta": [
-      "White marble base",
-      "Brushed brass",
-      "Luxury aesthetic"
+      "marble table lamp",
+      "white marble base",
+      "opal glass globe",
+      "brass detail",
+      "elegant warm light"
     ],
     "imageAlt": "Marble Brass Accent Lamp"
   },
@@ -593,9 +683,11 @@ products: {
     "tag": "Luksusowy akcent",
     "description": "Podstawa z białego marmuru ze szczotkowanym mosiądzem i mrożonym szklanym dyfuzorem.",
     "meta": [
-      "Biały marmur",
-      "Szczotkowany mosiądz",
-      "Luksusowy wygląd"
+      "marmurowa lampa stołowa",
+      "biała podstawa z marmuru",
+      "opalowa szklana kula",
+      "mosiężny detal",
+      "eleganckie ciepłe światło"
     ],
     "imageAlt": "Ekskluzywna lampa marmurowa"
   }
@@ -608,9 +700,11 @@ products: {
     "tag": "Compact reading",
     "description": "Versatile clip lamp with a gooseneck arm, ideal for headboards, desks, and shelves.",
     "meta": [
-      "Strong clamp",
-      "Flexible gooseneck",
-      "USB powered"
+      "clip on lamp",
+      "flexible black neck",
+      "small directional shade",
+      "bedside reading light",
+      "focused spot light"
     ],
     "imageAlt": "Flexible Clip-On Lamp"
   },
@@ -619,9 +713,11 @@ products: {
     "tag": "Wygodne czytanie",
     "description": "Uniwersalna lampka z klipsem i giętkim ramieniem, doskonała do łóżka, biurka i półek.",
     "meta": [
-      "Mocny zacisk",
-      "Giętkie ramię",
-      "Zasilanie USB"
+      "lampka z klipsem",
+      "elastyczne czarne ramię",
+      "mały klosz kierunkowy",
+      "do czytania przy łóżku",
+      "skupione światło punktowe"
     ],
     "imageAlt": "Elastyczna lampka z klipsem"
   }
@@ -634,9 +730,11 @@ products: {
     "tag": "Grand statement",
     "description": "Multi-light ceiling chandelier with smoky glass shades creating a dramatic focal point.",
     "meta": [
-      "Multi-bulb fixture",
-      "Smoky glass shades",
-      "Statement piece"
+      "smoked glass chandelier",
+      "cluster of glass globes",
+      "black ceiling fixture",
+      "glamour living room feature",
+      "warm multi light glow"
     ],
     "imageAlt": "Smoky Glass Chandelier"
   },
@@ -645,9 +743,11 @@ products: {
     "tag": "Mocny akcent",
     "description": "Wielopunktowy żyrandol sufitowy z kloszami z dymionego szkła, tworzący imponujący punkt centralny.",
     "meta": [
-      "Wielopunktowe światło",
-      "Dymione szkło",
-      "Efektowny wygląd"
+      "żyrandol z dymionego szkła",
+      "grono szklanych kul",
+      "czarna oprawa sufitowa",
+      "dekoracja salonu glamour",
+      "ciepłe wielopunktowe światło"
     ],
     "imageAlt": "Żyrandol z dymionego szkła"
   }
@@ -660,9 +760,11 @@ products: {
     "tag": "Zen atmosphere",
     "description": "Shoji paper style wooden floor lamp casting calm light for meditative and calm spaces.",
     "meta": [
-      "Shoji paper design",
-      "Wooden frame",
-      "Zen ambient"
+      "Japanese floor lamp",
+      "rectangular wood frame",
+      "vertical paper diffuser",
+      "zen tatami style",
+      "soft warm light"
     ],
     "imageAlt": "Japanese Tatami Floor Lamp"
   },
@@ -671,9 +773,11 @@ products: {
     "tag": "Klimat Zen",
     "description": "Drewniana lampa podłogowa w stylu papieru shoji, dająca wyciszające światło do przestrzeni relaksu.",
     "meta": [
-      "Styl papieru shoji",
-      "Drewniana rama",
-      "Nastrojowe światło"
+      "japońska lampa podłogowa",
+      "drewniana prostokątna rama",
+      "pionowy papierowy dyfuzor",
+      "styl zen i tatami",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Lampa podłogowa Tatami"
   }
@@ -686,9 +790,11 @@ products: {
     "tag": "Esports glow",
     "description": "Vertical corner LED bar with dynamic music synchronization and customizable color modes.",
     "meta": [
-      "Music sync",
-      "Dynamic RGB",
-      "Corner format"
+      "RGB corner floor lamp",
+      "slim black column",
+      "red green blue light",
+      "gaming room lighting",
+      "color controlled light"
     ],
     "imageAlt": "RGB Gaming Corner Lamp"
   },
@@ -697,9 +803,11 @@ products: {
     "tag": "Styl gracza",
     "description": "Pionowa narożna listwa LED z dynamiczną synchronizacją z muzyką i regulacją kolorów.",
     "meta": [
-      "Synchronizacja z muzyką",
-      "Dynamiczne RGB",
-      "Format narożny"
+      "narożna lampa podłogowa RGB",
+      "smukła czarna kolumna",
+      "czerwone zielone niebieskie światło",
+      "oświetlenie gamingowe",
+      "światło sterowane kolorami"
     ],
     "imageAlt": "Lampa narożna RGB"
   }
@@ -712,9 +820,11 @@ products: {
     "tag": "Classic Art",
     "description": "Hand-crafted mosaic glass lampshade with intricate floral patterns and warm colored glow.",
     "meta": [
-      "Handmade mosaic",
-      "Tiffany style",
-      "Floral pattern"
+      "Tiffany table lamp",
+      "multicolor stained glass shade",
+      "ornate bronze base",
+      "classic vintage style",
+      "warm decorative light"
     ],
     "imageAlt": "Stained Glass Tiffany Lamp"
   },
@@ -723,9 +833,11 @@ products: {
     "tag": "Klasyczna sztuka",
     "description": "Ręcznie składany mozaikowy klosz ze szkła o motywach kwiatowych i ciepłym świetle.",
     "meta": [
-      "Ręczna mozaika",
-      "Styl Tiffany",
-      "Motyw kwiatowy"
+      "lampa stołowa Tiffany",
+      "witrażowy wielokolorowy klosz",
+      "ozdobna brązowa podstawa",
+      "styl klasyczny vintage",
+      "ciepłe dekoracyjne światło"
     ],
     "imageAlt": "Lampa witrażowa Tiffany"
   }
@@ -738,9 +850,11 @@ products: {
     "tag": "Warm metallic",
     "description": "Polished copper finish shade with white reflective inner coating for kitchen dining counters.",
     "meta": [
-      "Polished copper",
-      "Kitchen accent",
-      "Warm glow"
+      "copper pendant lamp",
+      "metal dome shade",
+      "polished copper finish",
+      "industrial over table pendant",
+      "warm downward light"
     ],
     "imageAlt": "Copper Pendant Dome"
   },
@@ -749,9 +863,11 @@ products: {
     "tag": "Ciepły metal",
     "description": "Polerowana miedziana lampa z białym wnętrzem świetnie odbijającym światło na blat kuchenny.",
     "meta": [
-      "Polerowana miedź",
-      "Akcent kuchenny",
-      "Ciepły blask"
+      "miedziana lampa wisząca",
+      "metalowy klosz kopuła",
+      "polerowane miedziane wykończenie",
+      "industrialny zwis nad stół",
+      "ciepłe światło kierowane w dół"
     ],
     "imageAlt": "Miedziany klosz wiszący Dome"
   }
@@ -764,9 +880,11 @@ products: {
     "tag": "Soft luxury",
     "description": "Natural white feather cloud shade creating romantic diffused light for bedrooms.",
     "meta": [
-      "Natural feathers",
-      "Dreamy diffusion",
-      "Glamour style"
+      "feather pendant lamp",
+      "white fluffy shade",
+      "round decorative form",
+      "bedroom or kids room light",
+      "soft diffused light"
     ],
     "imageAlt": "Feather Shade Pendant"
   },
@@ -775,9 +893,11 @@ products: {
     "tag": "Miękki luksus",
     "description": "Klosz z naturalnych białych piór tworzący romantyczne, rozproszone światło do sypialni.",
     "meta": [
-      "Naturalne pióra",
-      "Liryczne rozproszenie",
-      "Styl glamour"
+      "lampa wisząca z piór",
+      "biały puszysty klosz",
+      "okrągła forma dekoracyjna",
+      "do sypialni lub pokoju dziecka",
+      "miękkie rozproszone światło"
     ],
     "imageAlt": "Puszysta lampa z piór"
   }
@@ -790,9 +910,11 @@ products: {
     "tag": "Modern motif",
     "description": "Speckled terrazzo cylindrical base topped with an opal glass sphere for contemporary desks.",
     "meta": [
-      "Terrazzo base",
-      "Opal sphere",
-      "Modern pattern"
+      "terrazzo table lamp",
+      "speckled cylinder base",
+      "opal white globe",
+      "minimalist style",
+      "warm console light"
     ],
     "imageAlt": "Terrazzo Accent Table Lamp"
   },
@@ -801,9 +923,11 @@ products: {
     "tag": "Wzór nowoczesny",
     "description": "Cylindryczna podstawa z nakrapianego lastryko zwieńczona kuleczką ze szkła opalowego.",
     "meta": [
-      "Podstawa terrazzo",
-      "Kula opalowa",
-      "Nowoczesny wzór"
+      "lampa stołowa terrazzo",
+      "nakrapiana cylindryczna podstawa",
+      "opalowa biała kula",
+      "minimalistyczny styl",
+      "ciepłe światło na komodę"
     ],
     "imageAlt": "Lampa stołowa Terrazzo"
   }
@@ -816,9 +940,11 @@ products: {
     "tag": "Studio work",
     "description": "Long adjustable spring-balanced arm with heavy-duty table clamp for drafting and art.",
     "meta": [
-      "Spring arm",
-      "Desk clamp",
-      "Drafting light"
+      "clamp architect lamp",
+      "black metal construction",
+      "adjustable jointed arm",
+      "directional shade",
+      "desk task lighting"
     ],
     "imageAlt": "Architect Clamp Desk Lamp"
   },
@@ -827,9 +953,11 @@ products: {
     "tag": "Praca studyjna",
     "description": "Długie regulowane ramię ze sprężynami i solidnym zaciskiem do biurka dla architektów i artystów.",
     "meta": [
-      "Ramię ze sprężynami",
-      "Zacisk stolarski",
-      "Światło kreślarskie"
+      "lampa kreślarska na zacisk",
+      "czarna metalowa konstrukcja",
+      "regulowane przegubowe ramię",
+      "klosz kierunkowy",
+      "światło robocze na biurko"
     ],
     "imageAlt": "Lampa kreślarska na zacisk"
   }
@@ -842,9 +970,11 @@ products: {
     "tag": "Patio life",
     "description": "Weatherproof solar-powered lantern with flickering candle flame effect for pathways.",
     "meta": [
-      "Solar charging",
-      "Flame effect",
-      "IP65 outdoor"
+      "solar garden lantern",
+      "black metal body",
+      "glazed cylinder lantern",
+      "outdoor lighting",
+      "warm flame glow"
     ],
     "imageAlt": "Solar Outdoor Garden Lantern"
   },
@@ -853,9 +983,11 @@ products: {
     "tag": "Życie na tarasie",
     "description": "Odporna na pogodę latarnia solarna z efektem migoczącego płomienia świecy na ścieżki i ogród.",
     "meta": [
-      "Ładowanie solarne",
-      "Efekt płomienia",
-      "Klasa outdoor IP65"
+      "solarna latarnia ogrodowa",
+      "czarna metalowa obudowa",
+      "przeszklony cylindryczny lampion",
+      "oświetlenie zewnętrzne",
+      "ciepły płomienny blask"
     ],
     "imageAlt": "Solarna latarnia ogrodowa"
   }
@@ -868,9 +1000,11 @@ products: {
     "tag": "Steampunk design",
     "description": "Cast iron plumbing pipe lamp with pressure gauge detail and retro toggle switch.",
     "meta": [
-      "Cast iron pipe",
-      "Steampunk accent",
-      "Toggle switch"
+      "industrial pipe lamp",
+      "black metal elbows",
+      "Edison bulb",
+      "loft table lamp",
+      "warm vintage light"
     ],
     "imageAlt": "Industrial Pipe Desk Lamp"
   },
@@ -879,9 +1013,11 @@ products: {
     "tag": "Styl steampunk",
     "description": "Lampa wykonana z żeliwnych rur hydraulicznych z manometrem i klasycznym przełącznikiem.",
     "meta": [
-      "Żeliwna rura",
-      "Akcent steampunk",
-      "Przełącznik dźwigniowy"
+      "industrialna lampa z rur",
+      "czarne metalowe kolanka",
+      "żarówka Edison",
+      "lampka stołowa loft",
+      "ciepłe światło vintage"
     ],
     "imageAlt": "Lampa hydrauliczna z rur"
   }
@@ -894,9 +1030,11 @@ products: {
     "tag": "Natural ion",
     "description": "Carved pink salt crystal block mounted on a wooden base with dimmer intensity switch.",
     "meta": [
-      "Natural salt crystal",
-      "Dimmer control",
-      "Warm pink glow"
+      "pink salt lamp",
+      "natural salt rock",
+      "round wood base",
+      "warm orange glow",
+      "relaxing bedroom light"
     ],
     "imageAlt": "Himalayan Salt Rock Lamp"
   },
@@ -905,9 +1043,11 @@ products: {
     "tag": "Naturalny jonizator",
     "description": "Rzeźbiony bryłowy kryształ soli himalajskiej na drewnianej podstawce z regulacją natężenia.",
     "meta": [
-      "Kryształ soli",
-      "Regulacja jasności",
-      "Różowy blask"
+      "różowa lampa solna",
+      "naturalna bryła soli",
+      "drewniana okrągła podstawa",
+      "ciepłe pomarańczowe światło",
+      "relaksacyjne oświetlenie sypialni"
     ],
     "imageAlt": "Różowa lampa solna"
   }
@@ -920,9 +1060,11 @@ products: {
     "tag": "Futuristic desk",
     "description": "Innovative elliptical lamp switched on by levitating two wooden spheres in center air.",
     "meta": [
-      "Magnetic switch",
-      "Levitating spheres",
-      "Futuristic frame"
+      "magnetic table lamp",
+      "round LED ring",
+      "black and gold base",
+      "kinetic balance design",
+      "warm decorative light"
     ],
     "imageAlt": "Kinetic Magnetic Balance Lamp"
   },
@@ -931,9 +1073,11 @@ products: {
     "tag": "Nowoczesne biurko",
     "description": "Innowacyjna eliptyczna lampa włączana poprzez przyciąganie dwóch unoszących się kulek.",
     "meta": [
-      "Przełącznik magnetyczny",
-      "Wiszące kulki",
-      "Futurystyczna rama"
+      "magnetyczna lampa stołowa",
+      "okrągły pierścień LED",
+      "czarno złota podstawa",
+      "kinetyczna konstrukcja balansowa",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Lampa magnetyczna Heng"
   }
@@ -946,9 +1090,11 @@ products: {
     "tag": "Bedhead reading",
     "description": "Compact wall-mounted spotlight with flexible rubber arm for pin-point reading comfort.",
     "meta": [
-      "Flexible arm",
-      "Narrow spot beam",
-      "Bedhead mount"
+      "black spot wall light",
+      "cylindrical metal spotlight",
+      "adjustable head",
+      "reading wall lamp",
+      "focused downward beam"
     ],
     "imageAlt": "Black Gooseneck Spotlight"
   },
@@ -957,9 +1103,11 @@ products: {
     "tag": "Czytanie w łóżku",
     "description": "Kompaktowy kinkiet punktowy z giętkim ramieniem gumowanym do wygodnego czytania.",
     "meta": [
-      "Elastyczne ramię",
-      "Wąski strumień",
-      "Montaż przy łóżku"
+      "czarny kinkiet punktowy",
+      "cylindryczny metalowy reflektor",
+      "regulowana głowica",
+      "światło do czytania",
+      "skupiona wiązka w dół"
     ],
     "imageAlt": "Kinkiet z elastycznym ramieniem"
   }
@@ -972,9 +1120,11 @@ products: {
     "tag": "Nordic living",
     "description": "Natural ash wood tripod base with a wide cream linen shade for relaxing living rooms.",
     "meta": [
-      "Ash wood legs",
-      "Linen shade",
-      "Nordic warmth"
+      "tripod floor lamp",
+      "wooden tripod legs",
+      "beige fabric shade",
+      "Scandinavian style",
+      "warm living room light"
     ],
     "imageAlt": "Scandi Tripod Floor Lamp"
   },
@@ -983,9 +1133,11 @@ products: {
     "tag": "Północny styl",
     "description": "Trójnóg z naturalnego drewna jesionowego z szerokim kloszem z lnianego płótna.",
     "meta": [
-      "Jesionowe nogi",
-      "Lniany klosz",
-      "Północne ciepło"
+      "lampa podłogowa na trójnogu",
+      "drewniane nogi statywu",
+      "beżowy tekstylny abażur",
+      "styl skandynawski",
+      "ciepłe światło do salonu"
     ],
     "imageAlt": "Lampa podłogowa Tripod Scandi"
   }
@@ -998,9 +1150,11 @@ products: {
     "tag": "Staircase centerpiece",
     "description": "Trio of suspended smoke glass drops hanging at staggered heights for high ceiling foyers.",
     "meta": [
-      "Cluster arrangement",
-      "Smoky glass",
-      "Staggered drop"
+      "cluster pendant lamp",
+      "three smoked glass shades",
+      "black ceiling canopy",
+      "filament bulbs",
+      "warm over table light"
     ],
     "imageAlt": "Smoke Glass Pendant Cluster"
   },
@@ -1009,9 +1163,11 @@ products: {
     "tag": "Ozdoba klatki schodowej",
     "description": "Potrójna lampa wisząca ze szkła dymionego o zawieszeniu na różnych wysokościach do holu.",
     "meta": [
-      "Układ kaskadowy",
-      "Dymione szkło",
-      "Różne wysokości"
+      "kaskadowa lampa wisząca",
+      "trzy klosze z dymionego szkła",
+      "czarna podsufitka",
+      "żarówki filamentowe",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Kaskadowa lampa wisząca"
   }
@@ -1024,9 +1180,11 @@ products: {
     "tag": "Glamour glow",
     "description": "Gilded textured metal disc reflecting hidden warm LED light back onto wall surfaces.",
     "meta": [
-      "Gold leaf texture",
-      "Indirect halo light",
-      "Glamour touch"
+      "gold round wall sconce",
+      "textured metal disc",
+      "LED edge lighting",
+      "elegant wall decoration",
+      "warm golden glow"
     ],
     "imageAlt": "Gold Leaf Wall Sconce"
   },
@@ -1035,9 +1193,11 @@ products: {
     "tag": "Blask glamour",
     "description": "Pozłacany metalowy talerz odbijający ukryte światło LED z powrotem na ścianę.",
     "meta": [
-      "Faktura złota",
-      "Świetlna poświata",
-      "Akcent glamour"
+      "złoty kinkiet okrągły",
+      "metalowy dysk z fakturą",
+      "podświetlana krawędź LED",
+      "elegancka dekoracja ściany",
+      "ciepła złota poświata"
     ],
     "imageAlt": "Złocony kinkiet ścienny"
   }
@@ -1050,9 +1210,11 @@ products: {
     "tag": "Pop culture",
     "description": "Vibrant pink LED neon flex light mounted on acrylic base for bedroom wall decor.",
     "meta": [
-      "Pink LED neon",
-      "Acrylic backing",
-      "Pop art vibe"
+      "cage table lamp",
+      "black cylinder cage",
+      "exposed Edison bulb",
+      "industrial loft style",
+      "warm decorative light"
     ],
     "imageAlt": "Neon Sign Heart Lamp"
   },
@@ -1061,9 +1223,11 @@ products: {
     "tag": "Styl pop art",
     "description": "Jaskrawa różowa lampka neonowa LED na akrylowej podstawce do dekoracji pokoju.",
     "meta": [
-      "Różowy neon LED",
-      "Podstawa akrylowa",
-      "Klimat pop art"
+      "stołowa lampa klatkowa",
+      "czarny cylindryczny kosz",
+      "widoczna żarówka Edison",
+      "industrialny styl loft",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Lampa LED Neon Serce"
   }
@@ -1076,9 +1240,11 @@ products: {
     "tag": "French chic",
     "description": "Traditional conical pleated shade resting on a brass rod base for bedside elegance.",
     "meta": [
-      "Pleated shade",
-      "French chic",
-      "Compact size"
+      "pleated shade table lamp",
+      "beige fabric shade",
+      "black round base",
+      "classic living room lighting",
+      "soft warm light"
     ],
     "imageAlt": "Pleated Fabric Shade Lamp"
   },
@@ -1087,9 +1253,11 @@ products: {
     "tag": "Francuski szyk",
     "description": "Tradycyjny stożkowy plisowany klosz umieszczony na delikatnej mosiężnej nóżce.",
     "meta": [
-      "Plisowany tkaninowy klosz",
-      "Francuski szyk",
-      "Elegancja do sypialni"
+      "lampa stołowa z plisowanym abażurem",
+      "beżowy tekstylny klosz",
+      "czarna okrągła podstawa",
+      "klasyczne oświetlenie salonu",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Lampa z plisowanym kloszem"
   }
@@ -1102,9 +1270,11 @@ products: {
     "tag": "Kitchen utility",
     "description": "Slim aluminium motion-sensor light strip with magnetic mounting for kitchen countertops.",
     "meta": [
-      "Motion sensor",
-      "Magnetic bar",
-      "Kitchen worklight"
+      "under cabinet LED bar",
+      "slim white fixture",
+      "linear task light",
+      "kitchen worktop lighting",
+      "even warm illumination"
     ],
     "imageAlt": "Under Cabinet LED Strip"
   },
@@ -1113,9 +1283,11 @@ products: {
     "tag": "Użyteczność w kuchni",
     "description": "Aluminiowa czujnikowa listwa LED z mocowaniem magnetycznym pod szafki kuchenne.",
     "meta": [
-      "Czujnik ruchu",
-      "Montaż magnetyczny",
-      "Jasne światło robocze"
+      "listwa LED pod szafkę",
+      "smukła biała oprawa",
+      "liniowe światło robocze",
+      "do kuchennego blatu",
+      "równomierne ciepłe oświetlenie"
     ],
     "imageAlt": "Listwa podszafkowa LED"
   }
@@ -1128,9 +1300,11 @@ products: {
     "tag": "1920s elegance",
     "description": "Symmetrical brass arches supporting a milky white glass orb for vintage luxury rooms.",
     "meta": [
-      "Art Deco geometry",
-      "Brass finish",
-      "Milky glass orb"
+      "brass table lamp",
+      "geometric stepped base",
+      "clear filament globe",
+      "Art Deco style",
+      "warm decorative light"
     ],
     "imageAlt": "Art Deco Brass Globe"
   },
@@ -1139,9 +1313,11 @@ products: {
     "tag": "Elegancja lat 20.",
     "description": "Symetryczne mosiężne łuki podtrzymujące mleczno-białą kulę szklaną w stylu klasycznym.",
     "meta": [
-      "Geometria Art Deco",
-      "Mosiężne wykończenie",
-      "Mleczna kula szklana"
+      "mosiężna lampa stołowa",
+      "geometryczna schodkowa podstawa",
+      "przezroczysta kula filamentowa",
+      "styl Art Deco",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Mosiężna lampa Art Deco"
   }
@@ -1154,9 +1330,11 @@ products: {
     "tag": "Hospitality design",
     "description": "Cordless metal cylinder lamp with touch dimmer ideal for restaurant and patio dining.",
     "meta": [
-      "Cordless battery",
-      "Touch dimmer",
-      "Hospitality grade"
+      "wireless table lamp",
+      "black T shaped design",
+      "horizontal LED bar",
+      "rechargeable portable light",
+      "even desk lighting"
     ],
     "imageAlt": "Rechargeable Bar Table Lamp"
   },
@@ -1165,9 +1343,11 @@ products: {
     "tag": "Design dla restauracji",
     "description": "Bezprzewodowa stożkowa lampka z dimmerem dotykowym na stoły w restauracji i tarasie.",
     "meta": [
-      "Zasilanie akumulatorowe",
-      "Ściemniacz dotykowy",
-      "Smukła obudowa"
+      "bezprzewodowa lampa stołowa",
+      "czarny kształt litery T",
+      "pozioma listwa LED",
+      "ładowalne światło przenośne",
+      "równomierne oświetlenie biurka"
     ],
     "imageAlt": "Bezprzewodowa lampka barowa"
   }
@@ -1180,9 +1360,11 @@ products: {
     "tag": "Textile craft",
     "description": "Woven cotton macrame fringe shade offering textured warm ambient light.",
     "meta": [
-      "Cotton macrame",
-      "Handmade fringe",
-      "Boho aesthetic"
+      "macrame pendant lamp",
+      "white woven fringe shade",
+      "boho style",
+      "bedroom decoration",
+      "warm patterned light"
     ],
     "imageAlt": "Boho Macrame Pendant Light"
   },
@@ -1191,9 +1373,11 @@ products: {
     "tag": "Sztuka tekstylna",
     "description": "Ręcznie pleciony klosz z bawełnianej makramy z frędzlami, dający ciepłe przytulne światło.",
     "meta": [
-      "Bawełniana makrama",
-      "Ręczne frędzle",
-      "Aura boho"
+      "lampa wisząca makrama",
+      "biały pleciony klosz z frędzlami",
+      "styl boho",
+      "dekoracja sypialni",
+      "ciepłe wzorzyste światło"
     ],
     "imageAlt": "Lampa wisząca Makrama Boho"
   }
@@ -1206,9 +1390,11 @@ products: {
     "tag": "Precision craft",
     "description": "Desk lamp with integrated 5x glass magnifying lens and bright daylight ring lighting.",
     "meta": [
-      "5x magnification",
-      "Daylight ring LED",
-      "Precision work"
+      "magnifying desk lamp",
+      "round LED ring",
+      "adjustable black arm",
+      "precision and beauty work",
+      "bright task light"
     ],
     "imageAlt": "Magnifying LED Desk Lamp"
   },
@@ -1217,9 +1403,11 @@ products: {
     "tag": "Precyzyjne prace",
     "description": "Lampa ze szkłem powiększającym 5x oraz pierścieniowym światłem LED do precyzyjnych prac.",
     "meta": [
-      "Powiększenie 5x",
-      "Światło pierścieniowe LED",
-      "Ramię przegubowe"
+      "lampa biurkowa z lupą",
+      "okrągłe światło LED",
+      "regulowane czarne ramię",
+      "praca precyzyjna i kosmetyczna",
+      "jasne światło robocze"
     ],
     "imageAlt": "Lampa biurkowa z lupą LED"
   }
@@ -1232,9 +1420,11 @@ products: {
     "tag": "Island lighting",
     "description": "Long black aluminium bar fixture casting glare-free downward illumination over kitchen island.",
     "meta": [
-      "Linear aluminium",
-      "Glare free beam",
-      "Kitchen island style"
+      "linear LED pendant",
+      "slim black light bar",
+      "minimalist ceiling suspension",
+      "over table or desk",
+      "even downward light"
     ],
     "imageAlt": "Minimalist Linear Pendant"
   },
@@ -1243,9 +1433,11 @@ products: {
     "tag": "Oświetlenie wyspy",
     "description": "Długa czarna czarna listwa wisząca LED dająca równomierne światło nad wyspę kuchenną.",
     "meta": [
-      "Aluminiowa listwa",
-      "Bezodblaskowe światło",
-      "Nowoczesna wyspa"
+      "liniowa lampa wisząca LED",
+      "smukła czarna listwa",
+      "minimalistyczny zwis sufitowy",
+      "nad stół lub biurko",
+      "równomierne światło w dół"
     ],
     "imageAlt": "Liniowa lampa wisząca"
   }
@@ -1258,9 +1450,11 @@ products: {
     "tag": "Executive classic",
     "description": "Classic green glass shade with brass pull chain and weighted brass base.",
     "meta": [
-      "Green glass shade",
-      "Brass pull chain",
-      "Banker classic"
+      "green bankers lamp",
+      "emerald glass shade",
+      "brass base",
+      "classic office style",
+      "warm reading light"
     ],
     "imageAlt": "Vintage Bankers Lamp"
   },
@@ -1269,9 +1463,11 @@ products: {
     "tag": "Szyku gabinetu",
     "description": "Kultowy zielony szklany klosz z mosiężnym łańcuszkiem włączającym i mosiężną podstawą.",
     "meta": [
-      "Zielone szkło",
-      "Łańcuszek mosiężny",
-      "Kultowy gabinetowy styl"
+      "zielona lampa bankierska",
+      "szmaragdowy szklany klosz",
+      "mosiężna podstawa",
+      "klasyczny styl gabinetowy",
+      "ciepłe światło do czytania"
     ],
     "imageAlt": "Klasyczna lampa bankierska"
   }
@@ -1284,9 +1480,11 @@ products: {
     "tag": "Earthy texture",
     "description": "Uneven textured clay shade celebrating natural imperfections and warm organic lighting.",
     "meta": [
-      "Clay ceramic",
-      "Wabi sabi texture",
-      "Organic form"
+      "ceramic pendant lamp",
+      "beige handmade shade",
+      "wabi sabi style",
+      "single over table pendant",
+      "warm downward light"
     ],
     "imageAlt": "Ceramic Wabi Sabi Pendant"
   },
@@ -1295,9 +1493,11 @@ products: {
     "tag": "Organiczna tekstura",
     "description": "Gliniana, nierównomierna faktura celebrująca naturalne piękno materiału i ciepłe światło.",
     "meta": [
-      "Ceramika z gliny",
-      "Tekstura wabi sabi",
-      "Nieregularna forma"
+      "ceramiczna lampa wisząca",
+      "beżowy ręcznie formowany klosz",
+      "styl wabi sabi",
+      "pojedynczy zwis nad stół",
+      "ciepłe światło w dół"
     ],
     "imageAlt": "Ceramiczna lampa Wabi Sabi"
   }
@@ -1310,9 +1510,11 @@ products: {
     "tag": "Cosmic ambient",
     "description": "Rotating globe projecting nebula clouds and starry laser spots onto room ceilings.",
     "meta": [
-      "Nebula projector",
-      "Laser stars",
-      "Bluetooth speaker"
+      "galaxy globe projector",
+      "clear glass sphere",
+      "red green blue effects",
+      "RGB ambient lamp",
+      "bedroom decoration"
     ],
     "imageAlt": "Starry Galaxy Projector Globe"
   },
@@ -1321,9 +1523,11 @@ products: {
     "tag": "Kosmiczny nastroj",
     "description": "Kula projekcyjna tworząca obracające się mgławice i laserowe gwiazdy na suficie.",
     "meta": [
-      "Projektor mgławic",
-      "Laserowe gwiazdy",
-      "Wbudowany głośnik BT"
+      "projektor galaktyki w kuli",
+      "przezroczysta szklana sfera",
+      "czerwone zielone niebieskie efekty",
+      "lampka nastrojowa RGB",
+      "dekoracja sypialni"
     ],
     "imageAlt": "Projektor gwiazd i galaktyki"
   }
@@ -1336,9 +1540,11 @@ products: {
     "tag": "Loft shadow",
     "description": "Black woven wire mesh cage creating semi-transparent shadow textures when lit.",
     "meta": [
-      "Woven wire mesh",
-      "Transparency",
-      "Shadow pattern"
+      "wire mesh pendant",
+      "black metal shade",
+      "exposed Edison bulb",
+      "industrial loft style",
+      "warm over table light"
     ],
     "imageAlt": "Wire Mesh Pendant Lamp"
   },
@@ -1347,9 +1553,11 @@ products: {
     "tag": "Cienie w stylu loft",
     "description": "Czarna metalowa siatka tworząca po podświetleniu miękkie półprzezroczyste cienie.",
     "meta": [
-      "Pleciona siatka metalowa",
-      "Ażurowy klosz",
-      "Lekka konstrukcja"
+      "lampa wisząca z siatki",
+      "czarny metalowy klosz",
+      "widoczna żarówka Edison",
+      "industrialny styl loft",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Ażurowa lampa z siatki"
   }
@@ -1362,9 +1570,11 @@ products: {
     "tag": "TV Backlight",
     "description": "Two standing lightbars for placement behind monitors to synchronize room illumination with video.",
     "meta": [
-      "Dual lightbars",
-      "Monitor sync",
-      "App control"
+      "pair of RGB light bars",
+      "vertical LED columns",
+      "red green blue light",
+      "gaming room lights",
+      "app control"
     ],
     "imageAlt": "Smart RGB LED Lightbar Pair"
   },
@@ -1373,9 +1583,11 @@ products: {
     "tag": "Podświetlenie ekranu",
     "description": "Dwie stojące kolumny podświetlające przestrzeń za monitorem lub telewizorem.",
     "meta": [
-      "Para kolumn",
-      "Synchronizacja obrazu",
-      "Aplikacja mobilna"
+      "zestaw dwóch kolumn RGB",
+      "pionowe listwy LED",
+      "czerwone zielone niebieskie światło",
+      "oświetlenie gamingowe",
+      "sterowanie aplikacją"
     ],
     "imageAlt": "Zestaw kolumn RGB LED"
   }
@@ -1388,9 +1600,11 @@ products: {
     "tag": "Minimal wood",
     "description": "Solid oak wooden block with embedded LED core and top touch-activated brightness control.",
     "meta": [
-      "Solid oak block",
-      "Touch top",
-      "Warm white LED"
+      "wooden bedside lamp",
+      "square wood frame",
+      "frosted center diffuser",
+      "nightstand light",
+      "soft warm glow"
     ],
     "imageAlt": "Wooden Cube Bedside Lamp"
   },
@@ -1399,9 +1613,11 @@ products: {
     "tag": "Proste drewno",
     "description": "Lity dębowy kloc ze wbudowanym modułem LED i dotykowym panelem włączającym.",
     "meta": [
-      "Lity dąb",
-      "Włącznik dotykowy",
-      "Kompaktowa kostka"
+      "drewniana lampka nocna",
+      "kwadratowa rama z drewna",
+      "mleczny środkowy dyfuzor",
+      "na stolik nocny",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Drewniana kostka nocna"
   }
@@ -1414,9 +1630,11 @@ products: {
     "tag": "Swivel reach",
     "description": "Long swinging brass arm mounted on wall for reaching over dining tables or reading sofas.",
     "meta": [
-      "Swivel arm",
-      "Brass finish",
-      "Wall swing"
+      "brass arc wall lamp",
+      "curved metal arm",
+      "directional shade",
+      "bedside reading light",
+      "warm downward beam"
     ],
     "imageAlt": "Brass Arc Wall Lamp"
   },
@@ -1425,9 +1643,11 @@ products: {
     "tag": "Obrotowy zasięg",
     "description": "Długie obrotowe ramiona mosiężne montowane do ściany nad sofę lub stół.",
     "meta": [
-      "Obrotowy wysięgnik",
-      "Szczotkowany mosiądz",
-      "Zasięg do sofy"
+      "mosiężny kinkiet łukowy",
+      "gięte metalowe ramię",
+      "klosz kierunkowy",
+      "lampka do czytania przy łóżku",
+      "ciepła wiązka w dół"
     ],
     "imageAlt": "Mosiężny kinkiet wysięgnik"
   }
@@ -1440,9 +1660,11 @@ products: {
     "tag": "Cinema vintage",
     "description": "Vintage movie studio reflector lamp mounted on height-adjustable wooden tripod legs.",
     "meta": [
-      "Studio searchlight",
-      "Wooden tripod",
-      "Adjustable height"
+      "industrial tripod spotlight",
+      "metal cinema light",
+      "studio style tripod",
+      "adjustable directional light",
+      "warm focused beam"
     ],
     "imageAlt": "Industrial Tripod Searchlight"
   },
@@ -1451,9 +1673,11 @@ products: {
     "tag": "Kino vintage",
     "description": "Stylizowany reflektor ze studia filmowego umieszczony na drewnianym statywie z regulacją.",
     "meta": [
-      "Reflektor studyjny",
-      "Drewniany statyw",
-      "Stylizowany klosz"
+      "industrialny reflektor na statywie",
+      "metalowy klosz filmowy",
+      "trójnóg w stylu studyjnym",
+      "regulowane światło kierunkowe",
+      "ciepła skupiona wiązka"
     ],
     "imageAlt": "Reflektor filmowy na statywie"
   }
@@ -1466,9 +1690,11 @@ products: {
     "tag": "Modern lounge",
     "description": "Semi-reflective smoked glass dome concealing warm bulb filament for cozy evening glow.",
     "meta": [
-      "Smoked dome",
-      "Warm filament glow",
-      "Lounge aesthetic"
+      "smoked glass table lamp",
+      "glass dome",
+      "black round base",
+      "exposed filament bulb",
+      "warm vintage light"
     ],
     "imageAlt": "Smoked Glass Dome Lamp"
   },
@@ -1477,9 +1703,11 @@ products: {
     "tag": "Nowoczesny salon",
     "description": "Przyciemniana dymiona kopuła szklana osłaniająca ozdobną żarówkę w stylu vintage.",
     "meta": [
-      "Dymiona kopuła",
-      "Ozdobny żarnik",
-      "Nastrojowy salon"
+      "lampa stołowa z dymionego szkła",
+      "szklana kopuła",
+      "czarna okrągła podstawa",
+      "widoczna żarówka filamentowa",
+      "ciepłe światło vintage"
     ],
     "imageAlt": "Lampa stołowa z dymioną kopułą"
   }
@@ -1492,9 +1720,11 @@ products: {
     "tag": "Halo geometry",
     "description": "Circular suspended halo light ring creating seamless modern lighting over dining space.",
     "meta": [
-      "Circular halo",
-      "Modern LED ring",
-      "Suspended mount"
+      "LED ring pendant",
+      "white circular hoop",
+      "modern ceiling lamp",
+      "dining table lighting",
+      "even halo light"
     ],
     "imageAlt": "LED Ring Pendant Light"
   },
@@ -1503,9 +1733,11 @@ products: {
     "tag": "Geometryczny pierścień",
     "description": "Zawieszony okrągły pierścień świetlny LED dodający minimalistycznego charakteru nad stołem.",
     "meta": [
-      "Pierścień LED",
-      "Zawieszenie mikrolinki",
-      "Światło obwodowe"
+      "wiszący pierścień LED",
+      "biała okrągła obręcz",
+      "nowoczesna lampa sufitowa",
+      "nad stół w jadalni",
+      "równomierne światło Halo"
     ],
     "imageAlt": "Pierścień wiszący LED Halo"
   }
@@ -1518,9 +1750,11 @@ products: {
     "tag": "Coastal interior",
     "description": "Natural seagrass woven body providing textured organic accents for coastal homes.",
     "meta": [
-      "Seagrass texture",
-      "Coastal vibe",
-      "Natural weave"
+      "seagrass table lamp",
+      "woven cylinder shade",
+      "natural beige material",
+      "boho style",
+      "warm decorative light"
     ],
     "imageAlt": "Woven Seagrass Table Lamp"
   },
@@ -1529,9 +1763,11 @@ products: {
     "tag": "Nadmorski klimat",
     "description": "Naturalny pleciony korpus z trawy morskiej wprowadzający przytulny nadmorski klimat.",
     "meta": [
-      "Pleciona trawa morska",
-      "Styl coastal",
-      "Naturalny splot"
+      "lampa stołowa z trawy morskiej",
+      "pleciony cylindryczny klosz",
+      "naturalny beżowy materiał",
+      "styl boho",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Lampa stołowa z trawy morskiej"
   }
@@ -1544,9 +1780,11 @@ products: {
     "tag": "Architectural modular",
     "description": "Low-voltage magnetic track spotlight easily repositionable without tools.",
     "meta": [
-      "Magnetic snap",
-      "Low voltage",
-      "Architectural track"
+      "magnetic track spotlight",
+      "black cylinder body",
+      "adjustable spot light",
+      "modern ceiling mount",
+      "focused warm beam"
     ],
     "imageAlt": "Magnetic Track Spot Light"
   },
@@ -1555,9 +1793,11 @@ products: {
     "tag": "Architektoniczna modułowość",
     "description": "Reflektor LED wpinany magnetycznie do szynoprzewodu niskonapięciowego bez narzędzi.",
     "meta": [
-      "Wpinanie magnetyczne",
-      "Bezpieczne napięcie",
-      "Niski profil"
+      "reflektor do szyny magnetycznej",
+      "czarny cylindryczny korpus",
+      "regulowane światło punktowe",
+      "nowoczesny montaż sufitowy",
+      "skupiona ciepła wiązka"
     ],
     "imageAlt": "Reflektor do szyny magnetycznej"
   }
@@ -1570,9 +1810,11 @@ products: {
     "tag": "Japanese airy",
     "description": "Lightweight paper lantern shade that collapses flat, dispersing balanced soft room glow.",
     "meta": [
-      "Paper shade",
-      "Diffused light",
-      "Foldable lantern"
+      "paper table lamp",
+      "spherical pleated lantern",
+      "white paper shade",
+      "Japanese style",
+      "soft diffused light"
     ],
     "imageAlt": "Pleated Paper Lantern Lamp"
   },
@@ -1581,9 +1823,11 @@ products: {
     "tag": "Japoński spokój",
     "description": "Lekki papierowy klosz lampionowy zmiękczający światło w pomieszczeniu.",
     "meta": [
-      "Papierowy klosz",
-      "Kompaktowy po złożeniu",
-      "Tradycyjny profil"
+      "papierowa lampa stołowa",
+      "kulisty plisowany lampion",
+      "biały papierowy klosz",
+      "styl japoński",
+      "miękkie rozproszone światło"
     ],
     "imageAlt": "Papierowa lampionowa lampa"
   }
@@ -1596,9 +1840,11 @@ products: {
     "tag": "Minimal reading",
     "description": "Surface mounted small wall spot with hidden switch for clean hotel-style bedrooms.",
     "meta": [
-      "Matte black finish",
-      "Integrated toggle",
-      "Focused spot"
+      "black hotel wall light",
+      "cylindrical spot lamp",
+      "adjustable head",
+      "bedside reading light",
+      "focused directional beam"
     ],
     "imageAlt": "Matte Black Bedside Spot"
   },
@@ -1607,9 +1853,11 @@ products: {
     "tag": "Minimalistyczne czytanie",
     "description": "Kinkiet punktowy montowany natynkowo ze zintegrowanym przełącznikiem w oprawie.",
     "meta": [
-      "Matowa czerń",
-      "Włącznik na oprawie",
-      "Kątowy strumień"
+      "czarny kinkiet hotelowy",
+      "cylindryczny reflektor punktowy",
+      "regulowana głowica",
+      "do czytania przy łóżku",
+      "skupione światło kierunkowe"
     ],
     "imageAlt": "Czarny kinkiet hotelowy"
   }
@@ -1622,9 +1870,11 @@ products: {
     "tag": "Luxurious drop",
     "description": "Cascading genuine glass crystal prisms catching light from interior LED sources.",
     "meta": [
-      "Glass prisms",
-      "Cascading drop",
-      "Crystal sparkles"
+      "crystal cascade chandelier",
+      "layered glass drops",
+      "chrome ceiling fixture",
+      "glamour style",
+      "statement living room light"
     ],
     "imageAlt": "Crystal Cascade Pendant"
   },
@@ -1633,9 +1883,11 @@ products: {
     "tag": "Luksusowy błysk",
     "description": "Kaskada szklanych kryształowych pryzmatów pięknie rozpraszających światło w salonie.",
     "meta": [
-      "Szklane kryształy",
-      "Układ kaskadowy",
-      "Błyszczące refleksy"
+      "kryształowy żyrandol kaskadowy",
+      "warstwowe szklane sople",
+      "chromowana oprawa sufitowa",
+      "styl glamour",
+      "efektowne światło do salonu"
     ],
     "imageAlt": "Kryształowy żyrandol kaskadowy"
   }
@@ -1648,9 +1900,11 @@ products: {
     "tag": "Apothecary style",
     "description": "Recycled amber glass bottle base paired with a warm burlap lampshade.",
     "meta": [
-      "Apothecary glass",
-      "Burlap shade",
-      "Recycled material"
+      "amber bottle table lamp",
+      "brown glass body",
+      "beige fabric shade",
+      "vintage bedside lamp",
+      "warm cozy light"
     ],
     "imageAlt": "Amber Glass Bottle Lamp"
   },
@@ -1659,9 +1913,11 @@ products: {
     "tag": "Styl aptekarski",
     "description": "Podstawa z barwionego bursztynowego szkła w połączeniu z lniano-jutowym kloszem.",
     "meta": [
-      "Bursztynowa szkło",
-      "Jutowy klosz",
-      "Recyklingowy styl"
+      "lampa stołowa z bursztynowej butelki",
+      "brązowy szklany korpus",
+      "beżowy tekstylny abażur",
+      "lampka nocna vintage",
+      "ciepłe przytulne światło"
     ],
     "imageAlt": "Lampa z bursztynowej butli"
   }
@@ -1674,9 +1930,11 @@ products: {
     "tag": "Relaxing art",
     "description": "3D flowing sand art round lamp shifting colorful sand patterns every time flipped.",
     "meta": [
-      "Moving sand art",
-      "LED halo light",
-      "Stress relief"
+      "3D moving sand lamp",
+      "round glass display",
+      "blue purple LED lighting",
+      "decorative ambient light",
+      "landscape effect"
     ],
     "imageAlt": "LED Sandscape Moving Lamp"
   },
@@ -1685,9 +1943,11 @@ products: {
     "tag": "Relaksujący widok",
     "description": "Okrągła lampka LED z zamkniętym piaszczystym obrazem tworzącym Unikalne krajobrazy.",
     "meta": [
-      "Ruchomy piasek 3D",
-      "Obręcz LED",
-      "Relaksujący efekt"
+      "lampa z ruchomym piaskiem 3D",
+      "okrągła szklana tarcza",
+      "niebiesko fioletowe podświetlenie LED",
+      "dekoracyjne światło nastrojowe",
+      "efekt krajobrazu"
     ],
     "imageAlt": "Lampa z ruchomym piaskiem 3D"
   }
@@ -1700,9 +1960,11 @@ products: {
     "tag": "Loft tall",
     "description": "Tall steel mesh column floor fixture with internal multi-bulb warm filament tower.",
     "meta": [
-      "Steel mesh column",
-      "Multi bulb stack",
-      "Loft floor light"
+      "industrial floor lamp",
+      "tall metal mesh cylinder",
+      "five exposed bulbs",
+      "loft style",
+      "warm vertical light"
     ],
     "imageAlt": "Industrial Mesh Floor Lamp"
   },
@@ -1711,9 +1973,11 @@ products: {
     "tag": "Wysoki loft",
     "description": "Wysoka stalowa kolumna siatkowa ze skrytą wewnątrz serią ozdobnych żarówek.",
     "meta": [
-      "Stalowa siatka",
-      "Wielopunktowy słupek",
-      "Surowa stal"
+      "industrialna lampa podłogowa",
+      "wysoki metalowy walec z siatki",
+      "pięć widocznych żarówek",
+      "styl loft",
+      "ciepłe pionowe światło"
     ],
     "imageAlt": "Siatkowa lampa podłogowa"
   }
@@ -1726,9 +1990,11 @@ products: {
     "tag": "Playful fringe",
     "description": "Tasseled fabric shade on brushed gold base adding tactile warmth to side tables.",
     "meta": [
-      "Tassel fringe",
-      "Brushed gold",
-      "Playful boho"
+      "boho table lamp",
+      "beige fringed shade",
+      "brass base",
+      "bedroom lighting",
+      "warm ambient light"
     ],
     "imageAlt": "Boho Fringe Table Lamp"
   },
@@ -1737,9 +2003,11 @@ products: {
     "tag": "Styl boho",
     "description": "Tkaninowy klosz ozdobiony frędzlami na podwoziu ze szczotkowanego złota.",
     "meta": [
-      "Frędzle tekstylne",
-      "Szczotkowane złoto",
-      "Przytulny nastrój"
+      "lampa stołowa boho",
+      "beżowy abażur z frędzlami",
+      "mosiężna podstawa",
+      "do sypialni",
+      "ciepłe nastrojowe światło"
     ],
     "imageAlt": "Lampa stołowa z frędzlami"
   }
@@ -1752,9 +2020,11 @@ products: {
     "tag": "Main ceiling",
     "description": "Ultra-slim smart LED ceiling light with adjustable color temperature and RGB backlight.",
     "meta": [
-      "Ultra slim profile",
-      "RGB rim backlight",
-      "Tunable white"
+      "smart LED ceiling light",
+      "white round diffuser",
+      "red green blue RGB light",
+      "modern flush mount",
+      "adjustable light color"
     ],
     "imageAlt": "Smart Ceiling Flushmount"
   },
@@ -1763,9 +2033,11 @@ products: {
     "tag": "Główne światło",
     "description": "Płaski natynkowy plafon smart z płynną regulacją temperatury i podświetleniem barwnym RGB.",
     "meta": [
-      "Płaski profil",
-      "Tylne światło RGB",
-      "Regulowana biel"
+      "inteligentny plafon LED",
+      "biały okrągły dyfuzor",
+      "czerwone zielone niebieskie światło RGB",
+      "nowoczesna lampa sufitowa",
+      "sterowanie barwą światła"
     ],
     "imageAlt": "Sufitowy plafon Smart LED"
   }
@@ -1778,9 +2050,11 @@ products: {
     "tag": "Retro glass",
     "description": "Hand-blown striped glass mushroom desk lamp emitting soft ambient bedroom lighting.",
     "meta": [
-      "Hand blown glass",
-      "Striped pattern",
-      "Retro mushroom"
+      "glass mushroom lamp",
+      "orange striped shade",
+      "gold round base",
+      "retro style",
+      "warm night light"
     ],
     "imageAlt": "Mushroom Glass Bedside Lamp"
   },
@@ -1789,9 +2063,11 @@ products: {
     "tag": "Szkło paski",
     "description": "Ręcznie dmuchane pasiaste szkło w kształcie grzybka daje nastrojowy blask sypialni.",
     "meta": [
-      "Ręcznie dmuchane szkło",
-      "Paski na szkle",
-      "Klimat włoskiego retro"
+      "szklana lampka grzybek",
+      "pomarańczowy pasiasty klosz",
+      "złota okrągła podstawa",
+      "styl retro",
+      "ciepłe światło nocne"
     ],
     "imageAlt": "Szklany grzybek retro"
   }
@@ -1804,9 +2080,11 @@ products: {
     "tag": "Classic standing",
     "description": "Floor standing variation of banker light with tilting shade and heavy ornate base.",
     "meta": [
-      "Banker floor format",
-      "Tilting shade",
-      "Solid brass look"
+      "bankers floor lamp",
+      "tall brass stand",
+      "gold metal shade",
+      "classic office style",
+      "reading light"
     ],
     "imageAlt": "Brass Banker Floor Lamp"
   },
@@ -1815,9 +2093,11 @@ products: {
     "tag": "Klasyczny stojak",
     "description": "Podłogowy wariant znanej lampy gabinetowej z regulowanym kątem nachylenia klosza.",
     "meta": [
-      "Mosiężny stojak",
-      "Regulacja klosza",
-      "Tradycyjny wygląd"
+      "podłogowa lampa bankierska",
+      "wysoka mosiężna podstawa",
+      "złoty metalowy klosz",
+      "klasyczny styl gabinetowy",
+      "światło do czytania"
     ],
     "imageAlt": "Lampa podłogowa Bankierska"
   }
@@ -1830,9 +2110,11 @@ products: {
     "tag": "Fairy ambient",
     "description": "Clear glass sphere filled with micro fairy string lights on warm copper wire.",
     "meta": [
-      "Micro fairy lights",
-      "Clear glass sphere",
-      "USB battery power"
+      "glass globe fairy light",
+      "clear round sphere",
+      "copper micro LEDs",
+      "decorative table lamp",
+      "warm ambient light"
     ],
     "imageAlt": "Copper Wire String Globe"
   },
@@ -1841,9 +2123,11 @@ products: {
     "tag": "Magiczny blask",
     "description": "Przezroczysta szklana kula wypełniona gęstym splotem mikrodiod LED na miedzianym druciku.",
     "meta": [
-      "Mikrodiodowe światełka",
-      "Miedziany drucik",
-      "Szklana kula"
+      "szklana kula ze świetlnym drucikiem",
+      "przezroczysta okrągła bańka",
+      "miedziane mikro LED",
+      "lampka stołowa dekoracyjna",
+      "ciepłe światło nastrojowe"
     ],
     "imageAlt": "Kula ze świetlnym drucikiem"
   }
@@ -1856,9 +2140,11 @@ products: {
     "tag": "Natural wood",
     "description": "Curved birch plywood arm holding an exposed filament bulb by braided fabric cord.",
     "meta": [
-      "Birch plywood",
-      "Braided cord",
-      "Scandi minimalism"
+      "Scandinavian wood wall light",
+      "light curved arm",
+      "exposed Edison bulb",
+      "minimal natural style",
+      "warm wall lighting"
     ],
     "imageAlt": "Scandi Wood Wall Sconce"
   },
@@ -1867,9 +2153,11 @@ products: {
     "tag": "Naturalne drewno",
     "description": "Wygięte ramię z sklejki brzozowej podtrzymujące ozdobną żarówkę na oplotowym kablu.",
     "meta": [
-      "Sklejka brzozowa",
-      "Kabel w oplocie",
-      "Skandynawski umiar"
+      "drewniany kinkiet skandynawski",
+      "jasne gięte ramię",
+      "widoczna żarówka Edison",
+      "minimalistyczny styl naturalny",
+      "ciepłe światło ścienne"
     ],
     "imageAlt": "Drewniany kinkiet Scandi"
   }
@@ -1882,9 +2170,11 @@ products: {
     "tag": "Mechanical loft",
     "description": "Adjustable height hanging lamp utilizing a heavy cast wheel pulley mechanism.",
     "meta": [
-      "Counterweight pulley",
-      "Cast metal wheel",
-      "Adjustable height"
+      "industrial pulley pendant",
+      "metal hanging mechanism",
+      "exposed Edison bulb",
+      "adjustable loft suspension",
+      "warm vintage light"
     ],
     "imageAlt": "Industrial Pulley Pendant"
   },
@@ -1893,9 +2183,11 @@ products: {
     "tag": "Mechaniczny loft",
     "description": "Lampa z płynną regulacją wysokości za pomocą metalowego koła pasowego i przeciwwagi.",
     "meta": [
-      "Mechanizm koła",
-      "Przeciwwaga",
-      "Wytłaczany metal"
+      "industrialna lampa z kołem pasowym",
+      "metalowa wisząca konstrukcja",
+      "widoczna żarówka Edison",
+      "regulowany zwis loftowy",
+      "ciepłe światło vintage"
     ],
     "imageAlt": "Lampa wisząca z kołem pasowym"
   }
@@ -1908,9 +2200,11 @@ products: {
     "tag": "Minimal touch",
     "description": "Horizontal LED bar with seamless touch slider control built into aluminum chassis.",
     "meta": [
-      "Touch slider bar",
-      "Aluminum frame",
-      "Nightstand focus"
+      "touch bedside light bar",
+      "slim horizontal LED lamp",
+      "black fixture",
+      "brightness control",
+      "bedside reading light"
     ],
     "imageAlt": "Touch Dimmer Bedside Bar"
   },
@@ -1919,9 +2213,11 @@ products: {
     "tag": "Minimalistyczny dotyk",
     "description": "Pozioma aluminiowa listewka LED z płynnym dotykowym regulatorem natężenia światła.",
     "meta": [
-      "Dotykowy suwak",
-      "Aluminiowy korpus",
-      "Ciepła barwa LED"
+      "dotykowa listwa nocna",
+      "smukła pozioma lampa LED",
+      "czarna oprawa",
+      "regulacja jasności",
+      "światło do czytania przy łóżku"
     ],
     "imageAlt": "Dotykowa listwa nocna"
   }
@@ -1934,9 +2230,11 @@ products: {
     "tag": "Bedroom softness",
     "description": "Small spherical feather shade on subtle metallic tripod feet for bedside tables.",
     "meta": [
-      "Feather sphere",
-      "Tripod feet",
-      "Cozy bedroom"
+      "feather table lamp",
+      "white fluffy globe shade",
+      "three slim legs",
+      "bedroom decoration",
+      "soft warm light"
     ],
     "imageAlt": "Feather Table Globe Lamp"
   },
@@ -1945,9 +2243,11 @@ products: {
     "tag": "Delikatna sypialnia",
     "description": "Niewielka puszysta kula z piór umieszczona na delikatnych trójnożnych metalowych nóżkach.",
     "meta": [
-      "Kula z piór",
-      "Nóżki tripod",
-      "Kobieca elegancja"
+      "lampka stołowa z piór",
+      "biały puszysty kulisty klosz",
+      "trzy smukłe nogi",
+      "dekoracja sypialni",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Puszysta lampka stołowa"
   }
@@ -1960,9 +2260,11 @@ products: {
     "tag": "Diamond cage",
     "description": "Diamond-shaped black wireframe shade showcasing glowing central vintage light.",
     "meta": [
-      "Diamond wireframe",
-      "Black metal shade",
-      "Geometric interior"
+      "geometric pendant lamp",
+      "black metal diamond cage",
+      "exposed Edison bulb",
+      "industrial loft style",
+      "warm over table light"
     ],
     "imageAlt": "Geometric Metal Pendant"
   },
@@ -1971,9 +2273,11 @@ products: {
     "tag": "Geometryczna klatka",
     "description": "Czarna druciana oprawa w kształcie diamentu eksponująca umieszczoną wewnątrz żarówkę.",
     "meta": [
-      "Ażur w kształcie diamentu",
-      "Czarny drut",
-      "Nowoczesny design"
+      "geometryczna lampa wisząca",
+      "czarny metalowy klosz diament",
+      "widoczna żarówka Edison",
+      "industrialny styl loft",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Lampa wisząca Diament"
   }
@@ -1986,9 +2290,11 @@ products: {
     "tag": "Outdoor cozy",
     "description": "Weatherproof synthetic rattan lantern with integrated solar panel for garden tables.",
     "meta": [
-      "Synthetic rattan",
-      "Solar power top",
-      "Weatherproof outdoor"
+      "solar rattan lamp",
+      "dark woven cylinder shade",
+      "patio and garden lighting",
+      "natural boho style",
+      "wireless warm light"
     ],
     "imageAlt": "Solar Rattan Patio Lamp"
   },
@@ -1997,9 +2303,11 @@ products: {
     "tag": "Tarasowy klimat",
     "description": "Odporna na deszcz ogrodowa lampa z syntetycznego rattanu z panelem słonecznym w pokrywie.",
     "meta": [
-      "Tworzywo rattanowe",
-      "Górny panel solarny",
-      "Odporność na deszcz"
+      "solarna lampa rattanowa",
+      "ciemny pleciony cylindryczny klosz",
+      "oświetlenie tarasu i ogrodu",
+      "naturalny styl boho",
+      "bezprzewodowe ciepłe światło"
     ],
     "imageAlt": "Solarna lampa rattanowa"
   }
@@ -2012,9 +2320,11 @@ products: {
     "tag": "70s vintage",
     "description": "Glossy orange mushroom acrylic lamp evoking iconic 1970s interior styling.",
     "meta": [
-      "70s Space Age",
-      "Glossy orange acrylic",
-      "Retro statement"
+      "orange mushroom lamp",
+      "glossy plastic body",
+      "1970s Space Age style",
+      "retro table lamp",
+      "warm decorative light"
     ],
     "imageAlt": "Retro Orange Space Age Lamp"
   },
@@ -2023,9 +2333,11 @@ products: {
     "tag": "Design lat 70.",
     "description": "Błyszcząca pomarańczowa lampa z akrylu nawiązująca bezpośrednio do wzornictwa lat 70.",
     "meta": [
-      "Styl Space Age",
-      "Pomarańczowy akryl",
-      "Prawdziwe retro"
+      "pomarańczowa lampa grzybek",
+      "błyszcząca obudowa z tworzywa",
+      "styl Space Age lat 70",
+      "lampka stołowa retro",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Retro Orange Space Age Lamp"
   }
@@ -2038,9 +2350,11 @@ products: {
     "tag": "Kitchen bar",
     "description": "Faceted glass crystal teardrop suspended above breakfast bars for focused shimmer.",
     "meta": [
-      "Faceted crystal drop",
-      "Brass hardware",
-      "Compact pendant"
+      "single crystal pendant",
+      "faceted glass teardrop",
+      "brass ceiling fitting",
+      "elegant glamour suspension",
+      "sparkling decorative light"
     ],
     "imageAlt": "Crystal Pendant Single Drop"
   },
@@ -2049,9 +2363,11 @@ products: {
     "tag": "Miejscowy blask",
     "description": "Szlifowana kryształowa łezka zawieszona nad wyspą lub barkiem kuchennym.",
     "meta": [
-      "Szlifowane szkło",
-      "Mosiężny detal",
-      "Kompaktowe zawieszenie"
+      "pojedyncza lampa kryształowa",
+      "fasetowana szklana łezka",
+      "mosiężne mocowanie sufitowe",
+      "elegancki zwis glamour",
+      "błyszczące światło dekoracyjne"
     ],
     "imageAlt": "Pojedyncza łezka kryształowa"
   }
@@ -2064,9 +2380,11 @@ products: {
     "tag": "Textured stone",
     "description": "Carved limestone base with natural mineral veins matched with neutral linen shade.",
     "meta": [
-      "Natural limestone",
-      "Mineral veins",
-      "Heirloom quality"
+      "stone table lamp",
+      "beige carved base",
+      "linen drum shade",
+      "natural classic style",
+      "soft living room light"
     ],
     "imageAlt": "Archaeology Fossil Stone Lamp"
   },
@@ -2075,9 +2393,11 @@ products: {
     "tag": "Kamienna faktura",
     "description": "Rzeźbiony blok wapienny o naturalnym usłojeniu mineralnym z lnianym abażurem.",
     "meta": [
-      "Naturalny wapień",
-      "Unikalne żyłki",
-      "Solidna podstawa"
+      "kamienna lampa stołowa",
+      "beżowa rzeźbiona podstawa",
+      "lniany cylindryczny abażur",
+      "naturalny styl klasyczny",
+      "miękkie światło do salonu"
     ],
     "imageAlt": "Lampa z kamienia wapiennego"
   }
@@ -2090,9 +2410,11 @@ products: {
     "tag": "Workspace Ergonomics",
     "description": "Asymmetric desk lamp mounting on top of computer screen to illuminate desk without screen glare.",
     "meta": [
-      "Screen clamp bar",
-      "No glare optics",
-      "USB C powered"
+      "monitor LED light bar",
+      "slim black fixture",
+      "screen mounted lamp",
+      "computer work light",
+      "even desk illumination"
     ],
     "imageAlt": "LED Under Monitor Lightbar"
   },
@@ -2101,9 +2423,11 @@ products: {
     "tag": "Ergonomia pracy",
     "description": "Asymetryczna lampka montowana na krawędzi monitora do oświetlania biurka bez odbić.",
     "meta": [
-      "Brak odbić na ekranie",
-      "Mocowanie do monitora",
-      "Zasilanie USB C"
+      "listwa LED na monitor",
+      "czarna smukła oprawa",
+      "montaż nad ekranem",
+      "światło do pracy przy komputerze",
+      "równomierne oświetlenie biurka"
     ],
     "imageAlt": "Lampa na monitor LED"
   }
@@ -2116,9 +2440,11 @@ products: {
     "tag": "Sculptural ceiling",
     "description": "Branching brass sputnik frame with exposed E27 decorative light bulbs.",
     "meta": [
-      "Sputnik design",
-      "Brushed brass branches",
-      "Multi direction"
+      "brass Sputnik chandelier",
+      "multi arm design",
+      "exposed globe bulbs",
+      "mid century style",
+      "warm living room light"
     ],
     "imageAlt": "Modern Brass Candelabra"
   },
@@ -2127,9 +2453,11 @@ products: {
     "tag": "Rzeźbiarski sufit",
     "description": "Rozgałęziona mosiężna konstrukcja typu sputnik z eksponowanymi żarówkami dekoracyjnymi.",
     "meta": [
-      "Styl sputnik",
-      "Mosiężne ramiona",
-      "Wielokierunkowe światło"
+      "mosiężny żyrandol Sputnik",
+      "wieloramienna konstrukcja",
+      "widoczne żarówki kuliste",
+      "styl mid century",
+      "ciepłe światło do salonu"
     ],
     "imageAlt": "Mosiężny żyrandol Sputnik"
   }
@@ -2142,9 +2470,11 @@ products: {
     "tag": "Warm natural",
     "description": "Tall cylindrical woven bamboo basket floor lamp projecting patterned ambient light.",
     "meta": [
-      "Cylindrical basket",
-      "Handmade weave",
-      "Warm pattern shadows"
+      "bamboo floor lamp",
+      "tall woven cylinder",
+      "natural brown material",
+      "boho style",
+      "warm diffused light"
     ],
     "imageAlt": "Boho Woven Bamboo Floor Lamp"
   },
@@ -2153,9 +2483,11 @@ products: {
     "tag": "Ciepła natura",
     "description": "Wysoka cylindryczna lampa z plecionego bambusa rzucająca wzorzyste cienie.",
     "meta": [
-      "Cylindryczny kosz",
-      "Handmade",
-      "Nastrojowe cienie"
+      "bambusowa lampa podłogowa",
+      "wysoki pleciony walec",
+      "naturalny brązowy materiał",
+      "styl boho",
+      "ciepłe rozproszone światło"
     ],
     "imageAlt": "Bambusowa lampa podłogowa"
   }
@@ -2168,9 +2500,11 @@ products: {
     "tag": "Modern hallway",
     "description": "Smoky grey glass sphere mounted flush to a round black metal wall plate.",
     "meta": [
-      "Smoky glass sphere",
-      "Wall plate mount",
-      "Subtle wall light"
+      "smoked globe wall light",
+      "black round fixture",
+      "glass hemisphere shade",
+      "modern minimalism",
+      "soft wall light"
     ],
     "imageAlt": "Smoky Glass Globe Wall Light"
   },
@@ -2179,9 +2513,11 @@ products: {
     "tag": "Korytarzowy styl",
     "description": "Kula z dymionego popielatego szkła osadzona na okrągłej czarnej przyściennej rozie.",
     "meta": [
-      "Kula z dymionego szkła",
-      "Czarna rozeta",
-      "Klimatyczny kinkiet"
+      "kinkiet z dymioną kulą",
+      "czarna okrągła oprawa",
+      "szklany półkulisty klosz",
+      "nowoczesny minimalizm",
+      "miękkie światło ścienne"
     ],
     "imageAlt": "Kinkiet z dymionego szkła"
   }
@@ -2194,9 +2530,11 @@ products: {
     "tag": "Metal reflector",
     "description": "Black metal stage searchlight mounted on adjustable metal stand with barn doors.",
     "meta": [
-      "Barn door reflectors",
-      "Black metal body",
-      "Stage aesthetic"
+      "industrial studio spotlight",
+      "black metal body",
+      "light shaping barn doors",
+      "adjustable floor stand",
+      "focused cinema beam"
     ],
     "imageAlt": "Industrial Spotlight Floor Lamp"
   },
@@ -2205,9 +2543,11 @@ products: {
     "tag": "Metalowy akcent",
     "description": "Sceniczny reflektor podłogowy z regulowanymi skrzydełkami (wrotami) kierującymi strumień.",
     "meta": [
-      "Wroty kierunkowe",
-      "Czarna stal",
-      "Sceniczny charakter"
+      "industrialny reflektor studyjny",
+      "czarny metalowy korpus",
+      "skrzydełka modelujące światło",
+      "regulowany stojak podłogowy",
+      "skupiona wiązka filmowa"
     ],
     "imageAlt": "Reflektor podłogowy z wrotami"
   }
@@ -2220,9 +2560,11 @@ products: {
     "tag": "Color gradient",
     "description": "Glass globe shifting continuously through soft gradient sunset colors via quiet LED chip.",
     "meta": [
-      "Gradient color transition",
-      "Glass globe",
-      "Quiet relaxing light"
+      "Sunset Aura glass globe",
+      "orange purple gradient",
+      "ambient table lamp",
+      "round shade on black base",
+      "colorful decorative light"
     ],
     "imageAlt": "Sunset Aura Desk Globe"
   },
@@ -2231,9 +2573,11 @@ products: {
     "tag": "Przejścia barwne",
     "description": "Szklana kula łagodnie przechodząca przez kolory zachodu słońca za pomocą diod LED.",
     "meta": [
-      "Płynny gradient",
-      "Szklana obudowa",
-      "Wyciszający nastrój"
+      "szklana kula Sunset Aura",
+      "pomarańczowo fioletowy gradient",
+      "lampka stołowa nastrojowa",
+      "okrągły klosz na czarnej podstawie",
+      "kolorowe światło dekoracyjne"
     ],
     "imageAlt": "Kula nastrojowa Sunset Aura"
   }
@@ -2246,9 +2590,11 @@ products: {
     "tag": "Washer paper icon",
     "description": "Organic shaped washi paper lantern with bamboo wire ribbing for sculptural ambient ceiling light.",
     "meta": [
-      "Washi paper lantern",
-      "Bamboo ribbing",
-      "Sculptural icon"
+      "Japanese pendant lamp",
+      "spherical Washi paper lantern",
+      "black horizontal ribs",
+      "zen style",
+      "soft warm light"
     ],
     "imageAlt": "Japanese Noguchi Style Pendant"
   },
@@ -2257,9 +2603,11 @@ products: {
     "tag": "Ikona stylu japońskiego",
     "description": "Organiczna lampa z tradycyjnego papieru washi usztywniona bambusowym stelażem.",
     "meta": [
-      "Papier washi",
-      "Bambusowy stelaż",
-      "Lekka rzeźbiarska forma"
+      "japońska lampa wisząca",
+      "kulisty papierowy lampion Washi",
+      "poziome czarne żebra",
+      "styl zen",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Papierowa lampa wisząca Washi"
   }
@@ -2272,9 +2620,11 @@ products: {
     "tag": "Retro wall spot",
     "description": "Wall sconce inspired by vintage banker lamps with tiltable amber glass shade.",
     "meta": [
-      "Amber glass shade",
-      "Wall sconce banker",
-      "Brass finish"
+      "amber bankers wall lamp",
+      "yellow glass shade",
+      "brass adjustable arm",
+      "reading wall light",
+      "warm vintage glow"
     ],
     "imageAlt": "Vintage Brass Banker Spot"
   },
@@ -2283,9 +2633,11 @@ products: {
     "tag": "Ścienny retro akcent",
     "description": "Kinkiet ścienny inspirowany lampą bankierską z bursztynowym regulowanym kloszem.",
     "meta": [
-      "Bursztynowy klosz",
-      "Mosiężny korpus",
-      "Regulacja nachylenia"
+      "bursztynowy kinkiet bankierski",
+      "żółty szklany klosz",
+      "mosiężne regulowane ramię",
+      "lampka do czytania",
+      "ciepłe światło vintage"
     ],
     "imageAlt": "Kinkiet bankierski bursztynowy"
   }
@@ -2298,9 +2650,11 @@ products: {
     "tag": "Outdoor indoor",
     "description": "Silicone handle portable cylinder lamp with 3 brightness tap settings and warm LED.",
     "meta": [
-      "Silicone handle",
-      "Tap brightness",
-      "Rechargeable battery"
+      "wireless touch lantern",
+      "black and white cylinder body",
+      "large carry handle",
+      "rechargeable patio light",
+      "soft warm illumination"
     ],
     "imageAlt": "Rechargeable Touch Lantern"
   },
@@ -2309,9 +2663,11 @@ products: {
     "tag": "Wewnątrz i na zewnątrz",
     "description": "Przenośna cylindryczna lampka z silikonowym uchwytem i 3-stopniową regulacją jasności dotykiem.",
     "meta": [
-      "Silikonowy uchwyt",
-      "Sterowanie dotykiem",
-      "Akumulator USB"
+      "bezprzewodowa latarenka dotykowa",
+      "czarno biały cylindryczny korpus",
+      "duży uchwyt do przenoszenia",
+      "ładowalne światło na taras",
+      "miękkie ciepłe oświetlenie"
     ],
     "imageAlt": "Bezprzewodowa latarenka dotykowa"
   }
@@ -2324,9 +2680,11 @@ products: {
     "tag": "Luxury island",
     "description": "Solid marble cylinder weights supporting a horizontal brushed brass beam LED pendant.",
     "meta": [
-      "Carrara marble detail",
-      "Brushed brass bar",
-      "High end finish"
+      "marble brass linear pendant",
+      "brass horizontal bar",
+      "two stone cylinders",
+      "minimal luxury style",
+      "long table lighting"
     ],
     "imageAlt": "Marble Brass Linear Pendant"
   },
@@ -2335,9 +2693,11 @@ products: {
     "tag": "Prestiżowa wyspa",
     "description": "Liniowa lampa wisząca ze szczotkowanego mosiądzu z elementami z prawdziwego marmuru.",
     "meta": [
-      "Lity marmur",
-      "Szczotkowany mosiądz",
-      "Prestiżowy wyraz"
+      "liniowa lampa wisząca z marmurem",
+      "mosiężna pozioma belka",
+      "dwa kamienne cylindry",
+      "minimalistyczny luksus",
+      "światło nad długi stół"
     ],
     "imageAlt": "Luksusowa wisząca listwa mosiężna"
   }
@@ -2350,9 +2710,11 @@ products: {
     "tag": "Loft minimal",
     "description": "Hanging solid gray concrete cube casing a downward halogen or LED warm bulb.",
     "meta": [
-      "Solid concrete cube",
-      "Braided wire",
-      "Industrial minimal"
+      "concrete pendant lamp",
+      "gray cube shade",
+      "single ceiling suspension",
+      "industrial style",
+      "focused downward light"
     ],
     "imageAlt": "Concrete Cube Pendant"
   },
@@ -2361,9 +2723,11 @@ products: {
     "tag": "Minimalistyczny loft",
     "description": "Minimalistyczna wisząca kostka z szarego betonu ze skierowanym w dół strumieniem światła.",
     "meta": [
-      "Betonowa obudowa",
-      "Kabel w plecionce",
-      "Kompaktowy surowy styl"
+      "betonowa lampa wisząca",
+      "szary sześcienny klosz",
+      "pojedynczy zwis sufitowy",
+      "styl industrialny",
+      "skupione światło w dół"
     ],
     "imageAlt": "Betonowa kostka wisząca"
   }
@@ -2376,9 +2740,11 @@ products: {
     "tag": "Cozy accent",
     "description": "Warm amber tinted glass globe resting on a low circular brass ring frame.",
     "meta": [
-      "Amber glass sphere",
-      "Brass ring frame",
-      "Ambient bedroom light"
+      "amber glass table lamp",
+      "spherical glass globe",
+      "low gold base",
+      "minimalist decoration",
+      "warm ambient light"
     ],
     "imageAlt": "Amber Glass Table Globe"
   },
@@ -2387,9 +2753,11 @@ products: {
     "tag": "Przytulny akcent",
     "description": "Kula ze szlachetnego bursztynowego szkła leżąca na mosiężnej pierścieniowej podstawie.",
     "meta": [
-      "Bursztynowa szkło",
-      "Pierścień mosiężny",
-      "Klimatyczne światło"
+      "bursztynowa lampa stołowa",
+      "szklana kulista bańka",
+      "złota niska podstawa",
+      "minimalistyczna dekoracja",
+      "ciepłe światło nastrojowe"
     ],
     "imageAlt": "Bursztynowa kula stołowa"
   }
@@ -2402,9 +2770,11 @@ products: {
     "tag": "Clean geometry",
     "description": "U-shaped bent metal tube with integrated diffuse LED light strip along inside edge.",
     "meta": [
-      "U shape arch",
-      "Integrated LED strip",
-      "Modern geometry"
+      "minimalist arch table lamp",
+      "black U shaped body",
+      "integrated LED strip",
+      "modern desk lighting",
+      "even warm light"
     ],
     "imageAlt": "Minimalist Arch Table Lamp"
   },
@@ -2413,9 +2783,11 @@ products: {
     "tag": "Czysta geometria",
     "description": "Nowoczesna lampa w kształcie litery U z ukrytym taśmowym źródłem światła LED.",
     "meta": [
-      "Forma łuku",
-      "Ukryty pasek LED",
-      "Geometria wnętrza"
+      "minimalistyczna lampa stołowa łuk",
+      "czarna obudowa w kształcie U",
+      "zintegrowana listwa LED",
+      "nowoczesne oświetlenie biurka",
+      "ciepłe równomierne światło"
     ],
     "imageAlt": "Lampa stołowa Łuk"
   }
@@ -2428,9 +2800,11 @@ products: {
     "tag": "Warehouse vibe",
     "description": "Cast metal caged wall fixture with clear glass cylinder protecting filament bulb.",
     "meta": [
-      "Caged protective frame",
-      "Clear cylinder glass",
-      "Loft exterior vibe"
+      "industrial cage wall sconce",
+      "black metal guard",
+      "exposed Edison bulb",
+      "loft style",
+      "warm hallway light"
     ],
     "imageAlt": "Industrial Caged Wall Sconce"
   },
@@ -2439,9 +2813,11 @@ products: {
     "tag": "Klimat magazynu",
     "description": "Metalowy kinkiet z ochronną klatką i szklanym cylindrem osłaniającym żarówkę.",
     "meta": [
-      "Ochronna klatka metalowa",
-      "Szklany cylinder",
-      "Surowy kinkiet"
+      "industrialny kinkiet klatkowy",
+      "czarna metalowa osłona",
+      "widoczna żarówka Edison",
+      "styl loftowy",
+      "ciepłe światło korytarzowe"
     ],
     "imageAlt": "Industrialny kinkiet klatkowy"
   }
@@ -2454,9 +2830,11 @@ products: {
     "tag": "Island natural",
     "description": "Bell-shaped woven rattan shade providing warm patterned lighting above dining tables.",
     "meta": [
-      "Bell shape rattan",
-      "Natural fiber",
-      "Warm dining light"
+      "rattan pendant lamp",
+      "woven bell shade",
+      "natural brown material",
+      "boho style",
+      "warm over table light"
     ],
     "imageAlt": "Boho Woven Rattan Pendant"
   },
@@ -2465,9 +2843,11 @@ products: {
     "tag": "Naturalna jadalnia",
     "description": "Klosz w kształcie dzwonu z naturalnego plecionego rattanu nad stół w jadalni.",
     "meta": [
-      "Kształt dzwonu",
-      "Plecionka rattanowa",
-      "Przytulny splot"
+      "rattanowa lampa wisząca",
+      "pleciony klosz dzwon",
+      "naturalny brązowy materiał",
+      "styl boho",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Lampa wisząca Rattanowy Dzwon"
   }
@@ -2480,9 +2860,11 @@ products: {
     "tag": "Travel portable",
     "description": "Slim gooseneck USB powered light strip plugging directly into laptop ports or powerbanks.",
     "meta": [
-      "USB powered",
-      "Flexible neck",
-      "Travel companion"
+      "flexible USB lamp",
+      "black bendable neck",
+      "small LED head",
+      "laptop and reading light",
+      "portable spot illumination"
     ],
     "imageAlt": "Flexible USB Reading Light"
   },
@@ -2491,9 +2873,11 @@ products: {
     "tag": "Podróżny gadżet",
     "description": "Wygodna elastyczna lampka na USB podłączana bezpośrednio do laptopa lub powerbanka.",
     "meta": [
-      "Zasilanie USB",
-      "Giętkie ramię",
-      "Super lekka"
+      "elastyczna lampka USB",
+      "czarne giętkie ramię",
+      "mała głowica LED",
+      "do laptopa i czytania",
+      "przenośne światło punktowe"
     ],
     "imageAlt": "Giętka lampka USB do laptopa"
   }
@@ -2506,9 +2890,11 @@ products: {
     "tag": "Glamour ceiling",
     "description": "Round flushmount frame embedded with glass crystal elements for low ceiling rooms.",
     "meta": [
-      "Crystal flushmount",
-      "Chrome frame",
-      "Low ceiling luxury"
+      "crystal ceiling light",
+      "round chrome fixture",
+      "ring of cut crystals",
+      "glamour style",
+      "bright sparkling light"
     ],
     "imageAlt": "Crystal Flushmount Ceiling Light"
   },
@@ -2517,9 +2903,11 @@ products: {
     "tag": "Sufitowy luksus",
     "description": "Okrągły natynkowy plafon bogato wykończony kryształkami do pomieszczeń o niższym suficie.",
     "meta": [
-      "Liczne kryształki",
-      "Chromowana oprawa",
-      "Efektowne światło"
+      "kryształowy plafon sufitowy",
+      "okrągła chromowana oprawa",
+      "pierścień szlifowanych kryształów",
+      "styl glamour",
+      "jasne błyszczące światło"
     ],
     "imageAlt": "Plafon kryształowy Glamour"
   }
@@ -2532,9 +2920,11 @@ products: {
     "tag": "Rustic warmth",
     "description": "Electric decorative lamp styled after antique oil lanterns with clear glass chimney.",
     "meta": [
-      "Antique kerosene look",
-      "Glass chimney",
-      "Warm electric flame"
+      "electric kerosene style lamp",
+      "brass vintage body",
+      "glass chimney",
+      "flame shaped bulb",
+      "warm retro light"
     ],
     "imageAlt": "Vintage Kerosene Style Lamp"
   },
@@ -2543,9 +2933,11 @@ products: {
     "tag": "Rustykalna klasyka",
     "description": "Elektryczna lampa stylizowana na dawną lampę naftową ze szklanym kloszem cylindrycznym.",
     "meta": [
-      "Styl starej naftówki",
-      "Szklany kominek",
-      "Ciepły nastrój"
+      "elektryczna lampa naftowa",
+      "mosiężna obudowa vintage",
+      "szklany komin",
+      "widoczna żarówka płomieniowa",
+      "ciepłe światło retro"
     ],
     "imageAlt": "Elektrionizowana lampa naftowa"
   }
@@ -2558,9 +2950,11 @@ products: {
     "tag": "Minimal corner",
     "description": "Slim black corner standing bar washing wall with customizable smart colors.",
     "meta": [
-      "Minimal corner bar",
-      "Wall wash effect",
-      "App integration"
+      "smart corner floor lamp",
+      "slim black LED column",
+      "red green blue RGB light",
+      "gaming room lighting",
+      "color control"
     ],
     "imageAlt": "Smart Corner Floor Lightbar"
   },
@@ -2569,9 +2963,11 @@ products: {
     "tag": "Światło odbite",
     "description": "Dyskretna czarna listwa podłogowa oblewająca ścianę barwnym światłem smart LED.",
     "meta": [
-      "Efekt wall-wash",
-      "Aplikacja Wi-Fi",
-      "Wysoki smukły profil"
+      "inteligentna narożna lampa podłogowa",
+      "smukły czarny słup LED",
+      "czerwone zielone niebieskie światło RGB",
+      "oświetlenie gamingowe",
+      "sterowanie kolorem światła"
     ],
     "imageAlt": "Narożny słup świetlny Smart"
   }
@@ -2584,9 +2980,11 @@ products: {
     "tag": "Porcelain craft",
     "description": "Fine porcelain pleated shade diffusing delicate warm light through translucent ceramic.",
     "meta": [
-      "Fine porcelain",
-      "Translucent ceramic",
-      "Pleated shade"
+      "white ceramic pendant",
+      "pleated dome shade",
+      "single black suspension",
+      "Scandinavian style",
+      "soft over table light"
     ],
     "imageAlt": "White Ceramic Pleated Pendant"
   },
@@ -2595,9 +2993,11 @@ products: {
     "tag": "Sztuka porcelany",
     "description": "Finezyjny klosz z cienkiej delikatnie przepuszczającej światło plisowanej porcelany.",
     "meta": [
-      "Półprzezroczysta porcelana",
-      "Plisowany kształt",
-      "Białe subtelne światło"
+      "biała ceramiczna lampa wisząca",
+      "plisowany klosz kopuła",
+      "pojedynczy czarny zwis",
+      "styl skandynawski",
+      "miękkie światło nad stołem"
     ],
     "imageAlt": "White Ceramic Pleated Pendant"
   }
@@ -2610,9 +3010,11 @@ products: {
     "tag": "Vintage focus",
     "description": "Miniature metal spotlight on small brass tripod legs for rustic desk decor.",
     "meta": [
-      "Miniature searchlight",
-      "Brass tripod",
-      "Desk accent"
+      "tripod desk spotlight",
+      "slim brass legs",
+      "metal spot head",
+      "industrial studio style",
+      "focused task light"
     ],
     "imageAlt": "Industrial Tripod Desk Spot"
   },
@@ -2621,9 +3023,11 @@ products: {
     "tag": "Akcent vintage",
     "description": "Niewielki metalowy reflektorek na mosiężnych trójnożnych nóżkach na biurko.",
     "meta": [
-      "Mosiężny tripod",
-      "Kompaktowy reflektor",
-      "Retro biurko"
+      "biurkowy reflektor na trójnogu",
+      "mosiężne smukłe nogi",
+      "metalowa głowica punktowa",
+      "industrialny styl studyjny",
+      "skupione światło robocze"
     ],
     "imageAlt": "Biurkowy reflektorek na statywie"
   }
@@ -2636,9 +3040,11 @@ products: {
     "tag": "Woven wall",
     "description": "Handwoven bamboo basket shade mounted on wall casting radial shadow patterns.",
     "meta": [
-      "Woven bamboo basket",
-      "Radial shadow",
-      "Boho wall art"
+      "bamboo boho wall sconce",
+      "woven semicircle shade",
+      "natural brown material",
+      "wall shadow patterns",
+      "warm decorative light"
     ],
     "imageAlt": "Boho Bamboo Wall Sconce"
   },
@@ -2647,9 +3053,11 @@ products: {
     "tag": "Plecionka na ścianie",
     "description": "Kinkiet z ręcznie plecionego bambusowego koszyczka rzucający promieniste cienie.",
     "meta": [
-      "Bambusowa plecionka",
-      "Promieniste cienie",
-      "Aura przyrody"
+      "bambusowy kinkiet boho",
+      "pleciony półokrągły klosz",
+      "naturalny brązowy materiał",
+      "wzory światła na ścianie",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Kinkiet bambusowy Boho"
   }
@@ -2662,9 +3070,11 @@ products: {
     "tag": "Modern dining",
     "description": "5-light ceiling bar fixture with varied smoked glass geometric shade forms.",
     "meta": [
-      "5 bulb linear bar",
-      "Varied glass shapes",
-      "Smoky glass texture"
+      "multi pendant light",
+      "five smoked glass shades",
+      "black linear bar",
+      "dining table lighting",
+      "warm filament glow"
     ],
     "imageAlt": "Smoked Glass Multi Pendant"
   },
@@ -2673,9 +3083,11 @@ products: {
     "tag": "Nowoczesny stołowy styl",
     "description": "Lampa wisząca z 5 kloszami z dymionego szkła o zróżnicowanych geometrycznych kształtach.",
     "meta": [
-      "5 punktów świetlnych",
-      "Różne kształty kloszy",
-      "Dymiony odcień"
+      "wielopunktowa lampa wisząca",
+      "pięć kloszy z dymionego szkła",
+      "czarna liniowa belka",
+      "nad stół w jadalni",
+      "ciepłe światło filamentowe"
     ],
     "imageAlt": "Wielopunktowa lampa wisząca dymiona"
   }
@@ -2688,9 +3100,11 @@ products: {
     "tag": "Halo wall",
     "description": "Brushed gold metal halo ring featuring an inset frosted glass diffuser orb.",
     "meta": [
-      "Gold halo ring",
-      "Frosted glass orb",
-      "Sleek wall design"
+      "gold ring wall sconce",
+      "round metal frame",
+      "central opal globe",
+      "modern glamour style",
+      "soft warm light"
     ],
     "imageAlt": "Modern Gold Ring Wall Sconce"
   },
@@ -2699,9 +3113,11 @@ products: {
     "tag": "Ścienne halo",
     "description": "Mosiężna obręcz z wprawioną wewnątrz matową szklaną kulą dającą miękkie światło.",
     "meta": [
-      "Złota obręcz",
-      "Mrożona kula",
-      "Elegancki profil"
+      "złoty kinkiet pierścień",
+      "okrągła metalowa rama",
+      "opalowa kula centralna",
+      "nowoczesny styl glamour",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Złoty kinkiet pierścień"
   }
@@ -2714,9 +3130,11 @@ products: {
     "tag": "Speckled stone",
     "description": "Solid terrazzo block with exposed top socket holding large warm Edison bulb.",
     "meta": [
-      "Terrazzo cube base",
-      "Exposed socket",
-      "Edison bulb match"
+      "terrazzo desk lamp",
+      "speckled cube base",
+      "filament bulb",
+      "industrial minimalism",
+      "warm decorative light"
     ],
     "imageAlt": "Terrazzo Cube Desk Lamp"
   },
@@ -2725,9 +3143,11 @@ products: {
     "tag": "Kamienne drobinki",
     "description": "Masywna kostka z nakrapianego lastryko z odsłoniętym gniazdem na ozdobną żarówkę.",
     "meta": [
-      "Kostka terrazzo",
-      "Odsłonięta żarówka",
-      "Ciężka stabilna podstawa"
+      "lampa biurkowa terrazzo",
+      "nakrapiana sześcienna podstawa",
+      "żarówka filamentowa",
+      "industrialny minimalizm",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Kostka z terrazzo na biurko"
   }
@@ -2740,9 +3160,11 @@ products: {
     "tag": "Chrome shine",
     "description": "All-chrome dome mushroom desk lamp providing indirect reflected ambient light.",
     "meta": [
-      "All chrome finish",
-      "Dome shade",
-      "Retro space age"
+      "chrome mushroom lamp",
+      "silver hemisphere dome",
+      "slim metal stand",
+      "retro Space Age style",
+      "warm downward light"
     ],
     "imageAlt": "Retro Mushroom Table Bar"
   },
@@ -2751,9 +3173,11 @@ products: {
     "tag": "Lustrzany blask",
     "description": "Całkowicie chromowana lampa w kształcie grzybka odbijająca otoczenie jak lustro.",
     "meta": [
-      "Lustrzany chrom",
-      "Nowoczesne retro",
-      "Światło odbite"
+      "chromowana lampa grzybek",
+      "srebrna półkulista kopuła",
+      "smukła metalowa podstawa",
+      "styl retro Space Age",
+      "ciepłe światło w dół"
     ],
     "imageAlt": "Chromowana lampa grzybek"
   }
@@ -2766,9 +3190,11 @@ products: {
     "tag": "Garden glow",
     "description": "Glass mason jar with solar lid and internal fairy lights for outdoor tree branches.",
     "meta": [
-      "Mason jar design",
-      "Solar lid charging",
-      "Outdoor tree light"
+      "solar mason jar light",
+      "clear glass jar",
+      "copper micro LED wire",
+      "hanging handle",
+      "warm garden light"
     ],
     "imageAlt": "Solar Hanging Mason Jar Light"
   },
@@ -2777,9 +3203,11 @@ products: {
     "tag": "Ogród nocą",
     "description": "Szklany słoik z pokrywką solarną i mikrodiodami wewnątrz, idealny do zawieszenia na drzewie.",
     "meta": [
-      "Szklany słoik",
-      "Nakrętka solarna",
-      "Diodowy wkład"
+      "solarna lampa w słoiku",
+      "przezroczyste szkło Mason Jar",
+      "miedziany drucik mikro LED",
+      "uchwyt do zawieszenia",
+      "ciepłe światło ogrodowe"
     ],
     "imageAlt": "Solarny słoik ogrodowy"
   }
@@ -2792,9 +3220,11 @@ products: {
     "tag": "Sleek studio",
     "description": "Slim black curved bar spanning across desk with touch sensor and dimming memory.",
     "meta": [
-      "Slim arch bar",
-      "Dimmer memory",
-      "Black coated steel"
+      "black arch desk lamp",
+      "semicircular LED body",
+      "minimal low profile",
+      "modern task lighting",
+      "neutral desk light"
     ],
     "imageAlt": "Minimalist Black Desk Arch"
   },
@@ -2803,9 +3233,11 @@ products: {
     "tag": "Nowoczesne studio",
     "description": "Minimalistyczny wygięty czarny pałąk nad biurko z płynnym ściemnianiem i pamięcią.",
     "meta": [
-      "Czarna matowa stal",
-      "Pamięć ściemniacza",
-      "Jednolity strumień"
+      "czarna lampa biurkowa łuk",
+      "półokrągła obudowa LED",
+      "minimalistyczny niski profil",
+      "nowoczesne oświetlenie robocze",
+      "neutralne światło biurka"
     ],
     "imageAlt": "Czarny łuk biurkowy LED"
   }
@@ -2818,9 +3250,11 @@ products: {
     "tag": "Classic tall",
     "description": "Slender vertical brass stem with subtle orb accents topped with off-white fabric shade.",
     "meta": [
-      "Brass stem",
-      "Fabric drum shade",
-      "Classic elegance"
+      "slim brass floor lamp",
+      "white fabric shade",
+      "classic tall design",
+      "living room reading light",
+      "soft warm illumination"
     ],
     "imageAlt": "Brass Brass Spindle Floor Lamp"
   },
@@ -2829,9 +3263,11 @@ products: {
     "tag": "Klasyczna podłogowa",
     "description": "Wysoki mosiężny smukły stojak z kuleczkowymi akcentami z tradycyjnym abażurem.",
     "meta": [
-      "Smukły mosiądz",
-      "Abażur walec",
-      "Stylowy salon"
+      "smukła mosiężna lampa podłogowa",
+      "biały tekstylny abażur",
+      "klasyczna wysoka konstrukcja",
+      "do salonu i czytania",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Mosiężna lampa smukła"
   }
@@ -2844,9 +3280,11 @@ products: {
     "tag": "Dreamy interior",
     "description": "Soft floating cloud shape crafted from non-woven polymer fibers diffusing light smoothly.",
     "meta": [
-      "Polymer cloud fiber",
-      "Floating appearance",
-      "Soft dream light"
+      "cloud pendant lamp",
+      "soft white shade",
+      "kids room decoration",
+      "single ceiling suspension",
+      "gentle diffused light"
     ],
     "imageAlt": "Cloud Pendant Light Shade"
   },
@@ -2855,9 +3293,11 @@ products: {
     "tag": "Marzycielski dom",
     "description": "Lekka lampa w kształcie wiszącej chmury wykonana ze specjalnego nieregularnego włókna.",
     "meta": [
-      "Efekt wiszącej chmury",
-      "Polimerowe włókno",
-      "Miękka poświata"
+      "lampa wisząca chmurka",
+      "biały miękki klosz",
+      "dekoracja pokoju dziecka",
+      "pojedynczy zwis sufitowy",
+      "delikatne rozproszone światło"
     ],
     "imageAlt": "Chmura wisząca rozpraszająca"
   }
@@ -2870,9 +3310,11 @@ products: {
     "tag": "Steampunk time",
     "description": "Cast iron desk lamp combined with a vintage gear clock built into the metal base.",
     "meta": [
-      "Gear clock base",
-      "Cast iron construction",
-      "Steampunk function"
+      "industrial clock desk lamp",
+      "black metal base",
+      "exposed gears",
+      "adjustable Edison bulb arm",
+      "warm steampunk light"
     ],
     "imageAlt": "Industrial Desk Lamp Clock"
   },
@@ -2881,9 +3323,11 @@ products: {
     "tag": "Czas w stylu loft",
     "description": "Żeliwna lampa biurkowa połączona z zegarem z widocznymi zębatkami w podstawie.",
     "meta": [
-      "Wbudowany zegar",
-      "Żeliwna konstrukcja",
-      "Styl steampunk"
+      "industrialna lampa biurkowa z zegarem",
+      "czarna metalowa podstawa",
+      "widoczne koła zębate",
+      "regulowane ramię z żarówką Edison",
+      "ciepłe światło steampunk"
     ],
     "imageAlt": "Lampa biurkowa z zegarem"
   }
@@ -2896,9 +3340,11 @@ products: {
     "tag": "Warm corridor",
     "description": "Ribbed amber glass shade mounted on a matte black angled wall holder.",
     "meta": [
-      "Ribbed amber glass",
-      "Black angled holder",
-      "Warm entryway light"
+      "amber glass wall sconce",
+      "ribbed bell shade",
+      "black metal fixture",
+      "vintage style",
+      "warm wall light"
     ],
     "imageAlt": "Amber Glass Wall Sconce"
   },
@@ -2907,9 +3353,11 @@ products: {
     "tag": "Ciepły korytarz",
     "description": "Kinkiet z prążkowanego bursztynowego szkła osadzony na czarnym skosnym uchwycie.",
     "meta": [
-      "Prążkowane szkło",
-      "Czarna skośna oprawa",
-      "Ciepłe wejście"
+      "bursztynowy kinkiet szklany",
+      "prążkowany klosz w kształcie dzwonu",
+      "czarna metalowa oprawa",
+      "styl vintage",
+      "ciepłe światło ścienne"
     ],
     "imageAlt": "Kinkiet z prążkowanym bursztynem"
   }
@@ -2922,9 +3370,11 @@ products: {
     "tag": "Tiered fringe",
     "description": "Three-tiered natural cotton fringe chandelier bringing relaxed bohemian texture to bedrooms.",
     "meta": [
-      "3 tiered fringe",
-      "Cotton tassels",
-      "Boho chandelier"
+      "boho fringe chandelier",
+      "three layers of beige fabric",
+      "large round shade",
+      "living room statement",
+      "warm diffused light"
     ],
     "imageAlt": "Boho Fringe Pendant Chandelier"
   },
@@ -2933,9 +3383,11 @@ products: {
     "tag": "Kaskada boho",
     "description": "Trójwarstwowy żyrandol z bawełnianymi frędzlami nadający wyjątkowy klimat sypialni.",
     "meta": [
-      "3 poziomy frędzli",
-      "Naturana bawełna",
-      "Styl bohemian"
+      "żyrandol boho z frędzlami",
+      "trzy warstwy beżowej tkaniny",
+      "okrągły duży klosz",
+      "dekoracja salonu",
+      "ciepłe rozproszone światło"
     ],
     "imageAlt": "Trójpoziomowy żyrandol z frędzlami"
   }
@@ -2948,9 +3400,11 @@ products: {
     "tag": "Linear shimmer",
     "description": "Triple crystal globe drop lights suspended from a single polished chrome ceiling plate.",
     "meta": [
-      "Triple crystal globes",
-      "Chrome ceiling plate",
-      "Dining shimmer"
+      "triple crystal pendant",
+      "three faceted glass globes",
+      "chrome ceiling fixture",
+      "glamour style",
+      "sparkling decorative light"
     ],
     "imageAlt": "Crystal Globe Pendant Bar"
   },
@@ -2959,9 +3413,11 @@ products: {
     "tag": "Liniowy błysk",
     "description": "Trzy kryształowe kule wiszące na jednej podłużnej chromowanej listwie sufitowej.",
     "meta": [
-      "Trzy kryształowe kule",
-      "Chromowana listwa",
-      "Blask nad stołem"
+      "potrójna kryształowa lampa wisząca",
+      "trzy fasetowane szklane kule",
+      "chromowana oprawa sufitowa",
+      "styl glamour",
+      "iskrzące światło dekoracyjne"
     ],
     "imageAlt": "Potrójna lampa wisząca Kryształowa Kula"
   }
@@ -2974,9 +3430,11 @@ products: {
     "tag": "Desktop halo",
     "description": "Circular desk ring light with inner ambient RGB halo and outer functional white desk light.",
     "meta": [
-      "Dual zone LED",
-      "Outer white inner RGB",
-      "Touch slider"
+      "smart RGB ring lamp",
+      "round black fixture",
+      "red green blue light",
+      "gaming table lamp",
+      "color control"
     ],
     "imageAlt": "Smart RGB Desk Ambient Ring"
   },
@@ -2985,9 +3443,11 @@ products: {
     "tag": "Aura biurka",
     "description": "Okrągła lampka biurkowa łącząca białe światło robocze z barwną aurą RGB wewnątrz.",
     "meta": [
-      "Dwustrefowe LED",
-      "Białe i RGB",
-      "Panel dotykowy"
+      "inteligentna lampa pierścień RGB",
+      "okrągła czarna oprawa",
+      "czerwone zielone niebieskie światło",
+      "lampka stołowa gamingowa",
+      "sterowanie barwą światła"
     ],
     "imageAlt": "Okrągła lampa biurkowa Halo Smart"
   }
@@ -3000,9 +3460,11 @@ products: {
     "tag": "Slim standing",
     "description": "Ultra-slim matte black floor pole light with flexible neck and foot switch pedal.",
     "meta": [
-      "Slim pole format",
-      "Foot switch pedal",
-      "Flexible top neck"
+      "black reading floor lamp",
+      "slim flexible neck",
+      "small directional spot",
+      "minimalist design",
+      "focused warm light"
     ],
     "imageAlt": "Minimalist Black Floor Reading"
   },
@@ -3011,9 +3473,11 @@ products: {
     "tag": "Dyskretna podłogowa",
     "description": "Niezwykle smukła czarna lampa podłogowa z elastyczną końcówką i włącznikiem nożnym.",
     "meta": [
-      "Smukła czarna rurka",
-      "Przełącznik nożny",
-      "Giętki top"
+      "czarna lampa podłogowa do czytania",
+      "smukłe elastyczne ramię",
+      "mały reflektor kierunkowy",
+      "minimalistyczna konstrukcja",
+      "skupione ciepłe światło"
     ],
     "imageAlt": "Smukła czarna lampa czytelnicza"
   }
@@ -3026,9 +3490,11 @@ products: {
     "tag": "Classic bedside",
     "description": "Swing arm wall sconce featuring a traditional fabric pleated shade.",
     "meta": [
-      "Swing arm wall",
-      "Fabric pleated shade",
-      "Classic cozy glow"
+      "pleated shade wall lamp",
+      "white fabric shade",
+      "brass curved arm",
+      "classic bedside light",
+      "soft warm glow"
     ],
     "imageAlt": "Vintage Pleated Shade Wall Sconce"
   },
@@ -3037,9 +3503,11 @@ products: {
     "tag": "Klasyczna sypialnia",
     "description": "Kinkiet na ruchomym ramieniu z tradycyjnym materiałowym plisowanym abażurkiem.",
     "meta": [
-      "Ruchome ramię",
-      "Plisowany abażur",
-      "Przytulne oświetlenie"
+      "kinkiet z plisowanym abażurem",
+      "biały tekstylny klosz",
+      "mosiężne łukowe ramię",
+      "klasyczna lampka przy łóżku",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Kinkiet z plisowanym abażurem"
   }
@@ -3052,9 +3520,11 @@ products: {
     "tag": "Cast iron gear",
     "description": "Interlocking decorative metal gears forming the base for an Edison filament bulb.",
     "meta": [
-      "Decorative gear base",
-      "Industrial iron",
-      "Exposed Edison light"
+      "industrial gear lamp",
+      "metal mechanical cogs",
+      "exposed filament bulb",
+      "steampunk table lamp",
+      "warm vintage light"
     ],
     "imageAlt": "Industrial Gear Table Lamp"
   },
@@ -3063,9 +3533,11 @@ products: {
     "tag": "Żeliwne koła",
     "description": "Ażurowa podstawa ze połączonych kół zębatych zwieńczona dekoracyjną żarówką Edison.",
     "meta": [
-      "Metalowe koła zębate",
-      "Styl fabryczny",
-      "Ciepła żarówka Edison"
+      "industrialna lampa z zębatkami",
+      "metalowe koła mechaniczne",
+      "widoczna żarówka filamentowa",
+      "lampka stołowa steampunk",
+      "ciepłe światło vintage"
     ],
     "imageAlt": "Lampa stołowa z zębatkami"
   }
@@ -3078,9 +3550,11 @@ products: {
     "tag": "Woven cylinder",
     "description": "Natural macrame cotton cord wrapped around a cylindrical wire frame.",
     "meta": [
-      "Wrapped macrame cord",
-      "Natural texture",
-      "Bedside soft glow"
+      "macrame table lamp",
+      "white woven cylinder shade",
+      "natural boho style",
+      "bedroom night lamp",
+      "warm patterned light"
     ],
     "imageAlt": "Boho Macrame Table Lamp"
   },
@@ -3089,9 +3563,11 @@ products: {
     "tag": "Bawełniany cylinder",
     "description": "Gęsto pleciony bawełniany sznurek makramowy nałożony na cylindryczny stelaż.",
     "meta": [
-      "Pleciony sznurek",
-      "Naturalna faktura",
-      "Ciepłe rozproszenie"
+      "stołowa lampa z makramy",
+      "biały pleciony cylindryczny klosz",
+      "naturalny styl boho",
+      "lampka nocna do sypialni",
+      "ciepłe wzorzyste światło"
     ],
     "imageAlt": "Stojąca lampka z makramy"
   }
@@ -3104,9 +3580,11 @@ products: {
     "tag": "Sleek pendant",
     "description": "Spherical translucent smoke glass shade hanging from black textile cable.",
     "meta": [
-      "Translucent smoke glass",
-      "Textile cord",
-      "Modern sphere"
+      "smoked glass globe pendant",
+      "gray glass shade",
+      "single black suspension",
+      "modern minimalism",
+      "soft over table light"
     ],
     "imageAlt": "Smoky Glass Pendant Globe"
   },
@@ -3115,9 +3593,11 @@ products: {
     "tag": "Nowoczesna wisząca",
     "description": "Przezroczysta kula z dymionego popielatego szkła wisząca na czarnym sznurze tekstylnym.",
     "meta": [
-      "Dymione szkło",
-      "Tekstylny czarny przewód",
-      "Kula szklana"
+      "dymiona lampa wisząca kula",
+      "szary szklany klosz",
+      "czarny pojedynczy zwis",
+      "nowoczesny minimalizm",
+      "miękkie światło nad stołem"
     ],
     "imageAlt": "Dymiona kula wisząca"
   }
@@ -3130,9 +3610,11 @@ products: {
     "tag": "Solid marble",
     "description": "Heavy green marble cylinder with brushed gold touch button and warm hidden LED.",
     "meta": [
-      "Green marble base",
-      "Brushed gold button",
-      "Luxury weight"
+      "green marble cylinder lamp",
+      "dark green stone body",
+      "brass touch button",
+      "minimalist table lamp",
+      "elegant decorative light"
     ],
     "imageAlt": "Marble Brass Table Cylinder"
   },
@@ -3141,9 +3623,11 @@ products: {
     "tag": "Masywny marmur",
     "description": "Masywny cylinder z zielonego marmuru ze szczotkowanym złotym przyciskiem i światłem LED.",
     "meta": [
-      "Zielony marmur",
-      "Złoty przycisk",
-      "Ciężka ekskluzywna oprawa"
+      "cylindryczna lampa z zielonego marmuru",
+      "ciemnozielony kamienny korpus",
+      "mosiężny przycisk dotykowy",
+      "minimalistyczna lampka stołowa",
+      "eleganckie światło dekoracyjne"
     ],
     "imageAlt": "Cylindryczna lampa z zielonego marmuru"
   }
@@ -3156,9 +3640,11 @@ products: {
     "tag": "Patio wall",
     "description": "Black outdoor wall light charging by sunlight with automatic dusk-to-dawn sensor.",
     "meta": [
-      "Dusk to dawn sensor",
-      "Solar wall charging",
-      "IP65 waterproof"
+      "solar outdoor wall lantern",
+      "black square body",
+      "frosted light panels",
+      "exterior wall light",
+      "warm entrance lighting"
     ],
     "imageAlt": "Solar Outdoor Wall Lantern"
   },
@@ -3167,9 +3653,11 @@ products: {
     "tag": "Ściana tarasowa",
     "description": "Czarny kinkiet elewacyjny ładowany słonecznie z automatycznym czujnikiem zmierzchu.",
     "meta": [
-      "Czujnik zmierzchu",
-      "Ładowanie słoneczne",
-      "Odporność IP65"
+      "solarna lampa elewacyjna",
+      "czarna kwadratowa latarnia",
+      "mleczne panele świetlne",
+      "kinkiet zewnętrzny",
+      "ciepłe światło przy wejściu"
     ],
     "imageAlt": "Elewacyjna lampa solarna"
   }
@@ -3182,9 +3670,11 @@ products: {
     "tag": "Golden desk",
     "description": "Slim brushed brass arm angling over desk with integrated glare-free LED strip.",
     "meta": [
-      "Brushed brass arm",
-      "Glare free illumination",
-      "Minimal footprint"
+      "minimal brass desk lamp",
+      "tilted linear LED bar",
+      "round gold base",
+      "modern task light",
+      "even warm illumination"
     ],
     "imageAlt": "Minimalist Brass Desk Lamp"
   },
@@ -3193,9 +3683,11 @@ products: {
     "tag": "Złote biurko",
     "description": "Smukłe zagięte mosiężne ramię zapewniające jasne bezodblaskowe światło do pracy.",
     "meta": [
-      "Szczotkowany mosiądz",
-      "Bezodblaskowy moduł",
-      "Smukły profil"
+      "minimalistyczna mosiężna lampka biurkowa",
+      "pochylona liniowa listwa LED",
+      "okrągła złota podstawa",
+      "nowoczesne światło robocze",
+      "ciepłe równomierne oświetlenie"
     ],
     "imageAlt": "Mosiężna lampa biurkowa Minimal"
   }
@@ -3208,9 +3700,11 @@ products: {
     "tag": "Large feather",
     "description": "Expansive natural white feather shade forming a cloud statement above bedroom beds.",
     "meta": [
-      "Expansive feather size",
-      "Statement cloud",
-      "Glamour bedroom"
+      "large feather pendant",
+      "white fluffy globe shade",
+      "bedroom statement chandelier",
+      "glamour style",
+      "soft diffused light"
     ],
     "imageAlt": "Feather Pendant Cloud Chandelier"
   },
@@ -3219,9 +3713,11 @@ products: {
     "tag": "Puszysty żyrandol",
     "description": "Okazała lampa z gęstych naturalnych piór stanowiąca centralny punkt sypialni.",
     "meta": [
-      "Duży rozmiar",
-      "Naturalne białe pióra",
-      "Luksusowy charakter"
+      "duża lampa wisząca z piór",
+      "biały puszysty kulisty klosz",
+      "dekoracyjny żyrandol do sypialni",
+      "styl glamour",
+      "miękkie rozproszone światło"
     ],
     "imageAlt": "Duża wisząca chmura z piór"
   }
@@ -3234,9 +3730,11 @@ products: {
     "tag": "Loft ceiling",
     "description": "3 swivel metal spotlights mounted on a rustic wooden ceiling beam.",
     "meta": [
-      "3 adjustable spots",
-      "Wooden beam ceiling",
-      "Loft spotlight bar"
+      "triple spotlight bar",
+      "three black metal spots",
+      "rustic wood beam",
+      "adjustable ceiling light",
+      "focused downward beams"
     ],
     "imageAlt": "Industrial Spot Pendant Bar"
   },
@@ -3245,9 +3743,11 @@ products: {
     "tag": "Belka w stylu loft",
     "description": "Trzy regulowane metalowe reflektory zamontowane na surowej drewnianej belce sufitowej.",
     "meta": [
-      "Drewniana belka",
-      "3 regulowane reflektorki",
-      "Surowe drewno i stal"
+      "potrójny reflektor na belce",
+      "trzy czarne metalowe spoty",
+      "rustykalna drewniana listwa",
+      "regulowane światło sufitowe",
+      "skupione wiązki w dół"
     ],
     "imageAlt": "Potrójny reflektor na belce"
   }
@@ -3260,9 +3760,11 @@ products: {
     "tag": "Amber glow",
     "description": "Solid amber blown glass mushroom lamp casting warm honey ambient illumination.",
     "meta": [
-      "Honey warm amber",
-      "Solid blown glass",
-      "Cozy nightstand"
+      "amber glass mushroom lamp",
+      "transparent orange body",
+      "retro style",
+      "decorative table lamp",
+      "warm ambient light"
     ],
     "imageAlt": "Amber Glass Mushroom Lamp"
   },
@@ -3271,9 +3773,11 @@ products: {
     "tag": "Bursztynowa aura",
     "description": "Ręcznie dmuchane miodowo-bursztynowe szkło w kształcie grzybka do sypialni.",
     "meta": [
-      "Miodowe szkło",
-      "Jednolita oprawa",
-      "Przytulne oświetlenie"
+      "bursztynowa szklana lampa grzybek",
+      "przezroczysty pomarańczowy korpus",
+      "styl retro",
+      "lampka stołowa dekoracyjna",
+      "ciepłe światło nastrojowe"
     ],
     "imageAlt": "Bursztynowy grzybek ze szkła"
   }
@@ -3286,9 +3790,11 @@ products: {
     "tag": "Smart retrofit",
     "description": "WiFi controllable RGBW E27 LED bulb compatible with smart home voice assistants.",
     "meta": [
-      "E27 smart standard",
-      "Voice assistant ready",
-      "16M RGB colors"
+      "smart E27 LED bulb",
+      "frosted white bulb",
+      "red green blue and white light",
+      "color change by remote or app",
+      "smart home bulb"
     ],
     "imageAlt": "Smart RGBW LED Bulb E27"
   },
@@ -3297,9 +3803,11 @@ products: {
     "tag": "Retrofit smart",
     "description": "Sterowana przez Wi-Fi żarówka E27 z paletą 16 mln kolorów i obsługą asystentów głosowych.",
     "meta": [
-      "Standard E27",
-      "Sterowanie głosem",
-      "Paleta RGBW"
+      "inteligentna żarówka LED E27",
+      "biała mleczna bańka",
+      "czerwone zielone niebieskie i białe światło",
+      "zmiana koloru pilotem lub aplikacją",
+      "żarówka smart home"
     ],
     "imageAlt": "Inteligentna żarówka LED E27 RGBW"
   }
@@ -3312,9 +3820,11 @@ products: {
     "tag": "Grand halo",
     "description": "Large suspended circular ring lined with high-refraction crystal elements.",
     "meta": [
-      "Large crystal halo",
-      "High refraction glass",
-      "Grand dining fixture"
+      "crystal ring chandelier",
+      "round chrome frame",
+      "hanging rectangular crystals",
+      "glamour style",
+      "bright over table light"
     ],
     "imageAlt": "Crystal Ring Pendant Chandelier"
   },
@@ -3323,9 +3833,11 @@ products: {
     "tag": "Okazałe halo",
     "description": "Duży wiszący okrągły pierścień bogato wysadzany szlifowanymi kryształami.",
     "meta": [
-      "Wysokie załamanie światła",
-      "Zawieszenie mikrolinki",
-      "Okazała dekoracja"
+      "kryształowy żyrandol pierścień",
+      "okrągła chromowana rama",
+      "wiszące prostokątne kryształy",
+      "styl glamour",
+      "jasne światło nad stołem"
     ],
     "imageAlt": "Żyrandol Kryształowy Pierścień"
   }
@@ -3338,9 +3850,11 @@ products: {
     "tag": "Natural floor",
     "description": "Freestanding woven rattan pear-shaped floor lamp with internal fabric diffuser.",
     "meta": [
-      "Pear shape rattan",
-      "Internal diffuser",
-      "Freestanding boho"
+      "rattan floor lantern",
+      "tall woven teardrop shade",
+      "natural brown material",
+      "boho style",
+      "warm diffused light"
     ],
     "imageAlt": "Boho Rattan Floor Lantern"
   },
@@ -3349,9 +3863,11 @@ products: {
     "tag": "Naturalna podłoga",
     "description": "Wolnostojąca rattanowa lampa podłogowa w kształcie gruszki z materiałowym dyfuzorem.",
     "meta": [
-      "Kształt gruszki",
-      "Wewnętrzny dyfuzor",
-      "Naturalny pleciony rattan"
+      "rattanowa latarnia podłogowa",
+      "wysoki pleciony klosz kropla",
+      "naturalny brązowy materiał",
+      "styl boho",
+      "ciepłe rozproszone światło"
     ],
     "imageAlt": "Rattanowa latarnia podłogowa"
   }
@@ -3364,9 +3880,11 @@ products: {
     "tag": "Linear wall",
     "description": "Slender vertical black line fixture emitting soft glow toward wall back surface.",
     "meta": [
-      "Slender black line",
-      "Wall bounce glow",
-      "Minimalist interior"
+      "black linear wall sconce",
+      "two slim vertical bars",
+      "minimalist metal fixture",
+      "modern wall lighting",
+      "warm up down glow"
     ],
     "imageAlt": "Minimalist Stick Wall Sconce"
   },
@@ -3375,9 +3893,11 @@ products: {
     "tag": "Liniowa ściana",
     "description": "Pionowa czarna kreska na ścianę odbijająca miękkie światło w stronę ściany.",
     "meta": [
-      "Czarna smukła linia",
-      "Światło odbite",
-      "Dyskretny kinkiet"
+      "czarny liniowy kinkiet",
+      "dwie smukłe pionowe listwy",
+      "minimalistyczna metalowa oprawa",
+      "nowoczesne światło ścienne",
+      "ciepła poświata góra dół"
     ],
     "imageAlt": "Liniowy kinkiet czarny Kreska"
   }
@@ -3390,9 +3910,11 @@ products: {
     "tag": "Enamel vintage",
     "description": "Classic green enamel dome shade with white inner ceiling reflection for rustic kitchens.",
     "meta": [
-      "Green enamel finish",
-      "White inner reflector",
-      "Rustic kitchen light"
+      "green enamel pendant",
+      "metal dome shade",
+      "industrial factory style",
+      "over table or island",
+      "warm downward light"
     ],
     "imageAlt": "Industrial Baker Pendant"
   },
@@ -3401,9 +3923,11 @@ products: {
     "tag": "Zielona emalia",
     "description": "Klasyczny zielony emaliowany klosz dzwonowy z białym wnętrzem świetnie odbijającym światło.",
     "meta": [
-      "Zielona emalia",
-      "Białe wnętrze",
-      "Klimat retro kuchni"
+      "zielona emaliowana lampa wisząca",
+      "metalowy klosz kopuła",
+      "industrialny styl fabryczny",
+      "nad stół lub wyspę",
+      "ciepłe światło w dół"
     ],
     "imageAlt": "Lampa wisząca Emaliowana"
   }
@@ -3416,9 +3940,11 @@ products: {
     "tag": "Bunk bed light",
     "description": "Detachable magnetic base light stick with touch control and angle rotation.",
     "meta": [
-      "Magnetic base mount",
-      "Detachable light bar",
-      "Rechargeable lithium"
+      "magnetic reading light bar",
+      "black horizontal LED lamp",
+      "rechargeable removable fixture",
+      "bedside mounting",
+      "adjustable directional light"
     ],
     "imageAlt": "Rechargeable Magnetic Reading Bar"
   },
@@ -3427,9 +3953,11 @@ products: {
     "tag": "Oświetlenie łóżka",
     "description": "Odepnij i przyczep z powrotem - listwa LED na uchwycie magnetycznym z akumulatorem.",
     "meta": [
-      "Baza magnetyczna",
-      "Odłączany moduł",
-      "Ładowanie USB"
+      "magnetyczna listwa do czytania",
+      "czarna pozioma lampa LED",
+      "ładowalna i odłączana oprawa",
+      "montaż przy łóżku",
+      "regulowane światło kierunkowe"
     ],
     "imageAlt": "Magnetyczna listwa do czytania"
   }
@@ -3442,9 +3970,11 @@ products: {
     "tag": "Modern desk",
     "description": "Smoked glass cylinder housing a central frosted glass pillar light source.",
     "meta": [
-      "Smoked outer glass",
-      "Frosted inner pillar",
-      "Modern table accent"
+      "smoked glass cylinder lamp",
+      "dark glass shade",
+      "inner frosted diffuser",
+      "modern minimalism",
+      "soft warm light"
     ],
     "imageAlt": "Smoked Glass Table Cylinder"
   },
@@ -3453,9 +3983,11 @@ products: {
     "tag": "Stylowy biurkowy",
     "description": "Cylindryczna oprawa z dymionego szkła kryjąca wewnątrz matowy słupek świetlny.",
     "meta": [
-      "Dymione szkło zewnętrzne",
-      "Matowy wewnętrzny rdzeń",
-      "Nowoczesna forma"
+      "cylindryczna lampa stołowa z dymionego szkła",
+      "ciemny szklany klosz",
+      "wewnętrzny mleczny dyfuzor",
+      "nowoczesny minimalizm",
+      "miękkie ciepłe światło"
     ],
     "imageAlt": "Cylindryczna dymiona lampa stołowa"
   }
@@ -3468,9 +4000,11 @@ products: {
     "tag": "Tall drafting",
     "description": "Tall spring-balanced articulate floor lamp entirely in brushed brass finish.",
     "meta": [
-      "Articulated spring arm",
-      "Tall floor drafting",
-      "Brushed brass body"
+      "brass architect floor lamp",
+      "tall adjustable arm",
+      "directional metal shade",
+      "industrial office style",
+      "reading and task light"
     ],
     "imageAlt": "Brass Architect Floor Lamp"
   },
@@ -3479,9 +4013,11 @@ products: {
     "tag": "Wysoka kreślarska",
     "description": "Wysoka podłogowa lampa przegubowa ze sprężynami wykonana w całości ze mosiądzu.",
     "meta": [
-      "Ramię przegubowe",
-      "Mosiężne wykończenie",
-      "Wysoki zasięg"
+      "mosiężna lampa kreślarska podłogowa",
+      "wysokie regulowane ramię",
+      "metalowy klosz kierunkowy",
+      "industrialny styl gabinetowy",
+      "światło do czytania i pracy"
     ],
     "imageAlt": "Mosiężna lampa kreślarska podłogowa"
   }
@@ -3494,9 +4030,11 @@ products: {
     "tag": "Paper rope",
     "description": "Lightweight paper rope woven shade casting intricate warm geometry onto surroundings.",
     "meta": [
-      "Paper rope weave",
-      "Lightweight fixture",
-      "Warm ambient shadow"
+      "boho paper pendant",
+      "open woven shade",
+      "natural light material",
+      "geometric wall shadows",
+      "warm decorative light"
     ],
     "imageAlt": "Boho Woven Paper Pendant"
   },
@@ -3505,9 +4043,11 @@ products: {
     "tag": "Papierowy sznur",
     "description": "Lekki klosz wypleciony z trwałego sznurka papierowego, tworzący przytulną aurę.",
     "meta": [
-      "Sznurek papierowy",
-      "Lekka oprawa",
-      "Ażurowy splot"
+      "papierowa lampa wisząca boho",
+      "ażurowy pleciony klosz",
+      "naturalny jasny materiał",
+      "geometryczne cienie na ścianie",
+      "ciepłe światło dekoracyjne"
     ],
     "imageAlt": "Lampa wisząca z plecionki papierowej"
   }
@@ -3520,9 +4060,11 @@ products: {
     "tag": "Raw wall",
     "description": "Curved concrete wall block shining light simultaneously up toward ceiling and down to floor.",
     "meta": [
-      "UpDown dual beam",
-      "Raw cast concrete",
-      "Architectural sconce"
+      "concrete up down wall light",
+      "gray semicircle fixture",
+      "raw minimalist style",
+      "two wall beams",
+      "warm architectural light"
     ],
     "imageAlt": "Concrete Wall Sconce Updown"
   },
@@ -3531,9 +4073,11 @@ products: {
     "tag": "Surowy akcent",
     "description": "Łukowy blok z surowego betonu świecący jednocześnie w górę i w dół ściany.",
     "meta": [
-      "Dwukierunkowe światło",
-      "Lany beton",
-      "Surowa architektura"
+      "betonowy kinkiet góra dół",
+      "szara półokrągła oprawa",
+      "surowy styl minimalistyczny",
+      "dwie wiązki na ścianę",
+      "ciepłe światło elewacyjne"
     ],
     "imageAlt": "Betonowy kinkiet góra-dół"
   }
@@ -3546,9 +4090,11 @@ products: {
     "tag": "Diamond glow",
     "description": "Acrylic faceted crystal column lamp with 3-color touch sensor top switch.",
     "meta": [
-      "Faceted crystal refraction",
-      "3 color touch switch",
-      "USB rechargeable"
+      "crystal touch lamp",
+      "tall faceted cylinder",
+      "black round base",
+      "glamour bedside lamp",
+      "warm sparkling light"
     ],
     "imageAlt": "Crystal Bedside Touch Lamp"
   },
@@ -3557,9 +4103,11 @@ products: {
     "tag": "Diamentowy blask",
     "description": "Akrylowa szlifowana kolumna kryształowa z 3-stopniowym przełącznikiem dotykowym.",
     "meta": [
-      "Szlifowany akryl",
-      "Dotykowy szczyt",
-      "Trzy barwy światła"
+      "kryształowa lampka dotykowa",
+      "wysoki fasetowany cylinder",
+      "czarna okrągła podstawa",
+      "lampka nocna glamour",
+      "ciepłe błyszczące światło"
     ],
     "imageAlt": "Kryształowa lampka dotykowa"
   }
@@ -3572,9 +4120,11 @@ products: {
     "tag": "Loft plumbing",
     "description": "Red valve handle wall sconce crafted from dark rusted iron plumbing fittings.",
     "meta": [
-      "Red valve accent",
-      "Rusted iron fittings",
-      "Loft wall piece"
+      "industrial pipe wall lamp",
+      "black plumbing pipes",
+      "red decorative valve",
+      "exposed Edison bulb",
+      "warm loft lighting"
     ],
     "imageAlt": "Industrial Waterpipe Wall Lamp"
   },
@@ -3583,9 +4133,11 @@ products: {
     "tag": "Czerwony zawór",
     "description": "Kinkiet ścienny z ciemnych rur hydraulicznych ozdobiony czerwonym zaworem retro.",
     "meta": [
-      "Czerwony zawór",
-      "Ciemne żeliwo",
-      "Oryginalny charakter"
+      "industrialny kinkiet z rur",
+      "czarne metalowe rury hydrauliczne",
+      "czerwony zawór dekoracyjny",
+      "widoczna żarówka Edison",
+      "ciepłe światło loftowe"
     ],
     "imageAlt": "Kinkiet z rur hydraulicznych"
   }
@@ -3598,9 +4150,11 @@ products: {
     "tag": "Warm foyer",
     "description": "Cluster of five amber glass pendants suspended at varying lengths for high entryways.",
     "meta": [
-      "5 amber drop bulbs",
-      "Varying cable lengths",
-      "Warm foyer accent"
+      "amber cluster pendant",
+      "five glass drops",
+      "staggered shade heights",
+      "warm over table light",
+      "vintage glamour style"
     ],
     "imageAlt": "Amber Glass Pendant Cluster"
   },
@@ -3609,9 +4163,11 @@ products: {
     "tag": "Ciepły hol",
     "description": "Zestaw pięciu bursztynowych szklanych kloszy wiszących na różnych wysokościach do holu.",
     "meta": [
-      "5 bursztynowych kropel",
-      "Różne długości kabli",
-      "Efektowny wejściowy akcent"
+      "bursztynowa lampa kaskadowa",
+      "pięć szklanych zwisów",
+      "różne wysokości kloszy",
+      "ciepłe światło nad stołem",
+      "styl vintage glamour"
     ],
     "imageAlt": "Bursztynowa kaskada wisząca"
   }
@@ -3624,9 +4180,11 @@ products: {
     "tag": "Bendable neon",
     "description": "3-meter bendable silicone neon rope light controllable via app for custom wall art shapes.",
     "meta": [
-      "3 meter silicone rope",
-      "App custom art",
-      "Bendable neon flex"
+      "flexible neon LED rope",
+      "red green blue light",
+      "bendable decorative form",
+      "smart RGB lighting",
+      "app control"
     ],
     "imageAlt": "Smart Flexible LED Neon Strip"
   },
@@ -3635,9 +4193,11 @@ products: {
     "tag": "Giętki neon",
     "description": "3-metrowy giętki silikonowy wąż neonowy LED do tworzenia własnych kształtów na ścianie.",
     "meta": [
-      "3 metry długości",
-      "Tworzenie kształtów",
-      "Aplikacja mobilna"
+      "elastyczny wąż Neon LED",
+      "czerwone zielone niebieskie światło",
+      "giętka forma dekoracyjna",
+      "inteligentne oświetlenie RGB",
+      "sterowanie aplikacją"
     ],
     "imageAlt": "Elastyczny wąż Neon LED Smart"
   }
@@ -3650,9 +4210,11 @@ products: {
     "tag": "Jute twine",
     "description": "Natural jute twine wrapped around an hourglass metal wire frame.",
     "meta": [
-      "Jute twine wrap",
-      "Hourglass wire frame",
-      "Warm organic light"
+      "jute table lamp",
+      "black metal cage",
+      "natural brown weave",
+      "exposed Edison bulb",
+      "warm boho loft light"
     ],
     "imageAlt": "Boho Woven Jute Table Lamp"
   },
@@ -3661,9 +4223,11 @@ products: {
     "tag": "Sznurek jutowy",
     "description": "Naturalny sznurek jutowy opleciony na stelażu w kształcie klepsydry.",
     "meta": [
-      "Sznurek jutowy",
-      "Forma klepsydry",
-      "Przytulny nastrój"
+      "jutowa lampa stołowa",
+      "czarna metalowa klatka",
+      "naturalny brązowy splot",
+      "widoczna żarówka Edison",
+      "ciepłe światło boho loft"
     ],
     "imageAlt": "Jutowa lampa stołowa"
   }
@@ -3676,9 +4240,11 @@ products: {
     "tag": "Slim arch",
     "description": "Continuous black metal thin arch sweeping from heavy base directly over couch seating.",
     "meta": [
-      "Continuous thin arch",
-      "Heavy steel base",
-      "Over couch reach"
+      "minimalist arch floor lamp",
+      "slim black frame",
+      "flat round LED base",
+      "modern living room feature",
+      "warm indirect light"
     ],
     "imageAlt": "Minimalist Arch Floor Lamp"
   },
@@ -3687,9 +4253,11 @@ products: {
     "tag": "Łuk nad sofę",
     "description": "Cienki czarny metalowy pałąk płynnie wyrastający z ciężkiej podstawy nad sofę.",
     "meta": [
-      "Niezwykle smukły łuk",
-      "Ciężka podstawa",
-      "Wygodne światło do czytania"
+      "minimalistyczna lampa podłogowa łuk",
+      "smukła czarna rama",
+      "płaska okrągła podstawa LED",
+      "nowoczesna dekoracja salonu",
+      "ciepłe światło pośrednie"
     ],
     "imageAlt": "Smukła lampa łukowa podłogowa"
   }
@@ -3702,9 +4270,11 @@ products: {
     "tag": "Duo tone wall",
     "description": "Smoked glass half-dome shade mounted against brushed brass wall plate.",
     "meta": [
-      "Smoked half dome",
-      "Brushed brass plate",
-      "Lounge sconce"
+      "smoked glass wall sconce",
+      "brass round frame",
+      "glass hemisphere shade",
+      "modern premium style",
+      "soft downward light"
     ],
     "imageAlt": "Smoked Glass Wall Sconce"
   },
@@ -3713,9 +4283,11 @@ products: {
     "tag": "Dwuodcieniowa ściana",
     "description": "Dymiona szklana półkula zamontowana na tarczy ze szczotkowanego mosiądzu.",
     "meta": [
-      "Półkula z dymionego szkła",
-      "Mosiężny talerz",
-      "Klimatyczne oświetlenie"
+      "kinkiet z dymionego szkła",
+      "mosiężna okrągła rama",
+      "szklany półkulisty klosz",
+      "nowoczesny styl premium",
+      "miękkie światło skierowane w dół"
     ],
     "imageAlt": "Kinkiet Półkula dymiona"
   }
@@ -3728,9 +4300,11 @@ products: {
     "tag": "Loft mechanical",
     "description": "Wall mounted pulley wheel allowing cable length adjustment for bedside filament light.",
     "meta": [
-      "Wall pulley wheel",
-      "Braided cord drop",
-      "Adjustable drop length"
+      "industrial pulley wall lamp",
+      "black metal mechanism",
+      "adjustable rope suspension",
+      "exposed Edison bulb",
+      "warm loft lighting"
     ],
     "imageAlt": "Industrial Pulley Wall Lamp"
   },
@@ -3739,9 +4313,11 @@ products: {
     "tag": "Mechanika loftu",
     "description": "Ścienny kołowrotek umożliwiający regulację wysokości wiszącej żarówki Edison.",
     "meta": [
-      "Koło zamachowe",
-      "Przewód w oplocie",
-      "Łatwa regulacja wysokości"
+      "industrialny kinkiet z kołem pasowym",
+      "czarny metalowy mechanizm",
+      "regulowany zwis na linie",
+      "widoczna żarówka Edison",
+      "ciepłe światło loftowe"
     ],
     "imageAlt": "Kinkiet z kołem pasowym"
   }
@@ -3754,9 +4330,11 @@ products: {
     "tag": "Sparkling sphere",
     "description": "Solid glass sphere filled with diamond-cut crystal facets creating galaxy light reflections.",
     "meta": [
-      "Solid crystal sphere",
-      "Galaxy light refraction",
-      "Weighted luxury"
+      "crystal globe table lamp",
+      "faceted clear sphere",
+      "black round LED base",
+      "galaxy effect",
+      "cool sparkling light"
     ],
     "imageAlt": "Crystal Table Globe Lamp"
   },
@@ -3765,9 +4343,11 @@ products: {
     "tag": "Mieniąca się kula",
     "description": "Lita szklana kula wypełniona mikroszlifami tworzącymi efekt gwiezdnej galaktyki.",
     "meta": [
-      "Szlifowane szkło",
-      "Efekt gwiezdnego pyłu",
-      "Ciężkie szkło"
+      "kryształowa kula stołowa",
+      "fasetowana przezroczysta sfera",
+      "czarna okrągła podstawa LED",
+      "efekt galaktyki",
+      "chłodne błyszczące światło"
     ],
     "imageAlt": "Kryształowa kula stołowa Galaxy"
   }
@@ -3780,9 +4360,11 @@ products: {
     "tag": "Green glass drop",
     "description": "Pendant lamp featuring iconic emerald green glass shade suspended by brass chain.",
     "meta": [
-      "Emerald green shade",
-      "Brass hanging chain",
-      "Banker pendant style"
+      "green bankers pendant",
+      "emerald glass shade",
+      "brass chain and fitting",
+      "classic library style",
+      "warm over table light"
     ],
     "imageAlt": "Vintage Brass Banker Pendant"
   },
@@ -3791,9 +4373,11 @@ products: {
     "tag": "Szmaragdowa zawieszka",
     "description": "Wariant wiszący znanej lampy bankierskiej ze szmaragdowym kloszem na mosiężnym łańcuchu.",
     "meta": [
-      "Szmaragdowe szkło",
-      "Mosiężny łańcuch",
-      "Stylowe wiszące światło"
+      "zielona lampa bankierska wisząca",
+      "szmaragdowy szklany klosz",
+      "mosiężny łańcuch i oprawa",
+      "klasyczny styl biblioteczny",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Wisząca lampa bankierska"
   }
@@ -3806,9 +4390,11 @@ products: {
     "tag": "Garden path",
     "description": "Sturdy aluminum outdoor post lamp with solar panel lid for driveway illumination.",
     "meta": [
-      "Outdoor post light",
-      "Solar powered lid",
-      "Aluminum pillar"
+      "solar post light",
+      "silver metal body",
+      "top solar panel",
+      "garden path lighting",
+      "warm downward light"
     ],
     "imageAlt": "Solar Outdoor Post Lamp"
   },
@@ -3817,9 +4403,11 @@ products: {
     "tag": "Ścieżka ogrodowa",
     "description": "Aluminiowy słupek ogrodowy z górnym panelem solarnym do oświetlania podjazdu i alejek.",
     "meta": [
-      "Aluminiowa konstrukcja",
-      "Górne ładowanie solarne",
-      "Auto włącznik"
+      "solarna lampa słupkowa",
+      "metalowy srebrny korpus",
+      "panel słoneczny na górze",
+      "oświetlenie ścieżki ogrodowej",
+      "ciepłe światło w dół"
     ],
     "imageAlt": "Solarna lampa słupkowa"
   }
@@ -3832,9 +4420,11 @@ products: {
     "tag": "Layered weave",
     "description": "Two-tier nested woven bamboo basket shade giving layered shadow patterns.",
     "meta": [
-      "Two tier bamboo",
-      "Nested basket shade",
-      "Layered shadow patterns"
+      "two tier bamboo pendant",
+      "two woven dome shades",
+      "natural brown material",
+      "hanging boho style",
+      "patterned warm light"
     ],
     "imageAlt": "Boho Woven Bamboo Pendant"
   },
@@ -3843,9 +4433,11 @@ products: {
     "tag": "Głębia splotu",
     "description": "Dwupoziomowa nakładana plecionka bambusowa tworząca trójwymiarowe cienie na ścianie.",
     "meta": [
-      "2 poziomy plecionki",
-      "Efekt głębi cieni",
-      "Naturalny surowiec"
+      "dwuwarstwowa lampa bambusowa",
+      "dwa plecione klosze kopułowe",
+      "naturalny brązowy materiał",
+      "wiszący styl boho",
+      "wzorzyste ciepłe światło"
     ],
     "imageAlt": "Dwuwarstwowa lampa bambusowa"
   }
@@ -3858,9 +4450,11 @@ products: {
     "tag": "Minimal cylinder",
     "description": "Compact black aluminium cylinder shining light direct downward for focused hallway accent.",
     "meta": [
-      "Compact cylinder",
-      "Downward beam",
-      "Aluminum housing"
+      "minimalist black wall sconce",
+      "metal cylinder body",
+      "downward facing light",
+      "modern hallway lighting",
+      "focused warm beam"
     ],
     "imageAlt": "Minimalist Black Wall Sconce"
   },
@@ -3869,9 +4463,11 @@ products: {
     "tag": "Kompaktowy walec",
     "description": "Czarny aluminiowy walec dający skupiony strumień światła w dół na ścianę.",
     "meta": [
-      "Czarny walec",
-      "Skupiony strumień w dół",
-      "Aluminiowa obudowa"
+      "minimalistyczny czarny kinkiet",
+      "metalowy cylindryczny korpus",
+      "światło skierowane w dół",
+      "nowoczesne oświetlenie korytarza",
+      "skupiona ciepła wiązka"
     ],
     "imageAlt": "Kinkiet walec czarny Minimal"
   }
@@ -3884,9 +4480,11 @@ products: {
     "tag": "Statement ring",
     "description": "Circular brass ring holding 8 smoked glass globes for grand living room centerpieces.",
     "meta": [
-      "8 smoked globes",
-      "Circular brass ring",
-      "Grand living room focus"
+      "smoked globe ring chandelier",
+      "brass circular frame",
+      "eight glass shades",
+      "large living room light",
+      "warm glamour glow"
     ],
     "imageAlt": "Smoky Glass Chandelier Ring"
   },
@@ -3895,9 +4493,11 @@ products: {
     "tag": "Centralny punkt salonu",
     "description": "Okrągła mosiężna obręcz z 8 dymionymi szklanymi kulami stanowiąca główną ozdobę salonu.",
     "meta": [
-      "8 szklanych kul",
-      "Mosiężny ring",
-      "Ekskluzywne centrum salonu"
+      "żyrandol pierścień z dymionymi kulami",
+      "mosiężna okrągła rama",
+      "osiem szklanych kloszy",
+      "duża lampa do salonu",
+      "ciepłe światło glamour"
     ],
     "imageAlt": "Żyrandol Pierścień z dymionymi kulami"
   }
@@ -3910,9 +4510,11 @@ products: {
     "tag": "Chrome cinema",
     "description": "Polished chrome searchlight mounted on black wooden tripod legs.",
     "meta": [
-      "Polished chrome spot",
-      "Black wooden tripod",
-      "Cinema reflector"
+      "chrome tripod spotlight",
+      "black wooden tripod",
+      "metal cinema head",
+      "industrial floor lamp",
+      "focused warm beam"
     ],
     "imageAlt": "Industrial Tripod Floor Search"
   },
@@ -3921,9 +4523,11 @@ products: {
     "tag": "Kinowy chrom",
     "description": "Polerowany chromowany reflektor kinowy na czarnym drewnianym statywie.",
     "meta": [
-      "Polerowany chrom",
-      "Czarny statyw drewniany",
-      "Kinowy akcent"
+      "chromowany reflektor na trójnogu",
+      "czarny drewniany statyw",
+      "metalowa głowica filmowa",
+      "industrialna lampa podłogowa",
+      "skupiona ciepła wiązka"
     ],
     "imageAlt": "Chromowany reflektor na czarnym statywie"
   }
@@ -3936,9 +4540,11 @@ products: {
     "tag": "Compact warm",
     "description": "Small spherical amber glass shade with touch button base for bedside night tables.",
     "meta": [
-      "Small amber sphere",
-      "Touch base switch",
-      "Cozy bedtime light"
+      "amber globe bedside lamp",
+      "small round glass shade",
+      "low black base",
+      "bedroom lighting",
+      "warm ambient light"
     ],
     "imageAlt": "Amber Glass Bedside Globe"
   },
@@ -3947,9 +4553,11 @@ products: {
     "tag": "Ciepłe czytanie",
     "description": "Niewielka szklana bursztynowa kulka na podstawe z włącznikiem dotykowym na szafkę nocną.",
     "meta": [
-      "Kompaktowa kulka",
-      "Włącznik dotykowy",
-      "Idealne do sypialni"
+      "bursztynowa lampka nocna kula",
+      "mały szklany okrągły klosz",
+      "czarna niska podstawa",
+      "do sypialni",
+      "ciepłe światło nastrojowe"
     ],
     "imageAlt": "Nocna bursztynowa kulka"
   }
@@ -3962,9 +4570,11 @@ products: {
     "tag": "Natural wall fan",
     "description": "Semicircular rattan woven fan shade attached to wall plate for textured warm accent.",
     "meta": [
-      "Semicircle rattan fan",
-      "Textured wall light",
-      "Natural boho charm"
+      "rattan fan wall sconce",
+      "semicircular woven shade",
+      "natural light material",
+      "boho style",
+      "radiating light patterns"
     ],
     "imageAlt": "Boho Woven Rattan Wall Sconce"
   },
@@ -3973,9 +4583,11 @@ products: {
     "tag": "Wachlarz boho",
     "description": "Półokrągły rattanowy wachlarz zamontowany przy ścianie dający ciepłe nastrojowe światło.",
     "meta": [
-      "Kształt wachlarza",
-      "Naturalny rattan",
-      "Klimatyczny kinkiet"
+      "rattanowy kinkiet wachlarz",
+      "półokrągły pleciony klosz",
+      "naturalny jasny materiał",
+      "styl boho",
+      "promieniste wzory światła"
     ],
     "imageAlt": "Kinkiet Rattanowy Wachlarz"
   }
@@ -3988,9 +4600,11 @@ products: {
     "tag": "Architectural desk",
     "description": "Ultra-thin horizontal LED bar suspended on slender brass rod supports.",
     "meta": [
-      "Ultra thin LED bar",
-      "Slender brass supports",
-      "Architectural minimalism"
+      "linear LED desk lamp",
+      "long white light bar",
+      "two slim brass supports",
+      "minimalist task light",
+      "even desk illumination"
     ],
     "imageAlt": "Minimalist Linear Desk Light"
   },
@@ -3999,9 +4613,11 @@ products: {
     "tag": "Architektoniczne biurko",
     "description": "Ultra-płaska pozioma listwa LED wsparta na dwóch delikatnych mosiężnych pionowych nóżkach.",
     "meta": [
-      "Płaska listwa LED",
-      "Mosiężne nóżki",
-      "Architektoniczna prostota"
+      "liniowa lampa biurkowa LED",
+      "długa biała listwa świetlna",
+      "dwie smukłe mosiężne podpory",
+      "minimalistyczne światło robocze",
+      "równomierne oświetlenie biurka"
     ],
     "imageAlt": "Smukła mosiężna lampka biurkowa"
   }
@@ -4014,9 +4630,11 @@ products: {
     "tag": "Glamour hallway",
     "description": "Polished chrome wall bracket draped with genuine glass crystal droplets.",
     "meta": [
-      "Glass crystal drops",
-      "Polished chrome bracket",
-      "Glamour hallway light"
+      "crystal drop wall sconce",
+      "chrome metal fixture",
+      "hanging glass crystals",
+      "glamour style",
+      "sparkling decorative light"
     ],
     "imageAlt": "Crystal Drop Wall Sconce"
   },
@@ -4025,9 +4643,11 @@ products: {
     "tag": "Korytarz glamour",
     "description": "Chromowany uchwyt ścienny ozdobiony zwisającymi szklanymi kroplami kryształowymi.",
     "meta": [
-      "Kryształowe krople",
-      "Chromowany uchwyt",
-      "Elegancja na ścianie"
+      "kryształowy kinkiet łezka",
+      "chromowana metalowa oprawa",
+      "wiszące szklane kryształy",
+      "styl glamour",
+      "iskrzące światło dekoracyjne"
     ],
     "imageAlt": "Kinkiet Kryształowa Łezka"
   }
@@ -4040,9 +4660,11 @@ products: {
     "tag": "Triple loft",
     "description": "Triple black metal caged lights lined along a horizontal steel suspension bar.",
     "meta": [
-      "3 caged lights",
-      "Steel horizontal bar",
-      "Industrial dining light"
+      "triple cage pendant bar",
+      "three black metal cages",
+      "exposed Edison bulbs",
+      "industrial over table light",
+      "warm loft glow"
     ],
     "imageAlt": "Industrial Caged Pendant Bar"
   },
@@ -4051,9 +4673,11 @@ products: {
     "tag": "Industrialny stołowy",
     "description": "Trzy czarne klatkowe klosze metalowe zawieszone na jednej poziomej czarnej listwie.",
     "meta": [
-      "3 klatkowe klosze",
-      "Czarna listwa",
-      "Industrialny stołowy styl"
+      "potrójna lampa klatkowa na listwie",
+      "trzy czarne metalowe kosze",
+      "widoczne żarówki Edison",
+      "industrialny zwis nad stół",
+      "ciepłe światło loftowe"
     ],
     "imageAlt": "Potrójna lampa klatkowa na listwie"
   }
@@ -4066,9 +4690,11 @@ products: {
     "tag": "Honey cylinder",
     "description": "Amber glass cylinder enclosure with internal brass mesh tube diffusing warmth.",
     "meta": [
-      "Amber glass cylinder",
-      "Inner brass mesh",
-      "Warm desk accent"
+      "amber cylinder desk lamp",
+      "clear glass body",
+      "inner metal diffuser",
+      "modern table lamp",
+      "warm golden light"
     ],
     "imageAlt": "Amber Glass Desk Cylinder"
   },
@@ -4077,9 +4703,11 @@ products: {
     "tag": "Miodowa lampka",
     "description": "Cylinder z bursztynowego szkła kryjący wewnętrzną siateczkę mosiężną rozpraszającą światło.",
     "meta": [
-      "Bursztynowe szkło",
-      "Siatka mosiężna",
-      "Bardzo ciepła barwa"
+      "bursztynowy cylinder biurkowy",
+      "przezroczysty szklany korpus",
+      "wewnętrzny metalowy dyfuzor",
+      "nowoczesna lampka stołowa",
+      "ciepłe złote światło"
     ],
     "imageAlt": "Bursztynowy cylinder biurkowy"
   }
@@ -4092,9 +4720,11 @@ products: {
     "tag": "Smart standing",
     "description": "Modern standing lamp with dual adjustable heads controllable individually via app.",
     "meta": [
-      "Dual smart heads",
-      "Individual control",
-      "Smart home app"
+      "smart WiFi floor lamp",
+      "two adjustable heads",
+      "red green blue and white light",
+      "independent light control",
+      "full RGBW lighting"
     ],
     "imageAlt": "Smart WiFi Floor Lamp"
   },
@@ -4103,9 +4733,11 @@ products: {
     "tag": "Inteligentny stojak",
     "description": "Nowoczesna lampa podłogowa z dwoma niezależnie regulowanymi głowicami sterowanymi z aplikacji.",
     "meta": [
-      "Dwie głowice",
-      "Niezależne sterowanie",
-      "Pełne RGBW Smart"
+      "inteligentna lampa podłogowa WiFi",
+      "dwie regulowane głowice",
+      "czerwone zielone niebieskie i białe światło",
+      "niezależne sterowanie światłem",
+      "pełne oświetlenie RGBW"
     ],
     "imageAlt": "Dwugłowicowa lampa podłogowa Smart"
   }
@@ -4118,9 +4750,11 @@ products: {
     "tag": "Sphere weave",
     "description": "Spherical wire cage completely wrapped in intricate white macrame knotting.",
     "meta": [
-      "Macrame knotting sphere",
-      "White cotton cord",
-      "Bohemian bedroom"
+      "macrame globe pendant",
+      "white woven cord",
+      "spherical open shade",
+      "boho style",
+      "warm patterned light"
     ],
     "imageAlt": "Boho Macrame Pendant Globe"
   },
@@ -4129,9 +4763,11 @@ products: {
     "tag": "Sferyczny splot",
     "description": "Ażurowa szklana lub metalowa kula osłonięta gęstym białym splotem makramowym.",
     "meta": [
-      "Sferyczny splot",
-      "Biała bawełna",
-      "Bohema w sypialni"
+      "lampa wisząca kula z makramy",
+      "biały pleciony sznurek",
+      "kulisty ażurowy klosz",
+      "styl boho",
+      "ciepłe wzorzyste światło"
     ],
     "imageAlt": "Kula z makramy wisząca"
   }
@@ -4144,9 +4780,11 @@ products: {
     "tag": "Single spot",
     "description": "Single surface-mount swiveling black cylindrical spotlight for modern galleries.",
     "meta": [
-      "360 swivel spot",
-      "Matte black cylinder",
-      "Gallery spotlight"
+      "black surface spotlight",
+      "adjustable cylinder spot",
+      "round ceiling mount",
+      "minimalist style",
+      "focused directional light"
     ],
     "imageAlt": "Minimalist Black Track Light"
   },
@@ -4155,9 +4793,11 @@ products: {
     "tag": "Pojedynczy spot",
     "description": "Obracany w pełnym zakresie czarny natynkowy walec świetlny do podkreślania obrazów.",
     "meta": [
-      "Obrót 360 stopni",
-      "Matowa czerń",
-      "Sufitowy punkt"
+      "czarny reflektor natynkowy",
+      "regulowany cylindryczny spot",
+      "okrągła oprawa sufitowa",
+      "minimalistyczny styl",
+      "skupione światło kierunkowe"
     ],
     "imageAlt": "Reflektor natynkowy Czarny Walec"
   }
@@ -4170,9 +4810,11 @@ products: {
     "tag": "Dark sphere",
     "description": "Smoked mirror glass sphere resting on a square black anodized aluminum block.",
     "meta": [
-      "Smoked mirror glass",
-      "Anodized aluminum base",
-      "Modern study accent"
+      "smoked glass desk sphere",
+      "dark mirrored globe",
+      "black cube base",
+      "modern minimalism",
+      "decorative office light"
     ],
     "imageAlt": "Smoked Glass Desk Sphere"
   },
@@ -4181,9 +4823,11 @@ products: {
     "tag": "Mroczna kula",
     "description": "Lustrzana dymiona szklana kula spoczywająca na kanciastej podstawie z czarnego aluminium.",
     "meta": [
-      "Dymione lustrzane szkło",
-      "Czarna podstawa",
-      "Egancki gabinet"
+      "dymiona szklana kula stołowa",
+      "ciemna lustrzana sfera",
+      "czarna sześcienna podstawa",
+      "nowoczesny minimalizm",
+      "dekoracyjne światło gabinetowe"
     ],
     "imageAlt": "Dymiona szklana kula na czarnym bloku"
   }
@@ -4196,9 +4840,11 @@ products: {
     "tag": "Plumbing elbow",
     "description": "Elbow pipe metal fixture mounting bulb sideways for hallway or accent walls.",
     "meta": [
-      "Elbow pipe fitting",
-      "Sideways bulb mount",
-      "Raw industrial vibe"
+      "industrial pipe wall sconce",
+      "black metal elbow",
+      "exposed horizontal Edison bulb",
+      "raw loft style",
+      "warm wall lighting"
     ],
     "imageAlt": "Industrial Pipe Wall Sconce"
   },
@@ -4207,9 +4853,11 @@ products: {
     "tag": "Hydrauliczny skos",
     "description": "Metalowe kolanko hydrauliczne zamontowane do ściany kierujące żarówkę w bok.",
     "meta": [
-      "Kolanko stalowe",
-      "Montaż boczny",
-      "Surowy wyraz"
+      "industrialny kinkiet z rury",
+      "czarne metalowe kolano",
+      "widoczna pozioma żarówka Edison",
+      "surowy styl loftowy",
+      "ciepłe światło ścienne"
     ],
     "imageAlt": "Kinkiet Kolano z rury"
   }
@@ -4222,9 +4870,11 @@ products: {
     "tag": "Dining luxury",
     "description": "Long horizontal brass channel filled with faceted crystal prisms over grand dining tables.",
     "meta": [
-      "Linear crystal bar",
-      "Brushed brass channel",
-      "Grand dining light"
+      "linear crystal pendant",
+      "long brass bar",
+      "cut rectangular crystals",
+      "luxury over table suspension",
+      "bright sparkling light"
     ],
     "imageAlt": "Crystal Linear Pendant Bar"
   },
@@ -4233,9 +4883,11 @@ products: {
     "tag": "Prestiż w jadalni",
     "description": "Długa mosiężna listwa wypełniona prostokątnymi szlifowanymi kryształami nad duży stół.",
     "meta": [
-      "Prostokątne kryształy",
-      "Mosiężne koryto",
-      "Ekskluzywny stołowy luksus"
+      "liniowa lampa kryształowa",
+      "długa mosiężna listwa",
+      "szlifowane prostokątne kryształy",
+      "luksusowy zwis nad stół",
+      "jasne błyszczące światło"
     ],
     "imageAlt": "Ekskluzywna liniowa lampa kryształowa"
   }
@@ -4248,9 +4900,11 @@ products: {
     "tag": "Warm arc",
     "description": "Tall sweeping arc floor lamp ending with a large amber glass globe shade.",
     "meta": [
-      "Large amber globe",
-      "Sweeping arch stem",
-      "Warm lounge lighting"
+      "arc floor lamp",
+      "amber glass globe",
+      "slim black arm",
+      "living room sofa light",
+      "warm ambient glow"
     ],
     "imageAlt": "Amber Glass Arc Floor Lamp"
   },
@@ -4259,9 +4913,11 @@ products: {
     "tag": "Ciepły łuk",
     "description": "Wysoka lampa łukowa wykończona dużą bursztynową kulą szklaną dającą ciepły blask.",
     "meta": [
-      "Wysoki stalowy łuk",
-      "Duża bursztynowa kula",
-      "Luksusowy salon"
+      "łukowa lampa podłogowa",
+      "bursztynowa szklana kula",
+      "smukłe czarne ramię",
+      "do salonu przy sofie",
+      "ciepłe światło nastrojowe"
     ],
     "imageAlt": "Lampa łukowa z bursztynową kulą"
   }
@@ -4274,9 +4930,11 @@ products: {
     "tag": "Dome seagrass",
     "description": "Wide dome shade woven from natural seagrass bringing texture to dining spaces.",
     "meta": [
-      "Seagrass dome shade",
-      "Natural texture",
-      "Boho dining style"
+      "seagrass pendant lamp",
+      "wide woven dome shade",
+      "natural beige material",
+      "boho style",
+      "warm over table light"
     ],
     "imageAlt": "Boho Woven Seagrass Pendant"
   },
@@ -4285,9 +4943,11 @@ products: {
     "tag": "Nadmorski dzwon",
     "description": "Szeroki klosz w kształcie kopuły wypleciony z naturalnej trawy morskiej.",
     "meta": [
-      "Kopuła z trawy morskiej",
-      "Naturalny charakter",
-      "Idealny do jadalni"
+      "lampa wisząca z trawy morskiej",
+      "szeroki pleciony klosz kopuła",
+      "naturalny beżowy materiał",
+      "styl boho",
+      "ciepłe światło nad stołem"
     ],
     "imageAlt": "Klosz wiszący z trawy morskiej"
   }
@@ -4300,9 +4960,11 @@ products: {
     "tag": "Triple spot bar",
     "description": "3 slim cylindrical black spotlights hanging in line from a single rectangular bar.",
     "meta": [
-      "3 slim cylinders",
-      "Rectangular bar mount",
-      "Sleek kitchen light"
+      "triple black cylinder pendant",
+      "three slim tubes",
+      "rectangular ceiling bar",
+      "minimalist island lighting",
+      "focused downward beams"
     ],
     "imageAlt": "Minimalist Black Pendant Bar"
   },
@@ -4311,9 +4973,11 @@ products: {
     "tag": "Liniowy walec",
     "description": "Trzy czarne smukłe cylindry świetlne wiszące na wspólnej podłużnej podsufitce.",
     "meta": [
-      "3 smukłe walce",
-      "Podłużna podsufitka",
-      "Minimalistyczna kuchnia"
+      "potrójny czarny zwis walec",
+      "trzy smukłe cylindry",
+      "prostokątna listwa sufitowa",
+      "minimalistyczne światło nad wyspę",
+      "skupione wiązki w dół"
     ],
     "imageAlt": "Potrójny czarny zwis walec"
   }
@@ -4326,9 +4990,11 @@ products: {
     "tag": "Glamour pair",
     "description": "Set of two matching crystal wall sconces for framing bathroom mirrors or beds.",
     "meta": [
-      "Pair of sconces",
-      "Crystal prism strands",
-      "Bathroom mirror framing"
+      "pair of crystal wall sconces",
+      "gold black cylinder fixtures",
+      "hanging glass drops",
+      "glamour style",
+      "warm mirror lighting"
     ],
     "imageAlt": "Crystal Wall Sconce Pair"
   },
@@ -4337,9 +5003,11 @@ products: {
     "tag": "Para glamour",
     "description": "Zestaw dwóch bliźniaczych kinkietów kryształowych przeznaczonych do oprawy lustra.",
     "meta": [
-      "Para kinkietów",
-      "Pasma kryształowe",
-      "Elegancka oprawa lustra"
+      "zestaw dwóch kinkietów kryształowych",
+      "złoto czarne cylindryczne oprawy",
+      "wiszące szklane sople",
+      "styl glamour",
+      "ciepłe światło przy lustrze"
     ],
     "imageAlt": "Zestaw 2 kinkietów kryształowych"
   }
@@ -4352,9 +5020,11 @@ products: {
     "tag": "Desk mechanical",
     "description": "Tabletop pulley lamp with counterweight iron ball allowing height adjustment.",
     "meta": [
-      "Iron counterweight ball",
-      "Pulley desk frame",
-      "Industrial study light"
+      "industrial counterweight desk lamp",
+      "black metal arm",
+      "pulley mechanism",
+      "adjustable directional shade",
+      "warm task light"
     ],
     "imageAlt": "Industrial Pulley Desk Lamp"
   },
@@ -4363,9 +5033,11 @@ products: {
     "tag": "Mechaniczne biurko",
     "description": "Biurkowa lampa z żeliwną kulą-przeciwwagą umożliwiającą łatwą regulację wysokości.",
     "meta": [
-      "Ciężka kula przeciwwagi",
-      "Mechaniczny kołowrotek",
-      "Unikalne biurko"
+      "industrialna lampa biurkowa z przeciwwagą",
+      "czarne metalowe ramię",
+      "mechanizm koła pasowego",
+      "regulowany klosz kierunkowy",
+      "ciepłe światło do pracy"
     ],
     "imageAlt": "Lampa biurkowa z przeciwwagą"
   }
@@ -4378,9 +5050,11 @@ products: {
     "tag": "Warm dining bar",
     "description": "Linear triple amber glass pendant bar creating inviting lighting over wooden tables.",
     "meta": [
-      "Triple amber glass",
-      "Wooden table match",
-      "Warm inviting glow"
+      "triple amber pendant",
+      "three glass globe shades",
+      "black linear bar",
+      "dining table lighting",
+      "warm diffused light"
     ],
     "imageAlt": "Amber Glass Multi Pendant"
   },
@@ -4389,9 +5063,11 @@ products: {
     "tag": "Stół z drewna",
     "description": "Trzy bursztynowe szklane klosze na podłużnej oprawie, komponujące się z drewnem.",
     "meta": [
-      "3 bursztynowe klosze",
-      "Ciepłe rozproszenie",
-      "Idealna nad drewniany stół"
+      "potrójna bursztynowa lampa wisząca",
+      "trzy szklane kuliste klosze",
+      "czarna liniowa belka",
+      "nad stół w jadalni",
+      "ciepłe rozproszone światło"
     ],
     "imageAlt": "Potrójna lampa wisząca Bursztyn"
   }
@@ -4404,9 +5080,11 @@ products: {
     "tag": "Motion underbed",
     "description": "Motion-activated RGB light strip kit designed for subtle night step illumination.",
     "meta": [
-      "Underbed motion sensor",
-      "Subtle night step",
-      "App customizable"
+      "smart underbed LED strip",
+      "red green blue RGB light",
+      "night motion sensor",
+      "app color control",
+      "subtle bedroom lighting"
     ],
     "imageAlt": "Smart RGB Underbed Light Kit"
   },
@@ -4415,9 +5093,11 @@ products: {
     "tag": "Nocny krok",
     "description": "Zestaw podświetlenia pod łóżko z czujnikiem ruchu uruchamiającym delikatny blask nocą.",
     "meta": [
-      "Czujnik ruchu pod łóżko",
-      "Subtelny nocny blask",
-      "Aplikacja smart"
+      "inteligentna taśma LED pod łóżko",
+      "czerwone zielone niebieskie światło RGB",
+      "czujnik ruchu nocnego",
+      "sterowanie kolorami w aplikacji",
+      "subtelne oświetlenie sypialni"
     ],
     "imageAlt": "Podłóżkowa taśma LED z czujnikiem"
   }

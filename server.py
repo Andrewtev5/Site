@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import secrets
+import subprocess
 import uuid
 from datetime import datetime, timezone
 from functools import partial
@@ -154,11 +155,15 @@ def connect():
 
     config = load_config()
     timeout = int(config.get("connect_timeout", 3))
+    return connect_with_candidates(config["sql_server_connection_string"], timeout=timeout)
+
+
+def connect_with_candidates(connection_string: str, timeout: int, autocommit: bool = False):
     last_error = None
 
-    for connection_string in connection_string_candidates(config["sql_server_connection_string"]):
+    for candidate in connection_string_candidates(connection_string):
         try:
-            return pyodbc.connect(connection_string, timeout=timeout)
+            return pyodbc.connect(candidate, timeout=timeout, autocommit=autocommit)
         except pyodbc.Error as error:
             last_error = error
 
@@ -177,7 +182,7 @@ def ensure_database_exists() -> None:
     safe_name = database_name.replace("]", "]]")
     safe_literal = database_name.replace("'", "''")
     timeout = int(config.get("connect_timeout", 3))
-    connection = pyodbc.connect(master_connection_string, timeout=timeout, autocommit=True)
+    connection = connect_with_candidates(master_connection_string, timeout=timeout, autocommit=True)
     try:
         cursor = connection.cursor()
         cursor.execute(f"IF DB_ID(N'{safe_literal}') IS NULL CREATE DATABASE [{safe_name}];")
@@ -215,7 +220,11 @@ def replace_connection_database(connection_string: str, database_name: str) -> s
 
 
 def connection_string_candidates(connection_string: str) -> list[str]:
-    candidates = [connection_string]
+    candidates = []
+    localdb_candidate = localdb_pipe_connection_string(connection_string)
+    if localdb_candidate:
+        candidates.append(localdb_candidate)
+    candidates.append(connection_string)
 
     replacements = {
         "SERVER=localhost;": ("SERVER=localhost\\SQLEXPRESS;", "SERVER=.\\SQLEXPRESS;"),
@@ -232,6 +241,64 @@ def connection_string_candidates(connection_string: str) -> list[str]:
                 candidates.append(candidate)
 
     return candidates
+
+
+def localdb_pipe_connection_string(connection_string: str) -> str | None:
+    server = connection_string_value(connection_string, "SERVER")
+    prefix = "(localdb)\\"
+    if not server or not server.lower().startswith(prefix):
+        return None
+
+    instance = server[len(prefix) :].strip()
+    if not instance:
+        return None
+
+    try:
+        subprocess.run(
+            ["sqllocaldb", "start", instance],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        result = subprocess.run(
+            ["sqllocaldb", "info", instance],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+    pipe_name = ""
+    for line in result.stdout.splitlines():
+        if line.lower().startswith("instance pipe name:"):
+            pipe_name = line.split(":", 1)[1].strip()
+            break
+
+    if not pipe_name:
+        return None
+
+    candidate = replace_connection_value(connection_string, "SERVER", pipe_name)
+    return replace_connection_value(candidate, "ENCRYPT", "no")
+
+
+def replace_connection_value(connection_string: str, key: str, value: str) -> str:
+    parts = []
+    replaced = False
+
+    for part in connection_string.split(";"):
+        if not part:
+            continue
+        part_key = part.split("=", 1)[0].strip().upper() if "=" in part else ""
+        if part_key == key.upper():
+            parts.append(f"{part.split('=', 1)[0]}={value}")
+            replaced = True
+        else:
+            parts.append(part)
+
+    if not replaced:
+        parts.append(f"{key}={value}")
+    return ";".join(parts) + ";"
 
 
 def ensure_schema() -> None:
@@ -379,6 +446,8 @@ def build_product_payload(row: dict, columns: set[str]) -> tuple[str, dict]:
         tag_pl = row.get("tag_pl") or row.get("tag_en") or "Lampa"
         description_en = row.get("description_en") or row.get("description_pl") or ""
         description_pl = row.get("description_pl") or row.get("description_en") or ""
+        meta_en = parse_product_meta(row.get("meta_en"), tag_en)
+        meta_pl = parse_product_meta(row.get("meta_pl"), tag_pl)
     else:
         image = row.get("image_url") or row.get("image") or "images/lamp1.jpg"
         name_en = row.get("name") or product_id
@@ -387,6 +456,8 @@ def build_product_payload(row: dict, columns: set[str]) -> tuple[str, dict]:
         tag_pl = row.get("category") or "Lampa"
         description_en = row.get("description") or ""
         description_pl = row.get("description") or ""
+        meta_en = [tag_en]
+        meta_pl = [tag_pl]
 
     return product_id, {
         "image": image,
@@ -395,17 +466,29 @@ def build_product_payload(row: dict, columns: set[str]) -> tuple[str, dict]:
             "name": name_en,
             "tag": tag_en,
             "description": description_en,
-            "meta": [tag_en],
+            "meta": meta_en,
             "imageAlt": name_en,
         },
         "pl": {
             "name": name_pl,
             "tag": tag_pl,
             "description": description_pl,
-            "meta": [tag_pl],
+            "meta": meta_pl,
             "imageAlt": name_pl,
         },
     }
+
+
+def parse_product_meta(value: object, fallback: str) -> list[str]:
+    try:
+        parsed = json.loads(str(value or "[]"))
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return [fallback]
+
+    if not isinstance(parsed, list):
+        return [fallback]
+    tags = [str(tag).strip() for tag in parsed if str(tag).strip()]
+    return tags or [fallback]
 
 
 class DiplomaRequestHandler(SimpleHTTPRequestHandler):
@@ -511,6 +594,8 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                     "tag_pl",
                     "description_en",
                     "description_pl",
+                    "meta_en",
+                    "meta_pl",
                 ]
                 selected_columns = [column for column in wanted_columns if column in columns]
                 cursor.execute(f"SELECT {', '.join(selected_columns)} FROM dbo.products ORDER BY id;")
