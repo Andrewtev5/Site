@@ -2,10 +2,12 @@ window.LampProducts = (() => {
 const storage = window.LampStorage;
 const { state, escapeHtml, formatDate } = storage;
 const t = (...args) => window.LampI18n.t(...args);
+const MAX_QUANTITY = 999;
 
 let libraryItems = [];
 let cartItems = storage.getLocalCart();
 let selectedThemeId = getThemeFromHash();
+const cartQuantityTimers = new WeakMap();
 
 async function loadCatalogProducts(){
 const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
@@ -154,6 +156,31 @@ function formatPrice(amount){
 return `${amount.toFixed(0)} PLN`;
 }
 
+function normalizeQuantity(value){
+const quantity = Math.floor(Number(value));
+if(!Number.isFinite(quantity)) return 1;
+return Math.min(MAX_QUANTITY, Math.max(1, quantity));
+}
+
+function renderQuantityControl(productId, quantity = 1, cart = false){
+const inputAttribute = cart ? "data-cart-quantity-input" : "data-product-quantity-input";
+const cartAttribute = cart ? " data-cart-quantity" : "";
+return `
+<div class="quantity-control" data-quantity-control${cartAttribute} data-product-id="${escapeHtml(productId)}">
+<button type="button" data-quantity-change="-1" aria-label="${escapeHtml(t("quantity.decrease"))}">−</button>
+<input type="number" min="1" max="${MAX_QUANTITY}" step="1" value="${normalizeQuantity(quantity)}" ${inputAttribute} inputmode="numeric" aria-label="${escapeHtml(t("quantity.label"))}">
+<button type="button" data-quantity-change="1" aria-label="${escapeHtml(t("quantity.increase"))}">+</button>
+</div>
+`;
+}
+
+function getRequestedQuantity(button, productId){
+const scope = button?.closest("[data-product-card], .library-card, .cart-item, .chat-product-card");
+const input = scope?.querySelector(`[data-product-quantity-input], [data-cart-quantity-input]`)
+|| document.querySelector(`[data-quantity-control][data-product-id="${CSS.escape(productId)}"] [data-product-quantity-input]`);
+return normalizeQuantity(input?.value || 1);
+}
+
 function getProductRating(productId){
 const seed = [...String(productId || "")].reduce((sum, character) => sum + character.charCodeAt(0), 0);
 const score = (4.6 + (seed % 4) / 10).toFixed(1);
@@ -269,6 +296,7 @@ ${renderRating(product.id)}
 <p class="description">${escapeHtml(product.description)}</p>
 <p class="price">${escapeHtml(product.price)}</p>
 <div class="product-meta">${product.meta.slice(0, 3).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
+${renderQuantityControl(product.id)}
 <div class="product-actions">
 <button class="product-action ghost" type="button" data-add-library data-product-id="${escapeHtml(product.id)}"></button>
 <button class="product-action secondary" type="button" data-add-cart data-product-id="${escapeHtml(product.id)}"></button>
@@ -299,9 +327,8 @@ button.disabled = stateForProduct.saved;
 });
 
 document.querySelectorAll("[data-buy-product]").forEach((button) => {
-const stateForProduct = getProductState(button.dataset.productId || "");
-button.textContent = stateForProduct.purchased ? t("buttons.purchased") : t("buttons.buyNow");
-button.disabled = stateForProduct.purchased;
+button.textContent = t("buttons.buyNow");
+button.disabled = false;
 });
 
 document.querySelectorAll("[data-add-cart]").forEach((button) => {
@@ -349,9 +376,10 @@ ${renderRating(item.id, true)}
 <span>${escapeHtml(t("library.savedOn", { price: item.price, date: formatDate(item.savedAt) }))}</span>
 <span>${escapeHtml(item.description)}</span>
 <span class="library-card-status${item.purchasedAt ? " purchased" : ""}">${escapeHtml(item.purchasedAt ? t("library.purchasedOn", { date: formatDate(item.purchasedAt) }) : t("library.readyForPurchase"))}</span>
+${renderQuantityControl(item.id)}
 </div>
 <div class="library-card-actions">
-<button class="library-buy primary" type="button" data-library-buy="${escapeHtml(item.id)}"${item.purchasedAt ? " disabled" : ""}>${escapeHtml(item.purchasedAt ? t("buttons.purchased") : t("buttons.buy"))}</button>
+<button class="library-buy primary" type="button" data-library-buy="${escapeHtml(item.id)}">${escapeHtml(t("buttons.buy"))}</button>
 <button class="library-remove ghost" type="button" data-library-remove="${escapeHtml(item.id)}">${escapeHtml(t("buttons.remove"))}</button>
 </div>
 `;
@@ -360,28 +388,35 @@ libraryList.appendChild(card);
 }
 
 function renderCart(){
-const cartList = document.getElementById("cartList") || document.querySelector("[data-cart-list]");
-const cartTotal = document.getElementById("cartTotal") || document.querySelector("[data-cart-total]");
+const cartLists = [...document.querySelectorAll("#cartList, [data-cart-list]")];
+const cartTotals = [...document.querySelectorAll("#cartTotal, [data-cart-total]")];
 const cartCount = document.getElementById("cartCount");
 const items = getCart();
 const total = items.reduce((sum, item) => sum + parsePrice(item.price) * item.quantity, 0);
 const count = items.reduce((sum, item) => sum + item.quantity, 0);
 
 if(cartCount) cartCount.textContent = String(count);
-if(cartTotal) cartTotal.textContent = formatPrice(total);
-if(!cartList) return;
+cartTotals.forEach((element) => {
+element.textContent = formatPrice(total);
+});
+if(!cartLists.length) return;
 
 if(!items.length){
-cartList.innerHTML = `<div class="library-empty"><strong>${escapeHtml(t("cart.emptyTitle"))}</strong><p>${escapeHtml(t("cart.emptyText"))}</p></div>`;
+const emptyMarkup = `<div class="library-empty"><strong>${escapeHtml(t("cart.emptyTitle"))}</strong><p>${escapeHtml(t("cart.emptyText"))}</p></div>`;
+cartLists.forEach((element) => {
+element.innerHTML = emptyMarkup;
+});
 return;
 }
 
-cartList.innerHTML = items.map((item) => `
+const cartMarkup = items.map((item) => `
 <article class="cart-item">
 <img class="cart-item-image" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}">
 <div class="cart-item-copy">
 <strong>${escapeHtml(item.name)}</strong>
-<span>${escapeHtml(item.price)} x ${escapeHtml(item.quantity)}</span>
+<span>${escapeHtml(t("quantity.unitPrice", { price: item.price }))}</span>
+<strong class="cart-item-subtotal">${escapeHtml(t("quantity.subtotal", { total: formatPrice(parsePrice(item.price) * item.quantity) }))}</strong>
+${renderQuantityControl(item.id, item.quantity, true)}
 </div>
 <div class="cart-item-actions">
 <button class="library-buy primary" type="button" data-cart-buy="${escapeHtml(item.id)}">${escapeHtml(t("buttons.buy"))}</button>
@@ -389,6 +424,9 @@ cartList.innerHTML = items.map((item) => `
 </div>
 </article>
 `).join("");
+cartLists.forEach((element) => {
+element.innerHTML = cartMarkup;
+});
 }
 
 function openCartModal(){
@@ -424,32 +462,32 @@ syncUi();
 window.LampUI.showToast(t("toasts.addedToLibrary", { name: product.name }));
 }
 
-async function buyProduct(product, source = "catalog"){
+async function buyProduct(product, source = "catalog", quantity = 1){
 if(!ensureSignedIn("purchase")) return;
 
 const existingItem = getLibrary().find((item) => item.id === product.id);
-if(existingItem?.purchasedAt){
-window.LampUI.showToast(t("toasts.alreadyPurchased"), "error");
-return;
-}
+const purchaseQuantity = normalizeQuantity(quantity);
 
 try{
-await storage.apiFetch("/api/purchase", { method: "POST", body: JSON.stringify({ productId: product.id }) });
+await storage.apiFetch("/api/purchase", {
+method: "POST",
+body: JSON.stringify({ productId: product.id, quantity: purchaseQuantity })
+});
 await Promise.allSettled([loadLibraryFromApi(), loadCartFromApi()]);
 }catch(error){
 const now = new Date().toISOString();
 libraryItems = existingItem
-? libraryItems.map((item) => item.id === product.id ? { ...item, purchasedAt: item.purchasedAt || now } : item)
-: [...libraryItems, { id: product.id, savedAt: now, purchasedAt: now }];
+? libraryItems.map((item) => item.id === product.id ? { ...item, purchasedAt: item.purchasedAt || now, quantity: purchaseQuantity } : item)
+: [...libraryItems, { id: product.id, savedAt: now, purchasedAt: now, quantity: purchaseQuantity }];
 cartItems = cartItems.filter((item) => item.id !== product.id);
 storage.saveLocalCart(cartItems);
 }
 
 syncUi();
-const message = t("toasts.purchaseComplete", { name: product.name });
+const message = t("toasts.purchaseComplete", { name: product.name, quantity: purchaseQuantity });
 
 if(source === "catalog"){
-window.LampUI.goToPage("library.html", { message, type: "success" });
+window.LampUI.goToPage("purchase-history.html", { message, type: "success" });
 return;
 }
 
@@ -470,27 +508,49 @@ syncUi();
 window.LampUI.showToast(t("toasts.removedFromLibrary"));
 }
 
-async function addToCart(product){
+async function addToCart(product, quantity = 1){
 const existing = cartItems.find((item) => item.id === product.id || item.product_id === product.id);
+const addedQuantity = normalizeQuantity(quantity);
 
 try{
 if(state.apiToken){
-await storage.apiFetch("/api/cart", { method: "POST", body: JSON.stringify({ productId: product.id, quantity: 1 }) });
+await storage.apiFetch("/api/cart", { method: "POST", body: JSON.stringify({ productId: product.id, quantity: addedQuantity }) });
 await loadCartFromApi();
 }else if(existing){
-cartItems = cartItems.map((item) => item.id === product.id ? { ...item, quantity: Number(item.quantity || 1) + 1 } : item);
+cartItems = cartItems.map((item) => item.id === product.id ? { ...item, quantity: normalizeQuantity(Number(item.quantity || 1) + addedQuantity) } : item);
 }else{
-cartItems = [...cartItems, { ...product, quantity: 1, addedAt: new Date().toISOString() }];
+cartItems = [...cartItems, { ...product, quantity: addedQuantity, addedAt: new Date().toISOString() }];
 }
 }catch(error){
 cartItems = existing
-? cartItems.map((item) => item.id === product.id ? { ...item, quantity: Number(item.quantity || 1) + 1 } : item)
-: [...cartItems, { ...product, quantity: 1, addedAt: new Date().toISOString() }];
+? cartItems.map((item) => item.id === product.id ? { ...item, quantity: normalizeQuantity(Number(item.quantity || 1) + addedQuantity) } : item)
+: [...cartItems, { ...product, quantity: addedQuantity, addedAt: new Date().toISOString() }];
 }
 
 storage.saveLocalCart(cartItems);
 syncUi();
-window.LampUI.showToast(t("cart.added", { name: product.name }));
+window.LampUI.showToast(t("cart.added", { name: product.name, quantity: addedQuantity }));
+}
+
+async function updateCartQuantity(productId, quantity){
+const normalized = normalizeQuantity(quantity);
+
+try{
+if(state.apiToken){
+await storage.apiFetch("/api/cart", {
+method: "PUT",
+body: JSON.stringify({ productId, quantity: normalized })
+});
+await loadCartFromApi();
+}else{
+cartItems = cartItems.map((item) => item.id === productId ? { ...item, quantity: normalized } : item);
+}
+}catch(error){
+cartItems = cartItems.map((item) => item.id === productId ? { ...item, quantity: normalized } : item);
+}
+
+storage.saveLocalCart(cartItems);
+syncUi();
 }
 
 async function removeFromCart(productId){
@@ -511,6 +571,7 @@ syncUi();
 
 function bindProductActions(){
 document.addEventListener("click", (event) => {
+const quantityButton = event.target.closest("[data-quantity-change]");
 const addLibrary = event.target.closest("[data-add-library]");
 const buyButton = event.target.closest("[data-buy-product], [data-library-buy], [data-cart-buy]");
 const addCart = event.target.closest("[data-add-cart]");
@@ -518,15 +579,62 @@ const removeLibrary = event.target.closest("[data-library-remove]");
 const removeCart = event.target.closest("[data-cart-remove]");
 const themeButton = event.target.closest("[data-product-theme]");
 
+if(quantityButton){
+const control = quantityButton.closest("[data-quantity-control]");
+const input = control?.querySelector("input[type='number']");
+if(!control || !input) return;
+const quantity = normalizeQuantity(Number(input.value) + Number(quantityButton.dataset.quantityChange || 0));
+input.value = String(quantity);
+if(control.hasAttribute("data-cart-quantity")){
+updateCartQuantity(control.dataset.productId || "", quantity);
+}
+return;
+}
+
 if(themeButton) selectProductTheme(themeButton.dataset.productTheme || "");
 if(addLibrary) addToLibrary(buildProductPayload(addLibrary.dataset.productId || ""));
-if(addCart) addToCart(buildProductPayload(addCart.dataset.productId || ""));
+if(addCart){
+const productId = addCart.dataset.productId || "";
+addToCart(buildProductPayload(productId), getRequestedQuantity(addCart, productId));
+}
 if(buyButton){
 const productId = buyButton.dataset.productId || buyButton.dataset.libraryBuy || buyButton.dataset.cartBuy || "";
-buyProduct(buildProductPayload(productId), buyButton.dataset.productId ? "catalog" : "library");
+const source = buyButton.dataset.cartBuy ? "cart" : (buyButton.dataset.productId ? "catalog" : "library");
+const quantity = getRequestedQuantity(buyButton, productId);
+buyProduct(buildProductPayload(productId), source, quantity);
 }
 if(removeLibrary) removeFromLibrary(removeLibrary.dataset.libraryRemove || "");
 if(removeCart) removeFromCart(removeCart.dataset.cartRemove || "");
+});
+
+document.addEventListener("change", (event) => {
+const input = event.target.closest("[data-product-quantity-input], [data-cart-quantity-input]");
+if(!input) return;
+const quantity = normalizeQuantity(input.value);
+input.value = String(quantity);
+const control = input.closest("[data-quantity-control]");
+if(control?.hasAttribute("data-cart-quantity")){
+const timer = cartQuantityTimers.get(input);
+if(timer) window.clearTimeout(timer);
+updateCartQuantity(control.dataset.productId || "", quantity);
+}
+});
+
+document.addEventListener("input", (event) => {
+const input = event.target.closest("[data-cart-quantity-input]");
+if(!input) return;
+
+const numericValue = Number(input.value);
+if(!Number.isInteger(numericValue) || numericValue < 1 || numericValue > MAX_QUANTITY) return;
+
+const existingTimer = cartQuantityTimers.get(input);
+if(existingTimer) window.clearTimeout(existingTimer);
+
+const control = input.closest("[data-quantity-control]");
+const timer = window.setTimeout(() => {
+updateCartQuantity(control?.dataset.productId || "", numericValue);
+}, 350);
+cartQuantityTimers.set(input, timer);
 });
 }
 

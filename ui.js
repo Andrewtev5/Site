@@ -78,7 +78,7 @@ main.insertAdjacentHTML("beforebegin", `
 <button class="menu-item" id="menuAccountButton" type="button" data-go-page="account.html"><span data-i18n="menu.accountTitle">Konto</span><small data-i18n="menu.accountDesc">Dane profilu i historia zakupów</small></button>
 <button class="menu-item" id="menuAuthPrimary" type="button" data-open-auth="login"><span data-i18n="menu.loginTitle">Zaloguj się</span><small data-i18n="menu.loginDesc">Uzyskaj bezpieczny dostęp do konta</small></button>
 <button class="menu-item" id="menuAuthSecondary" type="button" data-open-auth="register"><span data-i18n="menu.registerTitle">Załóż konto</span><small data-i18n="menu.registerDesc">Utwórz nowy profil</small></button>
-<button class="menu-item" id="menuLibraryButton" type="button" data-open-library><span data-i18n="menu.libraryTitle">Biblioteka</span><small data-i18n="menu.libraryDesc">Zapisane lampy i ulubione</small></button>
+<button class="menu-item" id="menuLibraryButton" type="button" data-open-library><span data-i18n="menu.libraryTitle">Moje zakupy</span><small data-i18n="menu.libraryDesc">Historia zakupów, ilości i cen</small></button>
 <button class="menu-item" type="button" data-open-info="return"><span data-i18n="menu.returnTitle">Zwrot produktu</span><small data-i18n="menu.returnDesc">Wskazowki zwrotu i gwarancji</small></button>
 <button class="menu-item" type="button" data-open-info="contact"><span data-i18n="menu.contactTitle">Kontakt</span><small data-i18n="menu.contactDesc">Wsparcie i komunikacja</small></button>
 </nav>
@@ -331,6 +331,11 @@ return `
 <strong>${name}</strong>
 <span>${price}</span>
 <p>${description}</p>
+<div class="quantity-control" data-quantity-control data-product-id="${productId}">
+<button type="button" data-quantity-change="-1" aria-label="${escapeHtml(t("quantity.decrease"))}">−</button>
+<input type="number" min="1" max="999" step="1" value="1" data-product-quantity-input inputmode="numeric" aria-label="${escapeHtml(t("quantity.label"))}">
+<button type="button" data-quantity-change="1" aria-label="${escapeHtml(t("quantity.increase"))}">+</button>
+</div>
 </div>
 <div class="chat-product-actions">
 <button class="product-action secondary" type="button" data-add-cart data-product-id="${productId}">${escapeHtml(t("cart.add"))}</button>
@@ -364,9 +369,7 @@ await window.LampProducts.addToLibrary(product);
 }
 
 if(action.type === "add_to_cart"){
-for(let index = 0; index < quantity; index += 1){
-await window.LampProducts.addToCart(product);
-}
+await window.LampProducts.addToCart(product, quantity);
 }
 }
 }
@@ -494,11 +497,8 @@ goToPage(targetPage);
 }
 
 function openLibraryModal(){
-if(getCurrentPageName() === "library.html"){
-window.LampProducts.renderLibrary();
-return;
-}
-goToPage("library.html");
+if(getCurrentPageName() === "purchase-history.html") return;
+goToPage("purchase-history.html");
 }
 
 function openInfoModal(type){
@@ -589,8 +589,8 @@ function highlightCurrentPage(){
 document.querySelectorAll(".menu-item").forEach((button) => button.classList.remove("is-current"));
 
 if(getPageType() === "catalog") document.getElementById("menuCatalogButton")?.classList.add("is-current");
-if(getPageType() === "account" || getPageType() === "purchase-history") document.getElementById("menuAccountButton")?.classList.add("is-current");
-if(getPageType() === "library") document.getElementById("menuLibraryButton")?.classList.add("is-current");
+if(getPageType() === "account") document.getElementById("menuAccountButton")?.classList.add("is-current");
+if(getPageType() === "library" || getPageType() === "purchase-history") document.getElementById("menuLibraryButton")?.classList.add("is-current");
 if(getPageType() === "login") document.getElementById("menuAuthPrimary")?.classList.add("is-current");
 if(getPageType() === "register") document.getElementById("menuAuthSecondary")?.classList.add("is-current");
 if(getPageType() === "cart") document.getElementById("cartButton")?.classList.add("is-current");

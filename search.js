@@ -122,10 +122,15 @@ return `
 <div class="search-result-topline"><div><h4>${escapeHtml(product.name)}</h4><p class="search-result-tag">${escapeHtml(product.tag)}</p></div><strong class="search-result-price">${escapeHtml(product.price)}</strong></div>
 <p class="search-result-description">${escapeHtml(product.description)}</p>
 <div class="search-result-meta-list">${metaList}</div>
+<div class="quantity-control" data-quantity-control data-product-id="${escapeHtml(product.id)}">
+<button type="button" data-quantity-change="-1" aria-label="${escapeHtml(t("quantity.decrease"))}">−</button>
+<input type="number" min="1" max="999" step="1" value="1" data-product-quantity-input inputmode="numeric" aria-label="${escapeHtml(t("quantity.label"))}">
+<button type="button" data-quantity-change="1" aria-label="${escapeHtml(t("quantity.increase"))}">+</button>
+</div>
 <div class="product-actions search-result-actions">
 <button class="product-action secondary" type="button" data-search-add-library data-product-id="${escapeHtml(product.id)}"${productState.saved ? " disabled" : ""}>${escapeHtml(productState.saved ? t("buttons.savedInLibrary") : t("buttons.addToLibrary"))}</button>
 <button class="product-action secondary" type="button" data-search-add-cart data-product-id="${escapeHtml(product.id)}">${escapeHtml(t("cart.add"))}</button>
-<button class="product-action" type="button" data-search-buy-product data-product-id="${escapeHtml(product.id)}"${productState.purchased ? " disabled" : ""}>${escapeHtml(productState.purchased ? t("buttons.purchased") : t("buttons.buyNow"))}</button>
+<button class="product-action" type="button" data-search-buy-product data-product-id="${escapeHtml(product.id)}">${escapeHtml(t("buttons.buyNow"))}</button>
 </div>
 </div>
 </article>
@@ -153,11 +158,13 @@ renderSearchResults();
 }
 
 if(cartButton){
-window.LampProducts.addToCart(window.LampProducts.buildProductPayload(cartButton.dataset.productId || ""));
+const quantity = cartButton.closest(".search-result-card")?.querySelector("[data-product-quantity-input]")?.value || 1;
+window.LampProducts.addToCart(window.LampProducts.buildProductPayload(cartButton.dataset.productId || ""), quantity);
 }
 
 if(buyButton){
-window.LampProducts.buyProduct(window.LampProducts.buildProductPayload(buyButton.dataset.productId || ""), "catalog");
+const quantity = buyButton.closest(".search-result-card")?.querySelector("[data-product-quantity-input]")?.value || 1;
+window.LampProducts.buyProduct(window.LampProducts.buildProductPayload(buyButton.dataset.productId || ""), "catalog", quantity);
 }
 });
 }

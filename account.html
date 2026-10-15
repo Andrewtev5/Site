@@ -15,7 +15,7 @@
 <div class="page-heading">
 <p class="hero-kicker">Konto</p>
 <h2 class="title">Dane użytkownika</h2>
-<p class="hero-text">Tutaj znajdują się dane podane przy rejestracji oraz szybki dostęp do biblioteki i historii zakupów.</p>
+<p class="hero-text">Tutaj znajdują się dane podane przy rejestracji oraz szybki dostęp do historii zakupów.</p>
 </div>
 
 <div class="account-auth-required" id="accountAuthRequired">
@@ -55,8 +55,7 @@
 </section>
 
 <section class="account-actions">
-<button class="product-action" type="button" onclick="goToPage('purchase-history.html')">Historia zakupów</button>
-<button class="product-action secondary" type="button" onclick="goToPage('library.html')">Otwórz bibliotekę</button>
+<button class="product-action" type="button" onclick="goToPage('purchase-history.html')" data-i18n="menu.libraryTitle">Moje zakupy</button>
 <button class="product-action secondary" type="button" onclick="goToPage('index.html')">Powrót do katalogu</button>
 </section>
 </div>
@@ -71,6 +70,7 @@
 <script src="search.js"></script>
 <script src="auth.js"></script>
 <script src="account.js"></script>
+<script src="promotions.js"></script>
 <script src="script.js"></script>
 
 </body>

@@ -115,6 +115,41 @@ SCHEMA_SQL = [
         );
     END
     """,
+    """
+    IF OBJECT_ID('dbo.purchase_history', 'U') IS NULL
+    BEGIN
+        CREATE TABLE dbo.purchase_history (
+            id UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_purchase_history PRIMARY KEY DEFAULT NEWID(),
+            user_id UNIQUEIDENTIFIER NOT NULL,
+            product_id NVARCHAR(100) NOT NULL,
+            quantity INT NOT NULL,
+            unit_price DECIMAL(10, 2) NOT NULL,
+            currency NVARCHAR(10) NOT NULL CONSTRAINT DF_purchase_history_currency DEFAULT N'PLN',
+            purchased_at DATETIME2 NOT NULL CONSTRAINT DF_purchase_history_purchased_at DEFAULT SYSUTCDATETIME(),
+            CONSTRAINT CK_purchase_history_quantity CHECK (quantity > 0),
+            CONSTRAINT CK_purchase_history_unit_price CHECK (unit_price >= 0),
+            CONSTRAINT FK_purchase_history_users FOREIGN KEY (user_id)
+                REFERENCES dbo.users(id) ON DELETE CASCADE
+        );
+    END
+    """,
+    """
+    IF OBJECT_ID('dbo.products', 'U') IS NOT NULL
+       AND OBJECT_ID('dbo.purchase_history', 'U') IS NOT NULL
+    BEGIN
+        INSERT INTO dbo.purchase_history (user_id, product_id, quantity, unit_price, currency, purchased_at)
+        SELECT l.user_id, l.product_id, 1, p.price, p.currency, l.purchased_at
+        FROM dbo.user_library l
+        JOIN dbo.products p ON p.id = l.product_id
+        WHERE l.purchased_at IS NOT NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM dbo.purchase_history h
+              WHERE h.user_id = l.user_id
+                AND h.product_id = l.product_id
+                AND h.purchased_at = l.purchased_at
+          );
+    END
+    """,
 ]
 
 
@@ -343,6 +378,17 @@ def read_json(handler: SimpleHTTPRequestHandler) -> dict:
     return json.loads(payload)
 
 
+def parse_quantity(value, default: int = 1) -> int:
+    try:
+        quantity = int(value if value is not None else default)
+    except (TypeError, ValueError) as error:
+        raise ValueError("Quantity must be a whole number.") from error
+
+    if quantity < 1 or quantity > 999:
+        raise ValueError("Quantity must be between 1 and 999.")
+    return quantity
+
+
 def hash_password(password: str, salt: str | None = None, iterations: int = PASSWORD_ITERATIONS) -> tuple[str, str, int]:
     salt = salt or secrets.token_hex(16)
     digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), bytes.fromhex(salt), iterations)
@@ -423,6 +469,18 @@ def product_row_to_public(item: dict) -> dict:
     }
 
 
+def purchase_row_to_public(item: dict) -> dict:
+    return {
+        "purchaseId": str(item["purchase_id"]),
+        "id": item["product_id"],
+        "quantity": int(item["quantity"]),
+        "unitPrice": float(item["unit_price"]),
+        "totalPrice": float(item["total_price"]),
+        "currency": item.get("currency") or "PLN",
+        "purchasedAt": to_iso(item["purchased_at"]),
+    }
+
+
 def product_exists(cursor, product_id: str) -> bool:
     if not product_id:
         return False
@@ -494,7 +552,7 @@ def parse_product_meta(value: object, fallback: str) -> list[str]:
 class DiplomaRequestHandler(SimpleHTTPRequestHandler):
     def end_headers(self) -> None:
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         super().end_headers()
 
@@ -552,6 +610,15 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
 
         if path == "/api/purchase":
             self.handle_purchase()
+            return
+
+        self.serve_json({"error": "Not found"}, status=404)
+
+    def do_PUT(self) -> None:
+        path = urlparse(self.path).path
+
+        if path == "/api/cart":
+            self.handle_cart_update()
             return
 
         self.serve_json({"error": "Not found"}, status=404)
@@ -702,16 +769,21 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                 cursor = connection.cursor()
                 cursor.execute(
                     """
-                    SELECT l.product_id, l.saved_at, l.purchased_at
-                    FROM dbo.user_library l
-                    JOIN dbo.users u ON u.id = l.user_id
+                    SELECT h.id AS purchase_id,
+                           h.product_id,
+                           h.quantity,
+                           h.unit_price,
+                           h.unit_price * h.quantity AS total_price,
+                           h.currency,
+                           h.purchased_at
+                    FROM dbo.purchase_history h
+                    JOIN dbo.users u ON u.id = h.user_id
                     WHERE u.email = ?
-                      AND l.purchased_at IS NOT NULL
-                    ORDER BY l.purchased_at DESC;
+                    ORDER BY h.purchased_at DESC;
                     """,
                     email,
                 )
-                items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
+                items = [purchase_row_to_public(row) for row in rows_to_dicts(cursor)]
             finally:
                 connection.close()
 
@@ -889,7 +961,7 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
         try:
             payload = read_json(self)
             product_id = str(payload.get("productId", "")).strip()
-            quantity = max(1, int(payload.get("quantity", 1)))
+            quantity = parse_quantity(payload.get("quantity"))
             connection = connect()
 
             try:
@@ -923,6 +995,47 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                 connection.close()
 
             self.serve_cart()
+        except ValueError as error:
+            self.serve_json({"error": str(error)}, status=400)
+        except Exception as error:
+            self.serve_json({"error": str(error)}, status=500)
+
+    def handle_cart_update(self) -> None:
+        email = get_session_email(self.headers)
+        if not email:
+            self.serve_json({"error": "Unauthorized"}, status=401)
+            return
+
+        try:
+            payload = read_json(self)
+            product_id = str(payload.get("productId", "")).strip()
+            quantity = parse_quantity(payload.get("quantity"))
+            connection = connect()
+            try:
+                cursor = connection.cursor()
+                cursor.execute(
+                    """
+                    UPDATE c
+                    SET quantity = ?
+                    FROM dbo.user_cart c
+                    JOIN dbo.users u ON u.id = c.user_id
+                    WHERE c.product_id = ?
+                      AND u.email = ?;
+                    """,
+                    quantity,
+                    product_id,
+                    email,
+                )
+                if cursor.rowcount == 0:
+                    self.serve_json({"error": "Cart item not found."}, status=404)
+                    return
+                connection.commit()
+            finally:
+                connection.close()
+
+            self.serve_cart()
+        except ValueError as error:
+            self.serve_json({"error": str(error)}, status=400)
         except Exception as error:
             self.serve_json({"error": str(error)}, status=500)
 
@@ -963,7 +1076,9 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             return
 
         try:
-            product_id = str(read_json(self).get("productId", "")).strip()
+            payload = read_json(self)
+            product_id = str(payload.get("productId", "")).strip()
+            quantity = parse_quantity(payload.get("quantity"))
             purchased_at = datetime.now(timezone.utc).replace(tzinfo=None)
             connection = connect()
 
@@ -974,9 +1089,29 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                     self.serve_json({"error": "Account not found."}, status=404)
                     return
 
-                if not product_exists(cursor, product_id):
+                cursor.execute(
+                    "SELECT price, currency FROM dbo.products WHERE id = ?;",
+                    product_id,
+                )
+                product = fetchone_dict(cursor)
+                if not product:
                     self.serve_json({"error": "Product not found."}, status=404)
                     return
+
+                cursor.execute(
+                    """
+                    INSERT INTO dbo.purchase_history (
+                        user_id, product_id, quantity, unit_price, currency, purchased_at
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?);
+                    """,
+                    user["id"],
+                    product_id,
+                    quantity,
+                    product["price"],
+                    product.get("currency") or "PLN",
+                    purchased_at,
+                )
 
                 cursor.execute(
                     """
@@ -1006,7 +1141,16 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             finally:
                 connection.close()
 
-            self.serve_json({"ok": True})
+            unit_price = float(product["price"])
+            self.serve_json({
+                "ok": True,
+                "quantity": quantity,
+                "unitPrice": unit_price,
+                "totalPrice": unit_price * quantity,
+                "currency": product.get("currency") or "PLN",
+            })
+        except ValueError as error:
+            self.serve_json({"error": str(error)}, status=400)
         except Exception as error:
             self.serve_json({"error": str(error)}, status=500)
 

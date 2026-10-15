@@ -18,6 +18,7 @@ await Promise.allSettled([catalogPromise, userDataPromise]);
 window.LampI18n.applyTranslations();
 window.LampProducts.syncUi();
 await window.LampAccount?.render?.();
+window.LampPromotions?.init?.();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

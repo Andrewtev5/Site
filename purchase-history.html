@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Historia zakupów | Sklep Lamp</title>
+<title>Moje zakupy | Sklep Lamp</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,28 +13,28 @@
 <main class="container page-shell">
 <section class="page-card account-page-card reveal-on-scroll">
 <div class="page-heading">
-<p class="hero-kicker">Konto</p>
-<h2 class="title">Historia zakupów</h2>
-<p class="hero-text">Lista produktów kupionych w trybie demonstracyjnym. Dane są powiązane z zalogowanym użytkownikiem.</p>
+<p class="hero-kicker" data-i18n="purchaseHistory.kicker">Konto</p>
+<h2 class="title" data-i18n="purchaseHistory.title">Moje zakupy</h2>
+<p class="hero-text" data-i18n="purchaseHistory.text">Historia kupionych produktów wraz z ilością i pełną wartością zakupu.</p>
 </div>
 
 <div class="account-auth-required" id="purchaseAuthRequired">
-<strong>Wymagane logowanie</strong>
-<p>Zaloguj się lub załóż konto, aby zobaczyć historię zakupów.</p>
-<button class="product-action" type="button" onclick="goToPage('login.html')">Zaloguj się</button>
+<strong data-i18n="purchaseHistory.authTitle">Wymagane logowanie</strong>
+<p data-i18n="purchaseHistory.authText">Zaloguj się lub załóż konto, aby zobaczyć swoje zakupy.</p>
+<button class="product-action" type="button" onclick="goToPage('login.html')" data-i18n="purchaseHistory.loginButton">Zaloguj się</button>
 </div>
 
 <div id="purchaseHistoryContent" hidden>
-<p class="library-intro" id="purchaseHistoryIntro">Twoja historia zakupów.</p>
+<p class="library-intro" id="purchaseHistoryIntro">Twoje zakupy.</p>
 <div class="purchase-history-list" id="purchaseHistoryList"></div>
 <div class="library-empty" id="purchaseHistoryEmpty">
-<strong>Historia zakupów jest pusta.</strong>
-<p>Kup produkt w trybie demonstracyjnym, a pojawi się tutaj.</p>
+<strong data-i18n="purchaseHistory.emptyTitle">Nie masz jeszcze żadnych zakupów.</strong>
+<p data-i18n="purchaseHistory.emptyText">Kup produkt, a pojawi się tutaj wraz z ilością i ceną.</p>
 </div>
 
 <div class="page-link-row">
-<button class="product-action secondary" type="button" onclick="goToPage('account.html')">Powrót do konta</button>
-<button class="product-action" type="button" onclick="goToPage('index.html')">Przejdź do katalogu</button>
+<button class="product-action secondary" type="button" onclick="goToPage('account.html')" data-i18n="purchaseHistory.backToAccount">Powrót do konta</button>
+<button class="product-action" type="button" onclick="goToPage('index.html')" data-i18n="purchaseHistory.openCatalog">Przejdź do katalogu</button>
 </div>
 </div>
 </section>
@@ -48,6 +48,7 @@
 <script src="search.js"></script>
 <script src="auth.js"></script>
 <script src="account.js"></script>
+<script src="promotions.js"></script>
 <script src="script.js"></script>
 
 </body>

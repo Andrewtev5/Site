@@ -1,5 +1,6 @@
 window.LampAccount = (() => {
 const { state, escapeHtml, formatDate } = window.LampStorage;
+const t = (...args) => window.LampI18n.t(...args);
 
 function valueOrDash(value){
 return value ? String(value) : "-";
@@ -57,6 +58,9 @@ document.getElementById("accountApartment").textContent = valueOrDash(user.apart
 
 function buildProductFromPurchase(item){
 const product = window.LampProducts.getCatalogProduct(item.id) || {};
+const quantity = Math.max(1, Number(item.quantity || 1));
+const unitPrice = Number(item.unitPrice ?? String(product.price || "0").replace(",", ".").match(/[\d.]+/)?.[0] ?? 0);
+const totalPrice = Number(item.totalPrice ?? unitPrice * quantity);
 return {
 ...product,
 ...item,
@@ -65,7 +69,15 @@ image: product.image || "images/lamp1.jpg",
 price: product.price || "0 PLN",
 description: product.description || "",
 tag: product.tag || "Lampa",
+quantity,
+unitPrice,
+totalPrice,
+currency: item.currency || "PLN",
 };
+}
+
+function formatMoney(amount, currency = "PLN"){
+return `${new Intl.NumberFormat(window.LampI18n.getLocale(), { maximumFractionDigits: 2 }).format(Number(amount || 0))} ${currency}`;
 }
 
 async function loadPurchases(){
@@ -77,9 +89,12 @@ try{
 const payload = await window.LampStorage.apiFetch("/api/purchases", { method: "GET" });
 return Array.isArray(payload.items) ? payload.items.map((item) => ({
 id: item.id || item.product_id || item.productId,
-savedAt: item.savedAt,
+purchasedId: item.purchaseId || item.purchase_id,
 purchasedAt: item.purchasedAt,
 quantity: item.quantity || 1,
+unitPrice: item.unitPrice ?? item.unit_price,
+totalPrice: item.totalPrice ?? item.total_price,
+currency: item.currency || "PLN",
 })) : [];
 }catch(error){
 return window.LampProducts.getLibrary().filter((item) => item.purchasedAt);
@@ -107,7 +122,14 @@ authRequired.hidden = true;
 content.hidden = false;
 
 const purchases = (await loadPurchases()).filter((item) => item.id && item.purchasedAt).map(buildProductFromPurchase);
-intro.textContent = `${state.currentUser.name}, liczba zakupów demonstracyjnych: ${purchases.length}.`;
+const totalQuantity = purchases.reduce((sum, item) => sum + item.quantity, 0);
+const totalAmount = purchases.reduce((sum, item) => sum + item.totalPrice, 0);
+intro.textContent = t("purchaseHistory.intro", {
+name: state.currentUser.name,
+orders: purchases.length,
+quantity: totalQuantity,
+total: formatMoney(totalAmount),
+});
 list.innerHTML = "";
 
 if(!purchases.length){
@@ -122,7 +144,10 @@ list.innerHTML = purchases.map((item) => `
 <div class="library-card-copy">
 <span class="library-card-tag">${escapeHtml(item.tag)}</span>
 <strong>${escapeHtml(item.name)}</strong>
-<span>${escapeHtml(item.price)} - kupiono ${escapeHtml(formatDate(item.purchasedAt))}</span>
+<span>${escapeHtml(t("purchaseHistory.purchasedOn", { date: formatDate(item.purchasedAt) }))}</span>
+<span>${escapeHtml(t("purchaseHistory.quantity", { quantity: item.quantity }))}</span>
+<span>${escapeHtml(t("purchaseHistory.unitPrice", { price: formatMoney(item.unitPrice, item.currency) }))}</span>
+<strong class="purchase-history-total">${escapeHtml(t("purchaseHistory.totalPrice", { total: formatMoney(item.totalPrice, item.currency) }))}</strong>
 <span>${escapeHtml(item.description)}</span>
 </div>
 </article>
