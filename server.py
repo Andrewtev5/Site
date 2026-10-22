@@ -5,6 +5,7 @@ import json
 import os
 import secrets
 import subprocess
+import time
 import uuid
 from datetime import datetime, timezone
 from functools import partial
@@ -37,6 +38,8 @@ DEFAULT_SQL_SERVER_CONNECTION_STRING = (
 DEFAULT_CONFIG = {
     "sql_server_connection_string": DEFAULT_SQL_SERVER_CONNECTION_STRING,
     "connect_timeout": 3,
+    "connect_attempts": 6,
+    "connect_retry_delay": 1.0,
 }
 
 
@@ -190,17 +193,34 @@ def connect():
 
     config = load_config()
     timeout = int(config.get("connect_timeout", 3))
-    return connect_with_candidates(config["sql_server_connection_string"], timeout=timeout)
+    attempts = max(1, int(config.get("connect_attempts", 6)))
+    retry_delay = max(0.0, float(config.get("connect_retry_delay", 1.0)))
+    return connect_with_candidates(
+        config["sql_server_connection_string"],
+        timeout=timeout,
+        attempts=attempts,
+        retry_delay=retry_delay,
+    )
 
 
-def connect_with_candidates(connection_string: str, timeout: int, autocommit: bool = False):
+def connect_with_candidates(
+    connection_string: str,
+    timeout: int,
+    autocommit: bool = False,
+    attempts: int = 1,
+    retry_delay: float = 0.0,
+):
     last_error = None
 
-    for candidate in connection_string_candidates(connection_string):
-        try:
-            return pyodbc.connect(candidate, timeout=timeout, autocommit=autocommit)
-        except pyodbc.Error as error:
-            last_error = error
+    for attempt in range(max(1, attempts)):
+        for candidate in connection_string_candidates(connection_string):
+            try:
+                return pyodbc.connect(candidate, timeout=timeout, autocommit=autocommit)
+            except pyodbc.Error as error:
+                last_error = error
+
+        if attempt + 1 < attempts and retry_delay:
+            time.sleep(retry_delay)
 
     raise last_error
 
@@ -217,7 +237,15 @@ def ensure_database_exists() -> None:
     safe_name = database_name.replace("]", "]]")
     safe_literal = database_name.replace("'", "''")
     timeout = int(config.get("connect_timeout", 3))
-    connection = connect_with_candidates(master_connection_string, timeout=timeout, autocommit=True)
+    attempts = max(1, int(config.get("connect_attempts", 6)))
+    retry_delay = max(0.0, float(config.get("connect_retry_delay", 1.0)))
+    connection = connect_with_candidates(
+        master_connection_string,
+        timeout=timeout,
+        autocommit=True,
+        attempts=attempts,
+        retry_delay=retry_delay,
+    )
     try:
         cursor = connection.cursor()
         cursor.execute(f"IF DB_ID(N'{safe_literal}') IS NULL CREATE DATABASE [{safe_name}];")
@@ -294,12 +322,14 @@ def localdb_pipe_connection_string(connection_string: str) -> str | None:
             check=True,
             capture_output=True,
             text=True,
+            timeout=15,
         )
         result = subprocess.run(
             ["sqllocaldb", "info", instance],
             check=True,
             capture_output=True,
             text=True,
+            timeout=15,
         )
     except (OSError, subprocess.SubprocessError):
         return None

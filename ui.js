@@ -384,6 +384,28 @@ sessionStorage.setItem(CHAT_SESSION_KEY, sessionId);
 }
 }
 
+function clearChatSessionId(){
+sessionStorage.removeItem(CHAT_SESSION_KEY);
+}
+
+async function requestChatReply(text, sessionId){
+const response = await fetch(`${CHAT_API_BASE_URL}/chat/messages`, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+session_id: sessionId,
+language: state.language || "pl",
+text,
+metadata: { source: "site-widget" }
+})
+});
+
+return {
+response,
+payload: await response.json().catch(() => ({}))
+};
+}
+
 async function sendChatMessage(form){
 const input = form.querySelector(".chat-input");
 const button = form.querySelector(".chat-send");
@@ -399,17 +421,13 @@ if(button) button.disabled = true;
 const loadingMessage = appendChatTypingIndicator(messages);
 
 try{
-const response = await fetch(`${CHAT_API_BASE_URL}/chat/messages`, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-session_id: getChatSessionId(),
-language: state.language || "pl",
-text,
-metadata: { source: "site-widget" }
-})
-});
-const payload = await response.json().catch(() => ({}));
+const existingSessionId = getChatSessionId();
+let { response, payload } = await requestChatReply(text, existingSessionId);
+
+if(response.status === 404 && existingSessionId){
+clearChatSessionId();
+({ response, payload } = await requestChatReply(text, null));
+}
 
 if(!response.ok){
 throw new Error(payload.detail || payload.error || `Bot API ${response.status}`);
