@@ -1731,6 +1731,7 @@ border-radius:18px;
 font-size:15px;
 line-height:1.5;
 overflow-wrap:anywhere;
+white-space:pre-line;
 }
 
 .chat-message.assistant{

@@ -127,7 +127,7 @@ main.insertAdjacentHTML("afterend", `
 <div><div class="chat-badge" data-i18n="chat.badge">Asystent Lamp</div><h3 class="chat-title" data-i18n="chat.title">Chat</h3></div>
 </div>
 <div class="chat-messages" id="chatMessages" aria-live="polite">
-<div class="chat-message assistant"><span data-i18n="chat.placeholderMessage">Napisz wiadomość, a później podłączymy tutaj odpowiedzi bota.</span></div>
+<div class="chat-message assistant"><span data-i18n="chat.placeholderMessage">Cześć! Napisz, jakiego światła szukasz, a coś dla Ciebie znajdę.</span></div>
 </div>
 <form class="chat-form" data-chat-form>
 <label class="sr-only" for="chatInput" data-i18n="chat.inputLabel">Message</label>
@@ -373,6 +373,30 @@ messages.scrollTop = messages.scrollHeight;
 async function handleChatAction(action, products){
 if(!action || !window.LampProducts) return;
 
+if(action.type === "open_cart"){
+window.LampProducts.openCartModal();
+return;
+}
+
+if(action.type === "open_library"){
+openLibraryModal();
+return;
+}
+
+if(action.all && action.type === "remove_from_cart"){
+for(const item of window.LampProducts.getCart()){
+await window.LampProducts.removeFromCart(item.id);
+}
+return;
+}
+
+if(action.all && action.type === "remove_from_library"){
+for(const item of window.LampProducts.getLibrary()){
+await window.LampProducts.removeFromLibrary(item.id);
+}
+return;
+}
+
 const items = Array.isArray(action.items)
 ? action.items
 : (Array.isArray(action.product_ids) ? action.product_ids.map((productId) => ({ product_id: productId, quantity: 1 })) : []);
@@ -390,6 +414,14 @@ await window.LampProducts.addToLibrary(product);
 
 if(action.type === "add_to_cart"){
 await window.LampProducts.addToCart(product, quantity);
+}
+
+if(action.type === "remove_from_cart"){
+await window.LampProducts.removeFromCart(productId);
+}
+
+if(action.type === "remove_from_library"){
+await window.LampProducts.removeFromLibrary(productId);
 }
 }
 }
