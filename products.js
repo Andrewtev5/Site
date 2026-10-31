@@ -7,6 +7,7 @@ const MAX_QUANTITY = 999;
 let libraryItems = [];
 let cartItems = storage.getLocalCart();
 let selectedThemeId = getThemeFromHash();
+let purchaseInProgress = false;
 const cartQuantityTimers = new WeakMap();
 
 function restoreCachedCatalog(){
@@ -483,7 +484,8 @@ window.LampUI.showToast(t("toasts.addedToLibrary", { name: product.name }));
 }
 
 async function buyProduct(product, source = "catalog", quantity = 1){
-if(!ensureSignedIn("purchase")) return;
+if(!ensureSignedIn("purchase") || purchaseInProgress) return;
+purchaseInProgress = true;
 
 const existingItem = getLibrary().find((item) => item.id === product.id);
 const purchaseQuantity = normalizeQuantity(quantity);
@@ -506,12 +508,16 @@ storage.saveLocalCart(cartItems);
 
 syncUi();
 const message = t("toasts.purchaseComplete", { name: product.name, quantity: purchaseQuantity });
+const purchaseSoundFinished = window.LampUI.playPurchaseSound();
 
 if(source === "catalog"){
+// Leaving the page stops the audio, so the redirect waits for the sound; the flag stays set until then.
+await purchaseSoundFinished;
 window.LampUI.goToPage("purchase-history.html", { message, type: "success" });
 return;
 }
 
+purchaseInProgress = false;
 window.LampUI.showToast(message);
 }
 

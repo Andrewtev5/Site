@@ -3,8 +3,14 @@ const { state, escapeHtml } = window.LampStorage;
 const t = (...args) => window.LampI18n.t(...args);
 const CHAT_API_BASE_URL = window.LAMP_BOT_API_BASE || "http://127.0.0.1:8001/api/v1";
 const CHAT_SESSION_KEY = "lamp_store_chat_session_v1";
-const BUTTON_SOUND_SRC = "audio/button-click.mp3";
-const BUTTON_SOUND_VOLUME = 0.18;
+const BUTTON_SOUND_SRC = "audio/button-click.wav";
+const BUTTON_SOUND_VOLUME = 0.4;
+const PURCHASE_SOUND_SRC = "audio/purchase-glass.wav";
+const PURCHASE_SOUND_VOLUME = 0.5;
+const PURCHASE_SOUND_MAX_WAIT_MS = 1300;
+const purchaseSound = new Audio(PURCHASE_SOUND_SRC);
+purchaseSound.preload = "auto";
+purchaseSound.volume = PURCHASE_SOUND_VOLUME;
 let buttonSound = null;
 let lastButtonSoundAt = 0;
 
@@ -218,6 +224,20 @@ sound.play().catch(() => {});
 }catch(error){
 console.warn("Button sound unavailable.", error);
 }
+}
+
+function playPurchaseSound(){
+return new Promise((resolve) => {
+const timer = window.setTimeout(resolve, PURCHASE_SOUND_MAX_WAIT_MS);
+const finish = () => {
+window.clearTimeout(timer);
+resolve();
+};
+
+purchaseSound.currentTime = 0;
+purchaseSound.addEventListener("ended", finish, { once: true });
+purchaseSound.play().catch(finish);
+});
 }
 
 function goToPage(path, toastPayload = null){
@@ -691,7 +711,8 @@ highlightCurrentPage,
 initScrollReveal,
 refreshActiveInfoModal,
 exposeLegacyGlobals,
-restoreChatHistory
+restoreChatHistory,
+playPurchaseSound
 };
 })();
 
