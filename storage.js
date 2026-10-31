@@ -2,6 +2,7 @@ window.LampStorage = (() => {
 const STORAGE_KEYS = {
 users: "lamp_store_users_v1",
 session: "lamp_store_session_v2",
+catalog: "lamp_store_catalog_v1",
 language: "lamp_store_language_v1",
 flashToast: "lamp_store_flash_toast_v1",
 cart: "lamp_store_cart_v1"
@@ -91,6 +92,14 @@ if(!response.ok){
 const error = new Error(payload.error || payload.message || `API ${response.status}`);
 error.status = response.status;
 error.payload = payload;
+error.retryAfter = Number(response.headers.get("Retry-After")) || 0;
+
+if(response.status === 401 && state.apiToken && !path.startsWith("/api/log")){
+error.sessionExpired = true;
+saveSession(null);
+window.LampUI?.goToPage?.("login.html", { message: window.LampI18n.t("toasts.sessionExpired"), type: "error" });
+}
+
 throw error;
 }
 
@@ -103,6 +112,22 @@ await apiFetch("/api/health", { method: "GET" });
 return true;
 }catch(error){
 return false;
+}
+}
+
+function getCachedCatalog(){
+try{
+const products = JSON.parse(localStorage.getItem(STORAGE_KEYS.catalog) || "null");
+return products && typeof products === "object" ? products : null;
+}catch(error){
+return null;
+}
+}
+
+function saveCachedCatalog(products){
+try{
+localStorage.setItem(STORAGE_KEYS.catalog, JSON.stringify(products));
+}catch(error){
 }
 }
 
@@ -160,6 +185,8 @@ loadSession,
 saveSession,
 apiFetch,
 apiAvailable,
+getCachedCatalog,
+saveCachedCatalog,
 getUsersFallback,
 saveUsersFallback,
 getLocalCart,

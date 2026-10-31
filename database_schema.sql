@@ -2,3 +2,4 @@
 -- Run this file with sqlcmd from the Site1 directory.
 
 :r ..\DataBace\02_init_schema.sql
+:r ..\DataBace\03_seed_products.sql

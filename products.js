@@ -9,9 +9,17 @@ let cartItems = storage.getLocalCart();
 let selectedThemeId = getThemeFromHash();
 const cartQuantityTimers = new WeakMap();
 
+function restoreCachedCatalog(){
+const products = storage.getCachedCatalog();
+if(products){
+window.LAMP_I18N.products = products;
+state.catalogSource = "cache";
+}
+}
+
 async function loadCatalogProducts(){
 const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-const timeout = controller ? window.setTimeout(() => controller.abort(), 2500) : null;
+const timeout = controller ? window.setTimeout(() => controller.abort(), 10000) : null;
 
 try{
 const payload = await storage.apiFetch("/api/products", { method: "GET", signal: controller?.signal });
@@ -22,9 +30,10 @@ throw new Error("Invalid API payload");
 
 window.LAMP_I18N.products = payload.products;
 state.catalogSource = payload.source || "mssql";
+storage.saveCachedCatalog(payload.products);
 }catch(error){
-state.catalogSource = "local";
-console.warn("Catalog API unavailable. Falling back to local products.", error);
+state.catalogSource = state.catalogSource === "cache" ? "cache" : "unavailable";
+console.warn("Catalog API unavailable.", error);
 }finally{
 if(timeout) window.clearTimeout(timeout);
 }
@@ -257,7 +266,7 @@ const localizedTheme = localizeTheme(selectedTheme);
 const productIds = selectedTheme ? getSelectedThemeProductIds().filter((productId) => window.LAMP_I18N.products[productId]) : [];
 const firstStatValue = document.querySelector(".hero-stats .stat-card .stat-value");
 
-if(firstStatValue) firstStatValue.textContent = String(allProductIds.length);
+if(firstStatValue && allProductIds.length) firstStatValue.textContent = String(allProductIds.length);
 if(!productsGrid) return;
 
 catalogSection?.classList.toggle("catalog-waiting", !selectedTheme);
@@ -275,6 +284,16 @@ productsGrid.innerHTML = `
 <div class="catalog-empty">
 <strong>${escapeHtml(t("themes.emptyTitle"))}</strong>
 <p>${escapeHtml(t("themes.emptyText"))}</p>
+</div>
+`;
+return;
+}
+
+if(state.catalogSource === "unavailable"){
+productsGrid.innerHTML = `
+<div class="catalog-empty">
+<strong>${escapeHtml(t("catalog.unavailableTitle"))}</strong>
+<p>${escapeHtml(t("catalog.unavailableText"))}</p>
 </div>
 `;
 return;
@@ -455,6 +474,7 @@ try{
 await storage.apiFetch("/api/library", { method: "POST", body: JSON.stringify({ productId: product.id }) });
 await loadLibraryFromApi();
 }catch(error){
+if(error.sessionExpired) return;
 libraryItems = [...libraryItems, { id: product.id, savedAt: new Date().toISOString(), purchasedAt: null }];
 }
 
@@ -475,6 +495,7 @@ body: JSON.stringify({ productId: product.id, quantity: purchaseQuantity })
 });
 await Promise.allSettled([loadLibraryFromApi(), loadCartFromApi()]);
 }catch(error){
+if(error.sessionExpired) return;
 const now = new Date().toISOString();
 libraryItems = existingItem
 ? libraryItems.map((item) => item.id === product.id ? { ...item, purchasedAt: item.purchasedAt || now, quantity: purchaseQuantity } : item)
@@ -501,6 +522,7 @@ try{
 await storage.apiFetch("/api/library", { method: "DELETE", body: JSON.stringify({ productId }) });
 await loadLibraryFromApi();
 }catch(error){
+if(error.sessionExpired) return;
 libraryItems = libraryItems.filter((item) => item.id !== productId);
 }
 
@@ -522,6 +544,7 @@ cartItems = cartItems.map((item) => item.id === product.id ? { ...item, quantity
 cartItems = [...cartItems, { ...product, quantity: addedQuantity, addedAt: new Date().toISOString() }];
 }
 }catch(error){
+if(error.sessionExpired) return;
 cartItems = existing
 ? cartItems.map((item) => item.id === product.id ? { ...item, quantity: normalizeQuantity(Number(item.quantity || 1) + addedQuantity) } : item)
 : [...cartItems, { ...product, quantity: addedQuantity, addedAt: new Date().toISOString() }];
@@ -546,6 +569,7 @@ await loadCartFromApi();
 cartItems = cartItems.map((item) => item.id === productId ? { ...item, quantity: normalized } : item);
 }
 }catch(error){
+if(error.sessionExpired) return;
 cartItems = cartItems.map((item) => item.id === productId ? { ...item, quantity: normalized } : item);
 }
 
@@ -562,6 +586,7 @@ await loadCartFromApi();
 cartItems = cartItems.filter((item) => item.id !== productId);
 }
 }catch(error){
+if(error.sessionExpired) return;
 cartItems = cartItems.filter((item) => item.id !== productId);
 }
 
@@ -650,6 +675,7 @@ window.LampUI.highlightCurrentPage();
 }
 
 return {
+restoreCachedCatalog,
 loadCatalogProducts,
 loadUserData,
 getCatalogProduct,

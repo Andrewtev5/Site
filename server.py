@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import os
 import secrets
 import subprocess
+import threading
 import time
 import uuid
-from datetime import datetime, timezone
-from functools import partial
+from contextlib import contextmanager
+from datetime import datetime, timedelta, timezone
+from functools import lru_cache, partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -19,13 +22,37 @@ except ImportError:  # pragma: no cover - local demo dependency hint
     pyodbc = None
 
 
+logger = logging.getLogger("lamp_store.site")
+
 SITE_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = SITE_ROOT.parent
 CONFIG_PATH = SITE_ROOT / "config.json"
-CANONICAL_SCHEMA_PATH = PROJECT_ROOT / "DataBace" / "02_init_schema.sql"
+SCHEMA_PATHS = (
+    PROJECT_ROOT / "DataBace" / "02_init_schema.sql",
+    PROJECT_ROOT / "DataBace" / "03_seed_products.sql",
+)
 ENV_PATHS = (SITE_ROOT / ".env", PROJECT_ROOT / "Bot" / ".env")
 PASSWORD_ITERATIONS = 120_000
-SESSIONS: dict[str, str] = {}
+# Hashed for an unknown email, so a login takes the same time whether the account exists or not.
+DUMMY_PASSWORD_SALT = secrets.token_hex(16)
+
+SESSION_TTL_SECONDS = 24 * 60 * 60
+CATALOG_CACHE_SECONDS = 60
+IDLE_CONNECTION_CHECK_SECONDS = 30
+MAX_IDLE_CONNECTIONS = 8
+REQUEST_CONNECT_ATTEMPTS = 2
+
+# (scope, allowed failures, window in seconds). Counters live in the database, so a restart does not reset them.
+# "account_ip" stops guessing one password, "ip" stops trying many accounts, "account" stops a distributed attack.
+LOGIN_THROTTLE_RULES = (
+    ("account_ip", 5, 15 * 60),
+    ("ip", 20, 15 * 60),
+    ("account", 50, 15 * 60),
+)
+REGISTER_THROTTLE_RULE = ("register_ip", 10, 60 * 60)
+THROTTLE_MESSAGE = "Too many attempts. Try again later."
+INVALID_CREDENTIALS_MESSAGE = "Invalid email or password."
+INTERNAL_ERROR_MESSAGE = "Internal server error."
 
 DEFAULT_SQL_SERVER_CONNECTION_STRING = (
     "DRIVER={ODBC Driver 18 for SQL Server};"
@@ -43,117 +70,14 @@ DEFAULT_CONFIG = {
 }
 
 
-SCHEMA_SQL = [
-    """
-    IF OBJECT_ID('dbo.users', 'U') IS NULL
-    BEGIN
-        CREATE TABLE dbo.users (
-            id UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_users PRIMARY KEY DEFAULT NEWID(),
-            name NVARCHAR(255) NOT NULL,
-            email NVARCHAR(320) NOT NULL,
-            password_hash NVARCHAR(128) NOT NULL,
-            salt NVARCHAR(64) NOT NULL,
-            iterations INT NOT NULL CONSTRAINT DF_users_iterations DEFAULT 120000,
-            created_at DATETIME2 NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSUTCDATETIME()
-        );
-    END
-    """,
-    """
-    IF NOT EXISTS (
-        SELECT 1
-        FROM sys.indexes
-        WHERE name = 'UX_users_email'
-          AND object_id = OBJECT_ID('dbo.users')
-    )
-    BEGIN
-        CREATE UNIQUE INDEX UX_users_email ON dbo.users(email);
-    END
-    """,
-    """
-    IF COL_LENGTH('dbo.users', 'phone') IS NULL
-        ALTER TABLE dbo.users ADD phone NVARCHAR(40) NULL;
-    """,
-    """
-    IF COL_LENGTH('dbo.users', 'city') IS NULL
-        ALTER TABLE dbo.users ADD city NVARCHAR(120) NULL;
-    """,
-    """
-    IF COL_LENGTH('dbo.users', 'street') IS NULL
-        ALTER TABLE dbo.users ADD street NVARCHAR(160) NULL;
-    """,
-    """
-    IF COL_LENGTH('dbo.users', 'building') IS NULL
-        ALTER TABLE dbo.users ADD building NVARCHAR(40) NULL;
-    """,
-    """
-    IF COL_LENGTH('dbo.users', 'apartment') IS NULL
-        ALTER TABLE dbo.users ADD apartment NVARCHAR(40) NULL;
-    """,
-    """
-    IF OBJECT_ID('dbo.user_library', 'U') IS NULL
-    BEGIN
-        CREATE TABLE dbo.user_library (
-            user_id UNIQUEIDENTIFIER NOT NULL,
-            product_id NVARCHAR(100) NOT NULL,
-            saved_at DATETIME2 NOT NULL CONSTRAINT DF_user_library_saved_at DEFAULT SYSUTCDATETIME(),
-            purchased_at DATETIME2 NULL,
-            CONSTRAINT PK_user_library PRIMARY KEY (user_id, product_id),
-            CONSTRAINT FK_user_library_users FOREIGN KEY (user_id)
-                REFERENCES dbo.users(id) ON DELETE CASCADE
-        );
-    END
-    """,
-    """
-    IF OBJECT_ID('dbo.user_cart', 'U') IS NULL
-    BEGIN
-        CREATE TABLE dbo.user_cart (
-            user_id UNIQUEIDENTIFIER NOT NULL,
-            product_id NVARCHAR(100) NOT NULL,
-            quantity INT NOT NULL CONSTRAINT DF_user_cart_quantity DEFAULT 1,
-            added_at DATETIME2 NOT NULL CONSTRAINT DF_user_cart_added_at DEFAULT SYSUTCDATETIME(),
-            CONSTRAINT PK_user_cart PRIMARY KEY (user_id, product_id),
-            CONSTRAINT CK_user_cart_quantity CHECK (quantity > 0),
-            CONSTRAINT FK_user_cart_users FOREIGN KEY (user_id)
-                REFERENCES dbo.users(id) ON DELETE CASCADE
-        );
-    END
-    """,
-    """
-    IF OBJECT_ID('dbo.purchase_history', 'U') IS NULL
-    BEGIN
-        CREATE TABLE dbo.purchase_history (
-            id UNIQUEIDENTIFIER NOT NULL CONSTRAINT PK_purchase_history PRIMARY KEY DEFAULT NEWID(),
-            user_id UNIQUEIDENTIFIER NOT NULL,
-            product_id NVARCHAR(100) NOT NULL,
-            quantity INT NOT NULL,
-            unit_price DECIMAL(10, 2) NOT NULL,
-            currency NVARCHAR(10) NOT NULL CONSTRAINT DF_purchase_history_currency DEFAULT N'PLN',
-            purchased_at DATETIME2 NOT NULL CONSTRAINT DF_purchase_history_purchased_at DEFAULT SYSUTCDATETIME(),
-            CONSTRAINT CK_purchase_history_quantity CHECK (quantity > 0),
-            CONSTRAINT CK_purchase_history_unit_price CHECK (unit_price >= 0),
-            CONSTRAINT FK_purchase_history_users FOREIGN KEY (user_id)
-                REFERENCES dbo.users(id) ON DELETE CASCADE
-        );
-    END
-    """,
-    """
-    IF OBJECT_ID('dbo.products', 'U') IS NOT NULL
-       AND OBJECT_ID('dbo.purchase_history', 'U') IS NOT NULL
-    BEGIN
-        INSERT INTO dbo.purchase_history (user_id, product_id, quantity, unit_price, currency, purchased_at)
-        SELECT l.user_id, l.product_id, 1, p.price, p.currency, l.purchased_at
-        FROM dbo.user_library l
-        JOIN dbo.products p ON p.id = l.product_id
-        WHERE l.purchased_at IS NOT NULL
-          AND NOT EXISTS (
-              SELECT 1 FROM dbo.purchase_history h
-              WHERE h.user_id = l.user_id
-                AND h.product_id = l.product_id
-                AND h.purchased_at = l.purchased_at
-          );
-    END
-    """,
-]
+class ApiError(Exception):
+    """An expected failure whose message is safe to show to the client."""
+
+    def __init__(self, status: int, message: str, retry_after: int | None = None) -> None:
+        super().__init__(message)
+        self.status = status
+        self.message = message
+        self.retry_after = retry_after
 
 
 def load_dotenv() -> None:
@@ -174,6 +98,7 @@ def load_dotenv() -> None:
             os.environ.setdefault(key, value.strip().strip('"').strip("'"))
 
 
+@lru_cache(maxsize=1)
 def load_config() -> dict:
     load_dotenv()
     config = dict(DEFAULT_CONFIG)
@@ -187,42 +112,120 @@ def load_config() -> dict:
     return config
 
 
-def connect():
+class ConnectionPool:
+    """Reuses open connections and runs sqllocaldb only when the last working connection string fails."""
+
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._idle: list[tuple[object, float]] = []
+        self._resolved: dict[str, str] = {}
+
+    def open(
+        self,
+        connection_string: str,
+        timeout: int,
+        autocommit: bool = False,
+        attempts: int = 1,
+        retry_delay: float = 0.0,
+    ):
+        last_error = None
+
+        for attempt in range(max(1, attempts)):
+            resolved = self._resolved.get(connection_string)
+            if resolved:
+                try:
+                    return pyodbc.connect(resolved, timeout=timeout, autocommit=autocommit)
+                except pyodbc.Error as error:
+                    last_error = error
+                    self._resolved.pop(connection_string, None)
+
+            for candidate in connection_string_candidates(connection_string):
+                try:
+                    connection = pyodbc.connect(candidate, timeout=timeout, autocommit=autocommit)
+                    self._resolved[connection_string] = candidate
+                    return connection
+                except pyodbc.Error as error:
+                    last_error = error
+
+            if attempt + 1 < attempts and retry_delay:
+                time.sleep(retry_delay)
+
+        raise last_error
+
+    def acquire(self):
+        while True:
+            with self._lock:
+                if not self._idle:
+                    break
+                connection, idle_since = self._idle.pop()
+
+            if time.monotonic() - idle_since < IDLE_CONNECTION_CHECK_SECONDS or connection_is_alive(connection):
+                return connection
+            close_quietly(connection)
+
+        return connect(attempts=REQUEST_CONNECT_ATTEMPTS)
+
+    def release(self, connection) -> None:
+        with self._lock:
+            if len(self._idle) < MAX_IDLE_CONNECTIONS:
+                self._idle.append((connection, time.monotonic()))
+                return
+        close_quietly(connection)
+
+    def close_all(self) -> None:
+        with self._lock:
+            idle, self._idle = self._idle, []
+        for connection, _ in idle:
+            close_quietly(connection)
+
+
+def connection_is_alive(connection) -> bool:
+    try:
+        connection.cursor().execute("SELECT 1;").fetchall()
+        return True
+    except pyodbc.Error:
+        return False
+
+
+def close_quietly(connection) -> None:
+    try:
+        connection.close()
+    except pyodbc.Error:
+        pass
+
+
+POOL = ConnectionPool()
+
+
+def connect(attempts: int | None = None):
     if pyodbc is None:
         raise RuntimeError("Install pyodbc and Microsoft ODBC Driver for SQL Server.")
 
     config = load_config()
-    timeout = int(config.get("connect_timeout", 3))
-    attempts = max(1, int(config.get("connect_attempts", 6)))
-    retry_delay = max(0.0, float(config.get("connect_retry_delay", 1.0)))
-    return connect_with_candidates(
+    return POOL.open(
         config["sql_server_connection_string"],
-        timeout=timeout,
-        attempts=attempts,
-        retry_delay=retry_delay,
+        timeout=int(config.get("connect_timeout", 3)),
+        attempts=max(1, int(config.get("connect_attempts", 6))) if attempts is None else attempts,
+        retry_delay=max(0.0, float(config.get("connect_retry_delay", 1.0))),
     )
 
 
-def connect_with_candidates(
-    connection_string: str,
-    timeout: int,
-    autocommit: bool = False,
-    attempts: int = 1,
-    retry_delay: float = 0.0,
-):
-    last_error = None
-
-    for attempt in range(max(1, attempts)):
-        for candidate in connection_string_candidates(connection_string):
-            try:
-                return pyodbc.connect(candidate, timeout=timeout, autocommit=autocommit)
-            except pyodbc.Error as error:
-                last_error = error
-
-        if attempt + 1 < attempts and retry_delay:
-            time.sleep(retry_delay)
-
-    raise last_error
+@contextmanager
+def db_cursor():
+    """Gives a cursor on a pooled connection: commits on success, rolls back on a failure."""
+    connection = POOL.acquire()
+    try:
+        yield connection.cursor()
+        connection.commit()
+    except ApiError:
+        connection.rollback()
+        POOL.release(connection)
+        raise
+    except Exception:
+        close_quietly(connection)
+        raise
+    else:
+        POOL.release(connection)
 
 
 def ensure_database_exists() -> None:
@@ -236,15 +239,12 @@ def ensure_database_exists() -> None:
     master_connection_string = replace_connection_database(config["sql_server_connection_string"], "master")
     safe_name = database_name.replace("]", "]]")
     safe_literal = database_name.replace("'", "''")
-    timeout = int(config.get("connect_timeout", 3))
-    attempts = max(1, int(config.get("connect_attempts", 6)))
-    retry_delay = max(0.0, float(config.get("connect_retry_delay", 1.0)))
-    connection = connect_with_candidates(
+    connection = POOL.open(
         master_connection_string,
-        timeout=timeout,
+        timeout=int(config.get("connect_timeout", 3)),
         autocommit=True,
-        attempts=attempts,
-        retry_delay=retry_delay,
+        attempts=max(1, int(config.get("connect_attempts", 6))),
+        retry_delay=max(0.0, float(config.get("connect_retry_delay", 1.0))),
     )
     try:
         cursor = connection.cursor()
@@ -371,10 +371,8 @@ def ensure_schema() -> None:
     connection = connect()
     try:
         cursor = connection.cursor()
-        for statement in SCHEMA_SQL:
-            cursor.execute(statement)
-        if CANONICAL_SCHEMA_PATH.exists():
-            for statement in sql_batches_from_file(CANONICAL_SCHEMA_PATH):
+        for schema_path in SCHEMA_PATHS:
+            for statement in sql_batches_from_file(schema_path):
                 cursor.execute(statement)
         connection.commit()
     finally:
@@ -400,22 +398,28 @@ def sql_batches_from_file(path: Path):
 
 
 def read_json(handler: SimpleHTTPRequestHandler) -> dict:
-    length = int(handler.headers.get("Content-Length", "0"))
-    if length == 0:
-        return {}
+    try:
+        length = int(handler.headers.get("Content-Length", "0"))
+        if length == 0:
+            return {}
 
-    payload = handler.rfile.read(length).decode("utf-8")
-    return json.loads(payload)
+        payload = json.loads(handler.rfile.read(length).decode("utf-8"))
+    except ValueError as error:
+        raise ApiError(400, "Invalid request body.") from error
+
+    if not isinstance(payload, dict):
+        raise ApiError(400, "Invalid request body.")
+    return payload
 
 
 def parse_quantity(value, default: int = 1) -> int:
     try:
         quantity = int(value if value is not None else default)
     except (TypeError, ValueError) as error:
-        raise ValueError("Quantity must be a whole number.") from error
+        raise ApiError(400, "Quantity must be a whole number.") from error
 
     if quantity < 1 or quantity > 999:
-        raise ValueError("Quantity must be between 1 and 999.")
+        raise ApiError(400, "Quantity must be between 1 and 999.")
     return quantity
 
 
@@ -438,13 +442,117 @@ def to_iso(value) -> str:
 def get_bearer_token(headers) -> str | None:
     value = headers.get("Authorization", "")
     if value.startswith("Bearer "):
-        return value.removeprefix("Bearer ").strip()
+        return value.removeprefix("Bearer ").strip() or None
     return None
 
 
-def get_session_email(headers) -> str | None:
-    token = get_bearer_token(headers)
-    return SESSIONS.get(token or "")
+def hash_value(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def create_auth_session(cursor, user_id) -> str:
+    """Stores only a hash of the token, so a database leak does not expose working sessions."""
+    token = secrets.token_urlsafe(32)
+    expires_at = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(seconds=SESSION_TTL_SECONDS)
+    cursor.execute(
+        "INSERT INTO dbo.auth_sessions (token_hash, user_id, expires_at) VALUES (?, ?, ?);",
+        hash_value(token),
+        user_id,
+        expires_at,
+    )
+    return token
+
+
+def get_session_user(cursor, token: str | None) -> dict | None:
+    if not token:
+        return None
+
+    cursor.execute(
+        """
+        SELECT u.id, u.name, u.email, u.created_at, u.phone, u.city, u.street, u.building, u.apartment
+        FROM dbo.auth_sessions s
+        JOIN dbo.users u ON u.id = s.user_id
+        WHERE s.token_hash = ?
+          AND s.expires_at > SYSUTCDATETIME();
+        """,
+        hash_value(token),
+    )
+    return fetchone_dict(cursor)
+
+
+def delete_expired_auth_data(cursor) -> None:
+    cursor.execute("DELETE FROM dbo.auth_sessions WHERE expires_at <= SYSUTCDATETIME();")
+    cursor.execute(
+        """
+        DELETE FROM dbo.auth_throttle
+        WHERE window_expires_at <= SYSUTCDATETIME()
+          AND (locked_until IS NULL OR locked_until <= SYSUTCDATETIME());
+        """
+    )
+
+
+def throttle_key(scope: str, *parts: str) -> str:
+    return hash_value("|".join((scope, *parts)))
+
+
+def login_throttle_keys(email: str, ip_address: str) -> list[tuple[str, int, int]]:
+    values = {"account_ip": (email, ip_address), "ip": (ip_address,), "account": (email,)}
+    return [
+        (throttle_key(scope, *values[scope]), max_failures, window_seconds)
+        for scope, max_failures, window_seconds in LOGIN_THROTTLE_RULES
+    ]
+
+
+def throttle_retry_after(cursor, keys: list[tuple[str, int, int]]) -> int | None:
+    placeholders = ", ".join("?" for _ in keys)
+    cursor.execute(
+        f"""
+        SELECT MAX(DATEDIFF(SECOND, SYSUTCDATETIME(), locked_until)) AS retry_after
+        FROM dbo.auth_throttle
+        WHERE key_hash IN ({placeholders})
+          AND locked_until > SYSUTCDATETIME();
+        """,
+        *[key for key, _, _ in keys],
+    )
+    row = cursor.fetchone()
+    return max(1, int(row.retry_after)) if row and row.retry_after is not None else None
+
+
+def record_throttle_failure(cursor, keys: list[tuple[str, int, int]]) -> None:
+    for key, max_failures, window_seconds in keys:
+        cursor.execute(
+            """
+            MERGE dbo.auth_throttle WITH (HOLDLOCK) AS target
+            USING (
+                SELECT CAST(? AS CHAR(64)) AS key_hash,
+                       CAST(? AS INT) AS max_failures,
+                       CAST(? AS INT) AS window_seconds
+            ) AS source
+            ON target.key_hash = source.key_hash
+            WHEN MATCHED THEN
+                UPDATE SET
+                    failures = CASE
+                        WHEN target.window_expires_at > SYSUTCDATETIME() THEN target.failures + 1
+                        ELSE 1
+                    END,
+                    locked_until = CASE
+                        WHEN target.window_expires_at <= SYSUTCDATETIME() THEN NULL
+                        WHEN target.failures + 1 >= source.max_failures
+                            THEN DATEADD(SECOND, source.window_seconds, SYSUTCDATETIME())
+                        ELSE target.locked_until
+                    END,
+                    window_expires_at = CASE
+                        WHEN target.window_expires_at > SYSUTCDATETIME() THEN target.window_expires_at
+                        ELSE DATEADD(SECOND, source.window_seconds, SYSUTCDATETIME())
+                    END
+            WHEN NOT MATCHED THEN
+                INSERT (key_hash, failures, window_expires_at)
+                VALUES (source.key_hash, 1, DATEADD(SECOND, source.window_seconds, SYSUTCDATETIME()));
+            """,
+            key,
+            max_failures,
+            window_seconds,
+        )
 
 
 def rows_to_dicts(cursor) -> list[dict]:
@@ -456,25 +564,6 @@ def fetchone_dict(cursor) -> dict | None:
     columns = [column[0] for column in cursor.description or []]
     row = cursor.fetchone()
     return dict(zip(columns, row)) if row else None
-
-
-def table_columns(cursor, table_name: str) -> set[str]:
-    cursor.execute(
-        """
-        SELECT LOWER(COLUMN_NAME) AS column_name
-        FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = 'dbo'
-          AND TABLE_NAME = ?
-        """,
-        table_name,
-    )
-    return {str(row.column_name).lower() for row in cursor.fetchall()}
-
-
-def products_table_exists(cursor) -> bool:
-    cursor.execute("SELECT OBJECT_ID('dbo.products', 'U') AS object_id;")
-    row = cursor.fetchone()
-    return bool(row and row.object_id)
 
 
 def get_user_by_email(cursor, email: str) -> dict | None:
@@ -511,58 +600,45 @@ def purchase_row_to_public(item: dict) -> dict:
     }
 
 
+def public_user(user: dict) -> dict:
+    return {
+        "name": user["name"],
+        "email": user["email"],
+        "phone": user.get("phone") or "",
+        "city": user.get("city") or "",
+        "street": user.get("street") or "",
+        "building": user.get("building") or "",
+        "apartment": user.get("apartment") or "",
+        "createdAt": to_iso(user.get("created_at")),
+    }
+
+
 def product_exists(cursor, product_id: str) -> bool:
     if not product_id:
         return False
-
-    if not products_table_exists(cursor):
-        return True
 
     cursor.execute("SELECT 1 FROM dbo.products WHERE id = ?;", product_id)
     return cursor.fetchone() is not None
 
 
-def build_product_payload(row: dict, columns: set[str]) -> tuple[str, dict]:
+def build_product_payload(row: dict) -> tuple[str, dict]:
     product_id = str(row["id"])
-    price = f"{float(row.get('price') or 0):.0f} {row.get('currency') or 'PLN'}"
-
-    if {"name_pl", "name_en", "tag_pl", "tag_en", "description_pl", "description_en", "image"}.issubset(columns):
-        image = row.get("image") or row.get("image_url") or "images/lamp1.jpg"
-        name_en = row.get("name_en") or row.get("name_pl") or product_id
-        name_pl = row.get("name_pl") or row.get("name_en") or product_id
-        tag_en = row.get("tag_en") or row.get("tag_pl") or "Lamp"
-        tag_pl = row.get("tag_pl") or row.get("tag_en") or "Lampa"
-        description_en = row.get("description_en") or row.get("description_pl") or ""
-        description_pl = row.get("description_pl") or row.get("description_en") or ""
-        meta_en = parse_product_meta(row.get("meta_en"), tag_en)
-        meta_pl = parse_product_meta(row.get("meta_pl"), tag_pl)
-    else:
-        image = row.get("image_url") or row.get("image") or "images/lamp1.jpg"
-        name_en = row.get("name") or product_id
-        name_pl = row.get("name") or product_id
-        tag_en = row.get("category") or "Lamp"
-        tag_pl = row.get("category") or "Lampa"
-        description_en = row.get("description") or ""
-        description_pl = row.get("description") or ""
-        meta_en = [tag_en]
-        meta_pl = [tag_pl]
-
     return product_id, {
-        "image": image,
-        "price": price,
+        "image": row["image"],
+        "price": f"{float(row['price']):.0f} {row['currency']}",
         "en": {
-            "name": name_en,
-            "tag": tag_en,
-            "description": description_en,
-            "meta": meta_en,
-            "imageAlt": name_en,
+            "name": row["name_en"],
+            "tag": row["tag_en"],
+            "description": row["description_en"],
+            "meta": parse_product_meta(row["meta_en"], row["tag_en"]),
+            "imageAlt": row["image_alt_en"],
         },
         "pl": {
-            "name": name_pl,
-            "tag": tag_pl,
-            "description": description_pl,
-            "meta": meta_pl,
-            "imageAlt": name_pl,
+            "name": row["name_pl"],
+            "tag": row["tag_pl"],
+            "description": row["description_pl"],
+            "meta": parse_product_meta(row["meta_pl"], row["tag_pl"]),
+            "imageAlt": row["image_alt_pl"],
         },
     }
 
@@ -579,7 +655,68 @@ def parse_product_meta(value: object, fallback: str) -> list[str]:
     return tags or [fallback]
 
 
+class CatalogCache:
+    """Every page asks for the whole catalog, but it changes only when the seed script runs."""
+
+    def __init__(self, ttl_seconds: int = CATALOG_CACHE_SECONDS) -> None:
+        self._ttl_seconds = ttl_seconds
+        self._lock = threading.Lock()
+        self._products: dict[str, dict] | None = None
+        self._expires_at = 0.0
+
+    def get(self) -> dict[str, dict]:
+        with self._lock:
+            if self._products is not None and time.monotonic() < self._expires_at:
+                return self._products
+
+            try:
+                with db_cursor() as cursor:
+                    cursor.execute(
+                        """
+                        SELECT id, image, price, currency,
+                               name_en, tag_en, description_en, meta_en, image_alt_en,
+                               name_pl, tag_pl, description_pl, meta_pl, image_alt_pl
+                        FROM dbo.products
+                        ORDER BY id;
+                        """
+                    )
+                    self._products = dict(build_product_payload(row) for row in rows_to_dicts(cursor))
+            except Exception:
+                if self._products is None:
+                    raise
+                logger.exception("Catalog refresh failed; serving the previous copy.")
+
+            self._expires_at = time.monotonic() + self._ttl_seconds
+            return self._products
+
+    def clear(self) -> None:
+        with self._lock:
+            self._products = None
+            self._expires_at = 0.0
+
+
+CATALOG = CatalogCache()
+
+
 class DiplomaRequestHandler(SimpleHTTPRequestHandler):
+    API_ROUTES = {
+        ("GET", "/api/health"): "serve_health",
+        ("GET", "/api/products"): "serve_products",
+        ("GET", "/api/library"): "serve_library",
+        ("GET", "/api/cart"): "serve_cart",
+        ("GET", "/api/account"): "serve_account",
+        ("GET", "/api/purchases"): "serve_purchases",
+        ("POST", "/api/register"): "handle_register",
+        ("POST", "/api/login"): "handle_login",
+        ("POST", "/api/logout"): "handle_logout",
+        ("POST", "/api/library"): "handle_library_add",
+        ("POST", "/api/cart"): "handle_cart_add",
+        ("POST", "/api/purchase"): "handle_purchase",
+        ("PUT", "/api/cart"): "handle_cart_update",
+        ("DELETE", "/api/library"): "handle_library_remove",
+        ("DELETE", "/api/cart"): "handle_cart_remove",
+    }
+
     def end_headers(self) -> None:
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
@@ -591,149 +728,86 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self) -> None:
-        path = urlparse(self.path).path
-
-        if path == "/api/health":
-            self.serve_json({"status": "ok", "database": "mssql"})
-            return
-
-        if path == "/api/products":
-            self.serve_products()
-            return
-
-        if path == "/api/library":
-            self.serve_library()
-            return
-
-        if path == "/api/cart":
-            self.serve_cart()
-            return
-
-        if path == "/api/account":
-            self.serve_account()
-            return
-
-        if path == "/api/purchases":
-            self.serve_purchases()
-            return
-
-        super().do_GET()
+        if not self.dispatch_api("GET"):
+            super().do_GET()
 
     def do_POST(self) -> None:
-        path = urlparse(self.path).path
-
-        if path == "/api/register":
-            self.handle_register()
-            return
-
-        if path == "/api/login":
-            self.handle_login()
-            return
-
-        if path == "/api/library":
-            self.handle_library_add()
-            return
-
-        if path == "/api/cart":
-            self.handle_cart_add()
-            return
-
-        if path == "/api/purchase":
-            self.handle_purchase()
-            return
-
-        self.serve_json({"error": "Not found"}, status=404)
+        if not self.dispatch_api("POST"):
+            self.serve_json({"error": "Not found"}, status=404)
 
     def do_PUT(self) -> None:
-        path = urlparse(self.path).path
-
-        if path == "/api/cart":
-            self.handle_cart_update()
-            return
-
-        self.serve_json({"error": "Not found"}, status=404)
+        if not self.dispatch_api("PUT"):
+            self.serve_json({"error": "Not found"}, status=404)
 
     def do_DELETE(self) -> None:
+        if not self.dispatch_api("DELETE"):
+            self.serve_json({"error": "Not found"}, status=404)
+
+    def dispatch_api(self, method: str) -> bool:
         path = urlparse(self.path).path
+        handler_name = self.API_ROUTES.get((method, path))
+        if handler_name is None:
+            return False
 
-        if path == "/api/library":
-            self.handle_library_remove()
-            return
+        try:
+            getattr(self, handler_name)()
+        except ApiError as error:
+            headers = {"Retry-After": str(error.retry_after)} if error.retry_after else None
+            self.serve_json({"error": error.message}, status=error.status, headers=headers)
+        except Exception:
+            # Details stay in the server log: the client must not see SQL, paths or driver messages.
+            logger.exception("Request failed: %s %s", method, path)
+            self.serve_json({"error": INTERNAL_ERROR_MESSAGE}, status=500)
+        return True
 
-        if path == "/api/cart":
-            self.handle_cart_remove()
-            return
+    def require_user(self, cursor) -> dict:
+        user = get_session_user(cursor, get_bearer_token(self.headers))
+        if user is None:
+            raise ApiError(401, "Unauthorized")
+        return user
 
-        self.serve_json({"error": "Not found"}, status=404)
+    def client_ip(self) -> str:
+        return str(self.client_address[0])
+
+    def serve_health(self) -> None:
+        self.serve_json({"status": "ok", "database": "mssql"})
 
     def serve_products(self) -> None:
-        try:
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                if not products_table_exists(cursor):
-                    self.serve_json({"source": "mssql", "products": {}}, status=404)
-                    return
+        products = CATALOG.get()
+        if not products:
+            self.serve_json({"source": "mssql", "products": {}}, status=404)
+            return
 
-                columns = table_columns(cursor, "products")
-                wanted_columns = [
-                    "id",
-                    "price",
-                    "currency",
-                    "image",
-                    "image_url",
-                    "name",
-                    "category",
-                    "description",
-                    "name_en",
-                    "name_pl",
-                    "tag_en",
-                    "tag_pl",
-                    "description_en",
-                    "description_pl",
-                    "meta_en",
-                    "meta_pl",
-                ]
-                selected_columns = [column for column in wanted_columns if column in columns]
-                cursor.execute(f"SELECT {', '.join(selected_columns)} FROM dbo.products ORDER BY id;")
-                products = dict(build_product_payload(row, columns) for row in rows_to_dicts(cursor))
-            finally:
-                connection.close()
-
-            if not products:
-                self.serve_json({"source": "mssql", "products": {}}, status=404)
-                return
-
-            self.serve_json({"source": "mssql", "products": products})
-        except Exception as error:
-            self.serve_json({"source": "error", "message": str(error), "products": {}}, status=500)
+        self.serve_json({"source": "mssql", "products": products})
 
     def handle_register(self) -> None:
+        payload = read_json(self)
+        name = str(payload.get("name", "")).strip()
+        email = str(payload.get("email", "")).strip().lower()
+        password = str(payload.get("password", ""))
+        phone = str(payload.get("phone", "")).strip()
+        city = str(payload.get("city", "")).strip()
+        street = str(payload.get("street", "")).strip()
+        building = str(payload.get("building", "")).strip()
+        apartment = str(payload.get("apartment", "")).strip()
+
+        if len(name) < 2 or "@" not in email or len(password) < 8:
+            raise ApiError(400, "Invalid registration payload.")
+
+        scope, max_attempts, window_seconds = REGISTER_THROTTLE_RULE
+        throttle_keys = [(throttle_key(scope, self.client_ip()), max_attempts, window_seconds)]
+
+        with db_cursor() as cursor:
+            retry_after = throttle_retry_after(cursor, throttle_keys)
+            if retry_after:
+                raise ApiError(429, THROTTLE_MESSAGE, retry_after)
+            record_throttle_failure(cursor, throttle_keys)
+
+        password_hash, salt, iterations = hash_password(password)
+        user_id = str(uuid.uuid4())
+
         try:
-            payload = read_json(self)
-            name = str(payload.get("name", "")).strip()
-            email = str(payload.get("email", "")).strip().lower()
-            password = str(payload.get("password", ""))
-            phone = str(payload.get("phone", "")).strip()
-            city = str(payload.get("city", "")).strip()
-            street = str(payload.get("street", "")).strip()
-            building = str(payload.get("building", "")).strip()
-            apartment = str(payload.get("apartment", "")).strip()
-
-            if len(name) < 2 or "@" not in email or len(password) < 8:
-                self.serve_json({"error": "Invalid registration payload."}, status=400)
-                return
-
-            password_hash, salt, iterations = hash_password(password)
-            user_id = str(uuid.uuid4())
-            connection = connect()
-
-            try:
-                cursor = connection.cursor()
-                if get_user_by_email(cursor, email):
-                    self.serve_json({"error": "Account already exists."}, status=409)
-                    return
-
+            with db_cursor() as cursor:
                 cursor.execute(
                     """
                     INSERT INTO dbo.users (
@@ -754,467 +828,305 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
                     building,
                     apartment,
                 )
-                connection.commit()
                 user = get_user_by_email(cursor, email)
-            finally:
-                connection.close()
+                token = create_auth_session(cursor, user_id)
+        except pyodbc.IntegrityError as error:
+            raise ApiError(409, "Account already exists.") from error
 
-            token = secrets.token_urlsafe(32)
-            SESSIONS[token] = email
-            self.serve_json({"token": token, "user": self.public_user(user)})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
-
-    def serve_account(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
-
-        try:
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                user = get_user_by_email(cursor, email)
-            finally:
-                connection.close()
-
-            if not user:
-                self.serve_json({"error": "Account not found."}, status=404)
-                return
-
-            self.serve_json({"user": self.public_user(user)})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
-
-    def serve_purchases(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"items": []}, status=401)
-            return
-
-        try:
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    SELECT h.id AS purchase_id,
-                           h.product_id,
-                           h.quantity,
-                           h.unit_price,
-                           h.unit_price * h.quantity AS total_price,
-                           h.currency,
-                           h.purchased_at
-                    FROM dbo.purchase_history h
-                    JOIN dbo.users u ON u.id = h.user_id
-                    WHERE u.email = ?
-                    ORDER BY h.purchased_at DESC;
-                    """,
-                    email,
-                )
-                items = [purchase_row_to_public(row) for row in rows_to_dicts(cursor)]
-            finally:
-                connection.close()
-
-            self.serve_json({"items": items})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_json({"token": token, "user": public_user(user)})
 
     def handle_login(self) -> None:
-        try:
-            payload = read_json(self)
-            email = str(payload.get("email", "")).strip().lower()
-            password = str(payload.get("password", ""))
+        payload = read_json(self)
+        email = str(payload.get("email", "")).strip().lower()
+        password = str(payload.get("password", ""))
+        throttle_keys = login_throttle_keys(email, self.client_ip())
 
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                user = get_user_by_email(cursor, email)
-            finally:
-                connection.close()
+        with db_cursor() as cursor:
+            retry_after = throttle_retry_after(cursor, throttle_keys)
+            if retry_after:
+                raise ApiError(429, THROTTLE_MESSAGE, retry_after)
+            user = get_user_by_email(cursor, email)
 
-            if not user:
-                self.serve_json({"error": "Account not found."}, status=404)
-                return
-
+        # Hashed outside the transaction, so the slow PBKDF2 does not hold a database connection.
+        if user:
             password_hash, _, _ = hash_password(password, user["salt"], int(user["iterations"]))
-            if not secrets.compare_digest(password_hash, user["password_hash"]):
-                self.serve_json({"error": "Incorrect password."}, status=401)
-                return
+            password_matches = secrets.compare_digest(password_hash, user["password_hash"])
+        else:
+            hash_password(password, DUMMY_PASSWORD_SALT)
+            password_matches = False
 
-            token = secrets.token_urlsafe(32)
-            SESSIONS[token] = email
-            self.serve_json({"token": token, "user": self.public_user(user)})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        if not password_matches:
+            with db_cursor() as cursor:
+                record_throttle_failure(cursor, throttle_keys)
+            raise ApiError(401, INVALID_CREDENTIALS_MESSAGE)
+
+        with db_cursor() as cursor:
+            account_ip_key = throttle_keys[0][0]
+            cursor.execute("DELETE FROM dbo.auth_throttle WHERE key_hash = ?;", account_ip_key)
+            delete_expired_auth_data(cursor)
+            token = create_auth_session(cursor, user["id"])
+
+        self.serve_json({"token": token, "user": public_user(user)})
+
+    def handle_logout(self) -> None:
+        token = get_bearer_token(self.headers)
+        if token:
+            with db_cursor() as cursor:
+                cursor.execute("DELETE FROM dbo.auth_sessions WHERE token_hash = ?;", hash_value(token))
+
+        self.serve_json({"ok": True})
+
+    def serve_account(self) -> None:
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+
+        self.serve_json({"user": public_user(user)})
+
+    def serve_purchases(self) -> None:
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                """
+                SELECT id AS purchase_id,
+                       product_id,
+                       quantity,
+                       unit_price,
+                       unit_price * quantity AS total_price,
+                       currency,
+                       purchased_at
+                FROM dbo.purchase_history
+                WHERE user_id = ?
+                ORDER BY purchased_at DESC;
+                """,
+                user["id"],
+            )
+            items = [purchase_row_to_public(row) for row in rows_to_dicts(cursor)]
+
+        self.serve_json({"items": items})
 
     def serve_library(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"items": []}, status=401)
-            return
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                """
+                SELECT product_id, saved_at, purchased_at
+                FROM dbo.user_library
+                WHERE user_id = ?
+                ORDER BY saved_at DESC;
+                """,
+                user["id"],
+            )
+            items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
 
-        try:
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    SELECT l.product_id, l.saved_at, l.purchased_at
-                    FROM dbo.user_library l
-                    JOIN dbo.users u ON u.id = l.user_id
-                    WHERE u.email = ?
-                    ORDER BY l.saved_at DESC;
-                    """,
-                    email,
-                )
-                items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
-            finally:
-                connection.close()
-
-            self.serve_json({"items": items})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_json({"items": items})
 
     def handle_library_add(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        payload = read_json(self)
+        product_id = str(payload.get("productId", "")).strip()
+        purchased = bool(payload.get("purchased", False))
+        purchased_at = datetime.now(timezone.utc).replace(tzinfo=None) if purchased else None
 
-        try:
-            payload = read_json(self)
-            product_id = str(payload.get("productId", "")).strip()
-            purchased = bool(payload.get("purchased", False))
-            purchased_at = datetime.now(timezone.utc).replace(tzinfo=None) if purchased else None
-            connection = connect()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            if not product_exists(cursor, product_id):
+                raise ApiError(404, "Product not found.")
 
-            try:
-                cursor = connection.cursor()
-                user = get_user_by_email(cursor, email)
-                if not user:
-                    self.serve_json({"error": "Account not found."}, status=404)
-                    return
+            cursor.execute(
+                """
+                MERGE dbo.user_library WITH (HOLDLOCK) AS target
+                USING (SELECT ? AS user_id, ? AS product_id, ? AS purchased_at) AS source
+                ON target.user_id = source.user_id AND target.product_id = source.product_id
+                WHEN MATCHED THEN
+                    UPDATE SET purchased_at = COALESCE(target.purchased_at, source.purchased_at)
+                WHEN NOT MATCHED THEN
+                    INSERT (user_id, product_id, purchased_at)
+                    VALUES (source.user_id, source.product_id, source.purchased_at);
+                """,
+                user["id"],
+                product_id,
+                purchased_at,
+            )
 
-                if not product_exists(cursor, product_id):
-                    self.serve_json({"error": "Product not found."}, status=404)
-                    return
-
-                cursor.execute(
-                    """
-                    MERGE dbo.user_library WITH (HOLDLOCK) AS target
-                    USING (SELECT ? AS user_id, ? AS product_id, ? AS purchased_at) AS source
-                    ON target.user_id = source.user_id AND target.product_id = source.product_id
-                    WHEN MATCHED THEN
-                        UPDATE SET purchased_at = COALESCE(target.purchased_at, source.purchased_at)
-                    WHEN NOT MATCHED THEN
-                        INSERT (user_id, product_id, purchased_at)
-                        VALUES (source.user_id, source.product_id, source.purchased_at);
-                    """,
-                    user["id"],
-                    product_id,
-                    purchased_at,
-                )
-                connection.commit()
-            finally:
-                connection.close()
-
-            self.serve_library()
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_library()
 
     def handle_library_remove(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        product_id = str(read_json(self).get("productId", "")).strip()
 
-        try:
-            product_id = str(read_json(self).get("productId", "")).strip()
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    DELETE l
-                    FROM dbo.user_library l
-                    JOIN dbo.users u ON u.id = l.user_id
-                    WHERE l.product_id = ?
-                      AND u.email = ?;
-                    """,
-                    product_id,
-                    email,
-                )
-                connection.commit()
-            finally:
-                connection.close()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                "DELETE FROM dbo.user_library WHERE product_id = ? AND user_id = ?;",
+                product_id,
+                user["id"],
+            )
 
-            self.serve_library()
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_library()
 
     def serve_cart(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"items": []}, status=401)
-            return
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                """
+                SELECT product_id, quantity, added_at AS saved_at
+                FROM dbo.user_cart
+                WHERE user_id = ?
+                ORDER BY added_at DESC;
+                """,
+                user["id"],
+            )
+            items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
 
-        try:
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    SELECT c.product_id, c.quantity, c.added_at AS saved_at
-                    FROM dbo.user_cart c
-                    JOIN dbo.users u ON u.id = c.user_id
-                    WHERE u.email = ?
-                    ORDER BY c.added_at DESC;
-                    """,
-                    email,
-                )
-                items = [product_row_to_public(row) for row in rows_to_dicts(cursor)]
-            finally:
-                connection.close()
-
-            self.serve_json({"items": items})
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_json({"items": items})
 
     def handle_cart_add(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        payload = read_json(self)
+        product_id = str(payload.get("productId", "")).strip()
+        quantity = parse_quantity(payload.get("quantity"))
 
-        try:
-            payload = read_json(self)
-            product_id = str(payload.get("productId", "")).strip()
-            quantity = parse_quantity(payload.get("quantity"))
-            connection = connect()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            if not product_exists(cursor, product_id):
+                raise ApiError(404, "Product not found.")
 
-            try:
-                cursor = connection.cursor()
-                user = get_user_by_email(cursor, email)
-                if not user:
-                    self.serve_json({"error": "Account not found."}, status=404)
-                    return
+            cursor.execute(
+                """
+                MERGE dbo.user_cart WITH (HOLDLOCK) AS target
+                USING (SELECT ? AS user_id, ? AS product_id, ? AS quantity) AS source
+                ON target.user_id = source.user_id AND target.product_id = source.product_id
+                WHEN MATCHED THEN
+                    UPDATE SET quantity = target.quantity + source.quantity
+                WHEN NOT MATCHED THEN
+                    INSERT (user_id, product_id, quantity)
+                    VALUES (source.user_id, source.product_id, source.quantity);
+                """,
+                user["id"],
+                product_id,
+                quantity,
+            )
 
-                if not product_exists(cursor, product_id):
-                    self.serve_json({"error": "Product not found."}, status=404)
-                    return
-
-                cursor.execute(
-                    """
-                    MERGE dbo.user_cart WITH (HOLDLOCK) AS target
-                    USING (SELECT ? AS user_id, ? AS product_id, ? AS quantity) AS source
-                    ON target.user_id = source.user_id AND target.product_id = source.product_id
-                    WHEN MATCHED THEN
-                        UPDATE SET quantity = target.quantity + source.quantity
-                    WHEN NOT MATCHED THEN
-                        INSERT (user_id, product_id, quantity)
-                        VALUES (source.user_id, source.product_id, source.quantity);
-                    """,
-                    user["id"],
-                    product_id,
-                    quantity,
-                )
-                connection.commit()
-            finally:
-                connection.close()
-
-            self.serve_cart()
-        except ValueError as error:
-            self.serve_json({"error": str(error)}, status=400)
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_cart()
 
     def handle_cart_update(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        payload = read_json(self)
+        product_id = str(payload.get("productId", "")).strip()
+        quantity = parse_quantity(payload.get("quantity"))
 
-        try:
-            payload = read_json(self)
-            product_id = str(payload.get("productId", "")).strip()
-            quantity = parse_quantity(payload.get("quantity"))
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    UPDATE c
-                    SET quantity = ?
-                    FROM dbo.user_cart c
-                    JOIN dbo.users u ON u.id = c.user_id
-                    WHERE c.product_id = ?
-                      AND u.email = ?;
-                    """,
-                    quantity,
-                    product_id,
-                    email,
-                )
-                if cursor.rowcount == 0:
-                    self.serve_json({"error": "Cart item not found."}, status=404)
-                    return
-                connection.commit()
-            finally:
-                connection.close()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                "UPDATE dbo.user_cart SET quantity = ? WHERE product_id = ? AND user_id = ?;",
+                quantity,
+                product_id,
+                user["id"],
+            )
+            if cursor.rowcount == 0:
+                raise ApiError(404, "Cart item not found.")
 
-            self.serve_cart()
-        except ValueError as error:
-            self.serve_json({"error": str(error)}, status=400)
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_cart()
 
     def handle_cart_remove(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        product_id = str(read_json(self).get("productId", "")).strip()
 
-        try:
-            product_id = str(read_json(self).get("productId", "")).strip()
-            connection = connect()
-            try:
-                cursor = connection.cursor()
-                cursor.execute(
-                    """
-                    DELETE c
-                    FROM dbo.user_cart c
-                    JOIN dbo.users u ON u.id = c.user_id
-                    WHERE c.product_id = ?
-                      AND u.email = ?;
-                    """,
-                    product_id,
-                    email,
-                )
-                connection.commit()
-            finally:
-                connection.close()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                "DELETE FROM dbo.user_cart WHERE product_id = ? AND user_id = ?;",
+                product_id,
+                user["id"],
+            )
 
-            self.serve_cart()
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
+        self.serve_cart()
 
     def handle_purchase(self) -> None:
-        email = get_session_email(self.headers)
-        if not email:
-            self.serve_json({"error": "Unauthorized"}, status=401)
-            return
+        payload = read_json(self)
+        product_id = str(payload.get("productId", "")).strip()
+        quantity = parse_quantity(payload.get("quantity"))
+        purchased_at = datetime.now(timezone.utc).replace(tzinfo=None)
 
-        try:
-            payload = read_json(self)
-            product_id = str(payload.get("productId", "")).strip()
-            quantity = parse_quantity(payload.get("quantity"))
-            purchased_at = datetime.now(timezone.utc).replace(tzinfo=None)
-            connection = connect()
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                "SELECT price, currency FROM dbo.products WHERE id = ?;",
+                product_id,
+            )
+            product = fetchone_dict(cursor)
+            if not product:
+                raise ApiError(404, "Product not found.")
 
-            try:
-                cursor = connection.cursor()
-                user = get_user_by_email(cursor, email)
-                if not user:
-                    self.serve_json({"error": "Account not found."}, status=404)
-                    return
-
-                cursor.execute(
-                    "SELECT price, currency FROM dbo.products WHERE id = ?;",
-                    product_id,
+            cursor.execute(
+                """
+                INSERT INTO dbo.purchase_history (
+                    user_id, product_id, quantity, unit_price, currency, purchased_at
                 )
-                product = fetchone_dict(cursor)
-                if not product:
-                    self.serve_json({"error": "Product not found."}, status=404)
-                    return
+                VALUES (?, ?, ?, ?, ?, ?);
+                """,
+                user["id"],
+                product_id,
+                quantity,
+                product["price"],
+                product.get("currency") or "PLN",
+                purchased_at,
+            )
 
-                cursor.execute(
-                    """
-                    INSERT INTO dbo.purchase_history (
-                        user_id, product_id, quantity, unit_price, currency, purchased_at
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?);
-                    """,
-                    user["id"],
-                    product_id,
-                    quantity,
-                    product["price"],
-                    product.get("currency") or "PLN",
-                    purchased_at,
-                )
+            cursor.execute(
+                """
+                MERGE dbo.user_library WITH (HOLDLOCK) AS target
+                USING (SELECT ? AS user_id, ? AS product_id, ? AS purchased_at) AS source
+                ON target.user_id = source.user_id AND target.product_id = source.product_id
+                WHEN MATCHED THEN
+                    UPDATE SET purchased_at = COALESCE(target.purchased_at, source.purchased_at)
+                WHEN NOT MATCHED THEN
+                    INSERT (user_id, product_id, purchased_at)
+                    VALUES (source.user_id, source.product_id, source.purchased_at);
+                """,
+                user["id"],
+                product_id,
+                purchased_at,
+            )
+            cursor.execute(
+                """
+                DELETE FROM dbo.user_cart
+                WHERE user_id = ?
+                  AND product_id = ?;
+                """,
+                user["id"],
+                product_id,
+            )
 
-                cursor.execute(
-                    """
-                    MERGE dbo.user_library WITH (HOLDLOCK) AS target
-                    USING (SELECT ? AS user_id, ? AS product_id, ? AS purchased_at) AS source
-                    ON target.user_id = source.user_id AND target.product_id = source.product_id
-                    WHEN MATCHED THEN
-                        UPDATE SET purchased_at = COALESCE(target.purchased_at, source.purchased_at)
-                    WHEN NOT MATCHED THEN
-                        INSERT (user_id, product_id, purchased_at)
-                        VALUES (source.user_id, source.product_id, source.purchased_at);
-                    """,
-                    user["id"],
-                    product_id,
-                    purchased_at,
-                )
-                cursor.execute(
-                    """
-                    DELETE FROM dbo.user_cart
-                    WHERE user_id = ?
-                      AND product_id = ?;
-                    """,
-                    user["id"],
-                    product_id,
-                )
-                connection.commit()
-            finally:
-                connection.close()
+        unit_price = float(product["price"])
+        self.serve_json({
+            "ok": True,
+            "quantity": quantity,
+            "unitPrice": unit_price,
+            "totalPrice": unit_price * quantity,
+            "currency": product.get("currency") or "PLN",
+        })
 
-            unit_price = float(product["price"])
-            self.serve_json({
-                "ok": True,
-                "quantity": quantity,
-                "unitPrice": unit_price,
-                "totalPrice": unit_price * quantity,
-                "currency": product.get("currency") or "PLN",
-            })
-        except ValueError as error:
-            self.serve_json({"error": str(error)}, status=400)
-        except Exception as error:
-            self.serve_json({"error": str(error)}, status=500)
-
-    def public_user(self, user: dict) -> dict:
-        return {
-            "name": user["name"],
-            "email": user["email"],
-            "phone": user.get("phone") or "",
-            "city": user.get("city") or "",
-            "street": user.get("street") or "",
-            "building": user.get("building") or "",
-            "apartment": user.get("apartment") or "",
-            "createdAt": to_iso(user.get("created_at")),
-        }
-
-    def serve_json(self, payload: dict, status: int = 200) -> None:
+    def serve_json(self, payload: dict, status: int = 200, headers: dict[str, str] | None = None) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        for name, value in (headers or {}).items():
+            self.send_header(name, value)
         self.end_headers()
         self.wfile.write(body)
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     host = os.getenv("HOST", "127.0.0.1")
     port = int(os.getenv("PORT", "8000"))
 
     try:
         ensure_schema()
+        with db_cursor() as cursor:
+            delete_expired_auth_data(cursor)
+        CATALOG.get()
         print("Database schema: ready")
-    except Exception as error:
-        print(f"Database schema: skipped ({error})")
+    except Exception:
+        logger.exception("Database schema: skipped")
 
     handler = partial(DiplomaRequestHandler, directory=str(SITE_ROOT))
     server = ThreadingHTTPServer((host, port), handler)

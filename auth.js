@@ -57,12 +57,8 @@ return publicFallbackUser(user);
 function loginFallback(email, password){
 const user = getFallbackUser(email);
 
-if(!user){
-throw new Error(t("toasts.accountNotFound"));
-}
-
-if(user.password !== password){
-throw new Error(t("toasts.incorrectPassword"));
+if(!user || user.password !== password){
+throw new Error(t("toasts.invalidCredentials"));
 }
 
 return publicFallbackUser(user);
@@ -148,8 +144,13 @@ window.LampUI.showToast(t("toasts.accountExists"), "error");
 return;
 }
 
+if(error.status === 429){
+window.LampUI.showToast(t("toasts.tooManyAttempts", { minutes: Math.max(1, Math.ceil((error.retryAfter || 60) / 60)) }), "error");
+return;
+}
+
 if(!shouldUseLocalFallback(error)){
-window.LampUI.showToast(error.message || t("toasts.createFailed"), "error");
+window.LampUI.showToast(t("toasts.createFailed"), "error");
 return;
 }
 
@@ -179,7 +180,7 @@ return;
 }
 
 if(!password){
-window.LampUI.showToast(t("toasts.incorrectPassword"), "error");
+window.LampUI.showToast(t("toasts.invalidCredentials"), "error");
 return;
 }
 
@@ -196,7 +197,12 @@ await window.LampProducts.loadUserData();
 event.target.reset();
 window.LampUI.goToPage("account.html", { message: t("toasts.welcomeBack", { name: payload.user.name }), type: "success" });
 }catch(error){
-if(error.status === 404){
+if(error.status === 429){
+window.LampUI.showToast(t("toasts.tooManyAttempts", { minutes: Math.max(1, Math.ceil((error.retryAfter || 60) / 60)) }), "error");
+return;
+}
+
+if(error.status === 401){
 const fallbackUser = getFallbackUser(email);
 
 if(fallbackUser && fallbackUser.password === password){
@@ -208,22 +214,17 @@ event.target.reset();
 window.LampUI.goToPage("account.html", { message: t("toasts.accountMigrated", { name: migrated.user.name }), type: "success" });
 return;
 }catch(migrationError){
-window.LampUI.showToast(migrationError.status === 409 ? t("toasts.accountExists") : t("toasts.loginFailed"), "error");
+window.LampUI.showToast(migrationError.status === 409 ? t("toasts.invalidCredentials") : t("toasts.loginFailed"), "error");
 return;
 }
 }
 
-window.LampUI.showToast(t("toasts.accountNotFound"), "error");
-return;
-}
-
-if(error.status === 401){
-window.LampUI.showToast(t("toasts.incorrectPassword"), "error");
+window.LampUI.showToast(t("toasts.invalidCredentials"), "error");
 return;
 }
 
 if(!shouldUseLocalFallback(error)){
-window.LampUI.showToast(error.message || t("toasts.loginFailed"), "error");
+window.LampUI.showToast(t("toasts.loginFailed"), "error");
 return;
 }
 
@@ -241,6 +242,12 @@ window.LampUI.setButtonBusy(submitButton, false, t("busy.checking"));
 }
 
 function logoutUser(){
+if(state.apiToken){
+storage.apiFetch("/api/logout", { method: "POST" }).catch((error) => {
+console.warn("Server logout failed.", error);
+});
+}
+
 storage.saveSession(null);
 window.LampProducts.loadUserData().finally(() => {
 window.LampProducts.syncUi();

@@ -388,6 +388,32 @@ function clearChatSessionId(){
 sessionStorage.removeItem(CHAT_SESSION_KEY);
 }
 
+async function restoreChatHistory(){
+const sessionId = getChatSessionId();
+const messages = document.getElementById("chatMessages");
+if(!sessionId || !messages) return;
+
+try{
+const response = await fetch(`${CHAT_API_BASE_URL}/chat/sessions/${encodeURIComponent(sessionId)}`);
+
+if(response.status === 404){
+clearChatSessionId();
+return;
+}
+
+if(!response.ok) return;
+
+const payload = await response.json();
+(payload.messages || []).forEach((message) => {
+if(message.role === "user" || message.role === "assistant"){
+appendChatMessage(messages, message.text, message.role);
+}
+});
+}catch(error){
+console.warn("Chat history unavailable.", error);
+}
+}
+
 async function requestChatReply(text, sessionId){
 const response = await fetch(`${CHAT_API_BASE_URL}/chat/messages`, {
 method: "POST",
@@ -664,7 +690,8 @@ renderMenuAccount,
 highlightCurrentPage,
 initScrollReveal,
 refreshActiveInfoModal,
-exposeLegacyGlobals
+exposeLegacyGlobals,
+restoreChatHistory
 };
 })();
 

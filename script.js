@@ -1,6 +1,7 @@
 async function bootstrap(){
 window.LampStorage.state.language = window.LampI18n.getLanguage();
 window.LampStorage.loadSession();
+window.LampProducts.restoreCachedCatalog();
 window.LampUI.renderSharedShell();
 window.LampUI.exposeLegacyGlobals();
 
@@ -19,6 +20,7 @@ window.LampI18n.applyTranslations();
 window.LampProducts.syncUi();
 await window.LampAccount?.render?.();
 window.LampPromotions?.init?.();
+window.LampUI.restoreChatHistory?.();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
