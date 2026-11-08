@@ -299,6 +299,26 @@ class ShopFlowTests(ApiTestCase):
         removed = self.request("DELETE", "/api/library", {"productId": "smart-wifi-lamp"}, token)
         self.assertEqual(removed[1]["items"], [])
 
+    def test_checkout_buys_the_whole_cart(self) -> None:
+        token = self.register()
+        self.request("POST", "/api/cart", {"productId": "smart-wifi-lamp", "quantity": 2}, token)
+        self.request("POST", "/api/cart", {"productId": "led-lamp-10w", "quantity": 1}, token)
+
+        status, payload, _ = self.request("POST", "/api/checkout", {}, token)
+
+        self.assertEqual(status, 200)
+        self.assertEqual(payload["quantity"], 3)
+        self.assertEqual(payload["totalPrice"], 95.0)
+        self.assertEqual(self.request("GET", "/api/cart", token=token)[1]["items"], [])
+        self.assertEqual(len(self.request("GET", "/api/purchases", token=token)[1]["items"]), 2)
+        self.assertEqual(len(self.request("GET", "/api/library", token=token)[1]["items"]), 2)
+
+    def test_checkout_of_an_empty_cart_is_refused(self) -> None:
+        token = self.register()
+
+        self.assertEqual(self.request("POST", "/api/checkout", {}, token)[0], 400)
+        self.assertEqual(self.request("POST", "/api/checkout", {})[0], 401)
+
     def test_protected_routes_require_session(self) -> None:
         for path in ("/api/account", "/api/library", "/api/cart", "/api/purchases"):
             self.assertEqual(self.request("GET", path)[0], 401)

@@ -44,12 +44,12 @@ main.insertAdjacentHTML("beforebegin", `
 <header class="header">
 <div class="header-inner">
 <h1 class="logo-title" aria-label="Sklep Lamp">
-<span class="logo-mark" aria-hidden="true"><span></span></span>
+<span class="logo-mark" aria-hidden="true"></span>
 <span class="logo-brand" data-i18n="brand">Sklep Lamp</span>
 </h1>
 <nav class="top-nav" aria-label="Primary navigation">
-<button class="top-nav-link" type="button" data-scroll-target=".theme-section" data-i18n="nav.newArrivals">Nowości</button>
-<button class="top-nav-link" type="button" data-scroll-target=".catalog-section" data-i18n="nav.premiumCollection">Kolekcja premium</button>
+<button class="top-nav-link" type="button" data-scroll-target=".theme-section" data-i18n="nav.categories">Kategorie</button>
+<button class="top-nav-link" type="button" data-scroll-target=".catalog-section" data-i18n="nav.catalog">Katalog</button>
 <button class="top-nav-link" type="button" data-scroll-target=".gallery-section" data-i18n="nav.inspiration">Inspiracje</button>
 <button class="top-nav-link" type="button" data-open-info="contact" data-i18n="nav.contact">Kontakt</button>
 </nav>
@@ -116,6 +116,21 @@ main.insertAdjacentHTML("afterend", `
 </div>
 <div class="cart-list" id="cartList"></div>
 <div class="cart-total"><span data-i18n="cart.total">Total</span><strong id="cartTotal">0 PLN</strong></div>
+<button class="product-action checkout-open" type="button" data-open-checkout data-i18n="checkout.open" hidden>Przejdź do kasy</button>
+</section>
+<section class="modal-window product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="productModalTitle" tabindex="-1">
+<div class="modal-head">
+<div><p class="modal-kicker" id="productModalKicker"></p><h3 class="modal-title" id="productModalTitle"></h3></div>
+<button class="modal-close" type="button" data-close-modal data-i18n-aria-label="product.close" aria-label="Close">&times;</button>
+</div>
+<div class="product-modal-layout" id="productModalBody"></div>
+</section>
+<section class="modal-window checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" tabindex="-1">
+<div class="modal-head">
+<div><p class="modal-kicker" data-i18n="checkout.kicker">Zamówienie</p><h3 class="modal-title" id="checkoutTitle" data-i18n="checkout.title">Finalizacja zamówienia</h3></div>
+<button class="modal-close" type="button" data-close-modal data-i18n-aria-label="product.close" aria-label="Close">&times;</button>
+</div>
+<div id="checkoutBody"></div>
 </section>
 <button class="chat-button" type="button" data-toggle-chat data-i18n-aria-label="aria.openAssistant" aria-label="Open assistant">
 <img src="images/botlog.png" data-i18n-alt="chat.robotAlt" alt="Assistant robot">
@@ -173,7 +188,11 @@ if(infoButton) openInfoModal(infoButton.dataset.openInfo);
 const scrollButton = target.closest("[data-scroll-target]");
 if(scrollButton){
 const section = document.querySelector(scrollButton.dataset.scrollTarget || "");
-section?.scrollIntoView({ behavior: "smooth", block: "start" });
+if(section){
+section.scrollIntoView({ behavior: "smooth", block: "start" });
+}else{
+goToPage("index.html");
+}
 }
 });
 
@@ -346,7 +365,7 @@ const image = escapeHtml(product.image_url || "images/lamp1.jpg");
 
 return `
 <article class="chat-product-card">
-<img class="chat-product-image" src="${image}" alt="${name}">
+<img class="chat-product-image" src="${image}" alt="${name}" data-open-product="${productId}">
 <div class="chat-product-copy">
 <strong>${name}</strong>
 <span>${price}</span>

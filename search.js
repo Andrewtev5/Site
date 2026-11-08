@@ -117,7 +117,7 @@ const metaList = product.meta.slice(0, 3).map((item) => `<span>${escapeHtml(item
 
 return `
 <article class="search-result-card" role="listitem">
-<img class="search-result-image" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.imageAlt)}">
+<img class="search-result-image" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.imageAlt)}" data-open-product="${escapeHtml(product.id)}">
 <div class="search-result-copy">
 <div class="search-result-topline"><div><h4>${escapeHtml(product.name)}</h4><p class="search-result-tag">${escapeHtml(product.tag)}</p></div><strong class="search-result-price">${escapeHtml(product.price)}</strong></div>
 <p class="search-result-description">${escapeHtml(product.description)}</p>

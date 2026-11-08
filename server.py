@@ -712,6 +712,7 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
         ("POST", "/api/library"): "handle_library_add",
         ("POST", "/api/cart"): "handle_cart_add",
         ("POST", "/api/purchase"): "handle_purchase",
+        ("POST", "/api/checkout"): "handle_checkout",
         ("PUT", "/api/cart"): "handle_cart_update",
         ("DELETE", "/api/library"): "handle_library_remove",
         ("DELETE", "/api/cart"): "handle_cart_remove",
@@ -1100,6 +1101,64 @@ class DiplomaRequestHandler(SimpleHTTPRequestHandler):
             "unitPrice": unit_price,
             "totalPrice": unit_price * quantity,
             "currency": product.get("currency") or "PLN",
+        })
+
+    def handle_checkout(self) -> None:
+        """Buys the whole cart in one transaction, so an order is never half placed."""
+        purchased_at = datetime.now(timezone.utc).replace(tzinfo=None)
+
+        with db_cursor() as cursor:
+            user = self.require_user(cursor)
+            cursor.execute(
+                """
+                SELECT c.product_id, c.quantity, p.price, p.currency
+                FROM dbo.user_cart c
+                JOIN dbo.products p ON p.id = c.product_id
+                WHERE c.user_id = ?;
+                """,
+                user["id"],
+            )
+            items = rows_to_dicts(cursor)
+            if not items:
+                raise ApiError(400, "Cart is empty.")
+
+            for item in items:
+                cursor.execute(
+                    """
+                    INSERT INTO dbo.purchase_history (
+                        user_id, product_id, quantity, unit_price, currency, purchased_at
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?);
+                    """,
+                    user["id"],
+                    item["product_id"],
+                    item["quantity"],
+                    item["price"],
+                    item["currency"],
+                    purchased_at,
+                )
+                cursor.execute(
+                    """
+                    MERGE dbo.user_library WITH (HOLDLOCK) AS target
+                    USING (SELECT ? AS user_id, ? AS product_id, ? AS purchased_at) AS source
+                    ON target.user_id = source.user_id AND target.product_id = source.product_id
+                    WHEN MATCHED THEN
+                        UPDATE SET purchased_at = COALESCE(target.purchased_at, source.purchased_at)
+                    WHEN NOT MATCHED THEN
+                        INSERT (user_id, product_id, purchased_at)
+                        VALUES (source.user_id, source.product_id, source.purchased_at);
+                    """,
+                    user["id"],
+                    item["product_id"],
+                    purchased_at,
+                )
+
+            cursor.execute("DELETE FROM dbo.user_cart WHERE user_id = ?;", user["id"])
+
+        self.serve_json({
+            "ok": True,
+            "quantity": sum(int(item["quantity"]) for item in items),
+            "totalPrice": sum(float(item["price"]) * int(item["quantity"]) for item in items),
         })
 
     def serve_json(self, payload: dict, status: int = 200, headers: dict[str, str] | None = None) -> None:

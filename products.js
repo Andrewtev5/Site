@@ -3,11 +3,16 @@ const storage = window.LampStorage;
 const { state, escapeHtml, formatDate } = storage;
 const t = (...args) => window.LampI18n.t(...args);
 const MAX_QUANTITY = 999;
+const CATALOG_PAGE_SIZE = 12;
+const DELIVERY_PRICES = { courier: 15, locker: 12 };
+const FREE_DELIVERY_FROM = 200;
 
 let libraryItems = [];
 let cartItems = storage.getLocalCart();
 let selectedThemeId = getThemeFromHash();
 let purchaseInProgress = false;
+let openProductId = null;
+let catalogView = { sort: "default", maxPrice: null, visible: CATALOG_PAGE_SIZE };
 const cartQuantityTimers = new WeakMap();
 
 function restoreCachedCatalog(){
@@ -185,29 +190,10 @@ return `
 }
 
 function getRequestedQuantity(button, productId){
-const scope = button?.closest("[data-product-card], .library-card, .cart-item, .chat-product-card");
+const scope = button?.closest("[data-product-card], .product-modal-copy, .library-card, .cart-item, .chat-product-card");
 const input = scope?.querySelector(`[data-product-quantity-input], [data-cart-quantity-input]`)
 || document.querySelector(`[data-quantity-control][data-product-id="${CSS.escape(productId)}"] [data-product-quantity-input]`);
 return normalizeQuantity(input?.value || 1);
-}
-
-function getProductRating(productId){
-const seed = [...String(productId || "")].reduce((sum, character) => sum + character.charCodeAt(0), 0);
-const score = (4.6 + (seed % 4) / 10).toFixed(1);
-const reviews = 42 + (seed % 86);
-return { score, reviews };
-}
-
-function renderRating(productId, compact = false){
-const rating = getProductRating(productId);
-const label = t("rating.label", { score: rating.score, reviews: rating.reviews });
-return `
-<div class="product-rating${compact ? " compact" : ""}" aria-label="${escapeHtml(label)}">
-<span class="rating-stars" aria-hidden="true">★★★★★</span>
-<strong>${escapeHtml(rating.score)}</strong>
-<span>${escapeHtml(t("rating.reviews", { count: rating.reviews }))}</span>
-</div>
-`;
 }
 
 function getLibrary(){
@@ -236,59 +222,126 @@ const themesRoot = document.getElementById("productThemes");
 if(!themesRoot) return;
 
 const themes = getProductThemes();
-themesRoot.innerHTML = Object.entries(themes).map(([themeId, theme]) => {
+const allCount = Object.keys(window.LAMP_I18N.products || {}).length;
+const allCard = `
+<button class="theme-card${selectedThemeId ? "" : " active"}" type="button" data-product-theme="" aria-pressed="${String(!selectedThemeId)}">
+<span class="theme-media"><img src="images/lamp5.jpg" alt="" decoding="async"></span>
+<span class="theme-copy">
+<strong>${escapeHtml(t("catalog.allTitle"))}</strong>
+<span class="theme-meta">${escapeHtml(t("themes.count", { count: allCount }))}</span>
+</span>
+</button>
+`;
+
+themesRoot.innerHTML = allCard + Object.entries(themes).map(([themeId, theme]) => {
 const localized = localizeTheme(theme);
 const count = Array.isArray(theme.products) ? theme.products.length : 0;
 const isActive = themeId === selectedThemeId;
 
 return `
 <button class="theme-card${isActive ? " active" : ""}" type="button" data-product-theme="${escapeHtml(themeId)}" aria-pressed="${String(isActive)}">
-<span class="theme-media"><img src="${escapeHtml(theme.image)}" alt="${escapeHtml(localized.title)}" decoding="async"></span>
+<span class="theme-media"><img src="${escapeHtml(theme.image)}" alt="" decoding="async"></span>
 <span class="theme-copy">
-<span class="theme-kicker">${escapeHtml(localized.kicker)}</span>
 <strong>${escapeHtml(localized.title)}</strong>
-<span>${escapeHtml(localized.description)}</span>
 <span class="theme-meta">${escapeHtml(t("themes.count", { count }))}</span>
 </span>
-<span class="theme-cta">${escapeHtml(localized.cta)}</span>
 </button>
 `;
 }).join("");
 }
 
+function catalogPosition(product){
+return Number(String(product?.image || "").match(/\d+/)?.[0] || 0);
+}
+
+function getProductsForCatalog(){
+const catalog = window.LAMP_I18N.products || {};
+// The database returns ids alphabetically, which would open the catalog with a row of similar amber lamps.
+const allIds = Object.keys(catalog).sort((left, right) => catalogPosition(catalog[left]) - catalogPosition(catalog[right]));
+const ids = getTheme() ? getSelectedThemeProductIds().filter((productId) => catalog[productId]) : allIds;
+return ids.map(getCatalogProduct).filter(Boolean);
+}
+
+function viewCatalogProducts(products){
+const filtered = catalogView.maxPrice === null
+? products
+: products.filter((product) => parsePrice(product.price) <= catalogView.maxPrice);
+
+if(catalogView.sort === "price-asc") return [...filtered].sort((left, right) => parsePrice(left.price) - parsePrice(right.price));
+if(catalogView.sort === "price-desc") return [...filtered].sort((left, right) => parsePrice(right.price) - parsePrice(left.price));
+if(catalogView.sort === "name") return [...filtered].sort((left, right) => left.name.localeCompare(right.name, window.LampI18n.getLocale()));
+return filtered;
+}
+
+function renderProductCard(product){
+const id = escapeHtml(product.id);
+const name = escapeHtml(product.name);
+
+return `
+<article class="product" data-product-card data-product-id="${id}">
+<button class="product-media" type="button" data-open-product="${id}" aria-label="${escapeHtml(t("product.open", { name: product.name }))}">
+<img src="${escapeHtml(product.image)}" class="product-image" alt="${escapeHtml(product.imageAlt)}" loading="lazy" decoding="async">
+<span class="product-media-overlay"><span>${escapeHtml(t("buttons.viewProduct"))}</span></span>
+</button>
+<button class="product-heart" type="button" data-library-toggle data-product-id="${id}"></button>
+<div class="product-info">
+<span class="product-tag">${escapeHtml(product.tag)}</span>
+<h3><button class="product-name-link" type="button" data-open-product="${id}">${name}</button></h3>
+<p class="description">${escapeHtml(product.description)}</p>
+<p class="price">${escapeHtml(product.price)}</p>
+<button class="product-action" type="button" data-add-cart data-product-id="${id}"></button>
+</div>
+</article>
+`;
+}
+
+function renderCatalogSkeleton(productsGrid){
+productsGrid.innerHTML = Array.from({ length: 8 }, () => `
+<div class="product-skeleton" aria-hidden="true"><span class="skeleton-image"></span><span class="skeleton-line"></span><span class="skeleton-line short"></span></div>
+`).join("");
+}
+
+function renderCatalogToolbar(products, shownCount){
+const toolbar = document.getElementById("catalogToolbar");
+if(!toolbar) return;
+
+toolbar.hidden = !products.length;
+const prices = products.map((product) => parsePrice(product.price));
+const highest = Math.ceil(Math.max(0, ...prices));
+const lowest = Math.floor(Math.min(highest, ...prices));
+const slider = document.getElementById("catalogMaxPrice");
+const sort = document.getElementById("catalogSort");
+const priceValue = catalogView.maxPrice === null ? highest : Math.min(catalogView.maxPrice, highest);
+
+if(sort) sort.value = catalogView.sort;
+if(slider){
+slider.min = String(lowest);
+slider.max = String(highest);
+slider.value = String(priceValue);
+}
+
+const priceLabel = document.getElementById("catalogMaxPriceValue");
+if(priceLabel) priceLabel.textContent = t("catalog.priceUpTo", { price: priceValue });
+
+const count = document.getElementById("catalogCount");
+if(count) count.textContent = t("catalog.resultsCount", { shown: shownCount, total: viewCatalogProducts(products).length });
+}
+
 function renderCatalogProducts(){
 const productsGrid = document.getElementById("productsGrid");
-const catalogSection = document.querySelector(".catalog-section");
 const catalogTitle = document.getElementById("catalogTitle");
 const catalogText = document.getElementById("catalogSectionText");
+const moreButton = document.getElementById("catalogMore");
 const allProductIds = Object.keys(window.LAMP_I18N.products || {});
-const selectedTheme = getTheme();
-const localizedTheme = localizeTheme(selectedTheme);
-const productIds = selectedTheme ? getSelectedThemeProductIds().filter((productId) => window.LAMP_I18N.products[productId]) : [];
+const localizedTheme = localizeTheme(getTheme());
 const firstStatValue = document.querySelector(".hero-stats .stat-card .stat-value");
 
 if(firstStatValue && allProductIds.length) firstStatValue.textContent = String(allProductIds.length);
 if(!productsGrid) return;
 
-catalogSection?.classList.toggle("catalog-waiting", !selectedTheme);
-
-if(catalogTitle){
-catalogTitle.textContent = localizedTheme?.title || t("catalog.sectionTitle");
-}
-
-if(catalogText){
-catalogText.textContent = localizedTheme?.description || t("catalog.sectionText");
-}
-
-if(!selectedTheme){
-productsGrid.innerHTML = `
-<div class="catalog-empty">
-<strong>${escapeHtml(t("themes.emptyTitle"))}</strong>
-<p>${escapeHtml(t("themes.emptyText"))}</p>
-</div>
-`;
-return;
-}
+if(catalogTitle) catalogTitle.textContent = localizedTheme?.title || t("catalog.allTitle");
+if(catalogText) catalogText.textContent = localizedTheme?.description || t("catalog.sectionText");
+if(moreButton) moreButton.hidden = true;
 
 if(state.catalogSource === "unavailable"){
 productsGrid.innerHTML = `
@@ -297,46 +350,89 @@ productsGrid.innerHTML = `
 <p>${escapeHtml(t("catalog.unavailableText"))}</p>
 </div>
 `;
+renderCatalogToolbar([], 0);
 return;
 }
 
-productsGrid.innerHTML = productIds.map((productId) => {
-const product = getCatalogProduct(productId);
-if(!product) return "";
+if(!allProductIds.length){
+renderCatalogSkeleton(productsGrid);
+renderCatalogToolbar([], 0);
+return;
+}
 
-return `
-<article class="product reveal-on-scroll" data-product-card data-product-id="${escapeHtml(product.id)}">
-<div class="product-media">
-<img src="${escapeHtml(product.image)}" class="product-image" alt="${escapeHtml(product.imageAlt)}" loading="lazy" decoding="async">
-<div class="product-media-overlay"><span>${escapeHtml(t("buttons.viewProduct"))}</span></div>
+const products = getProductsForCatalog();
+const viewed = viewCatalogProducts(products);
+const visible = viewed.slice(0, catalogView.visible);
+
+renderCatalogToolbar(products, visible.length);
+
+if(!viewed.length){
+productsGrid.innerHTML = `
+<div class="catalog-empty">
+<strong>${escapeHtml(t("catalog.noResultsTitle"))}</strong>
+<p>${escapeHtml(t("catalog.noResultsText"))}</p>
 </div>
-<div class="product-info">
-<div class="product-topline"><h3>${escapeHtml(product.name)}</h3><span class="product-tag">${escapeHtml(product.tag)}</span></div>
-${renderRating(product.id)}
-<p class="description">${escapeHtml(product.description)}</p>
-<p class="price">${escapeHtml(product.price)}</p>
-<div class="product-meta">${product.meta.slice(0, 3).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
-${renderQuantityControl(product.id)}
-<div class="product-actions">
-<button class="product-action ghost" type="button" data-add-library data-product-id="${escapeHtml(product.id)}"></button>
-<button class="product-action secondary" type="button" data-add-cart data-product-id="${escapeHtml(product.id)}"></button>
-<button class="product-action primary" type="button" data-buy-product data-product-id="${escapeHtml(product.id)}"></button>
-</div>
-</div>
-</article>
 `;
-}).join("");
-window.LampUI?.initScrollReveal?.();
+return;
+}
+
+productsGrid.innerHTML = visible.map(renderProductCard).join("");
+if(moreButton){
+moreButton.hidden = visible.length >= viewed.length;
+moreButton.textContent = t("catalog.showMore", { count: Math.min(CATALOG_PAGE_SIZE, viewed.length - visible.length) });
+}
 }
 
 function selectProductTheme(themeId){
-if(!getProductThemes()[themeId]) return;
-selectedThemeId = themeId;
-window.location.hash = `theme=${themeId}`;
+if(themeId && !getProductThemes()[themeId]) return;
+selectedThemeId = themeId || null;
+catalogView = { ...catalogView, maxPrice: null, visible: CATALOG_PAGE_SIZE };
+window.history.replaceState(null, "", themeId ? `#theme=${themeId}` : window.location.pathname + window.location.search);
 renderProductThemes();
 renderCatalogProducts();
 renderProductActions();
 document.querySelector(".catalog-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderProductModal(){
+const body = document.getElementById("productModalBody");
+const product = openProductId ? getCatalogProduct(openProductId) : null;
+if(!body || !product) return;
+
+const id = escapeHtml(product.id);
+document.getElementById("productModalKicker").textContent = product.tag;
+document.getElementById("productModalTitle").textContent = product.name;
+body.innerHTML = `
+<img class="product-modal-image" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.imageAlt)}" decoding="async">
+<div class="product-modal-copy">
+<p class="price">${escapeHtml(product.price)}</p>
+<p class="description">${escapeHtml(product.description)}</p>
+<h4 class="product-modal-heading">${escapeHtml(t("product.features"))}</h4>
+<ul class="product-modal-features">${product.meta.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+${renderQuantityControl(product.id)}
+<div class="product-actions">
+<button class="product-action" type="button" data-add-cart data-product-id="${id}"></button>
+<button class="product-action secondary" type="button" data-buy-product data-product-id="${id}"></button>
+<button class="product-heart with-label" type="button" data-library-toggle data-product-id="${id}"></button>
+</div>
+</div>
+`;
+renderProductActions();
+}
+
+function openProductModal(productId){
+if(!getCatalogProduct(productId)) return;
+openProductId = productId;
+renderProductModal();
+window.LampUI.openModal("productModal");
+}
+
+function toggleLibrary(productId){
+if(getProductState(productId).saved){
+removeFromLibrary(productId);
+return;
+}
+addToLibrary(buildProductPayload(productId));
 }
 
 function renderProductActions(){
@@ -344,6 +440,16 @@ document.querySelectorAll("[data-add-library]").forEach((button) => {
 const stateForProduct = getProductState(button.dataset.productId || "");
 button.textContent = stateForProduct.saved ? t("buttons.savedInLibrary") : t("buttons.addToLibrary");
 button.disabled = stateForProduct.saved;
+});
+
+document.querySelectorAll("[data-library-toggle]").forEach((button) => {
+const saved = getProductState(button.dataset.productId || "").saved;
+const label = saved ? t("buttons.savedInLibrary") : t("buttons.addToLibrary");
+button.classList.toggle("is-saved", saved);
+button.setAttribute("aria-pressed", String(saved));
+button.setAttribute("aria-label", label);
+button.title = label;
+button.textContent = button.classList.contains("with-label") ? `${saved ? "\u2665" : "\u2661"} ${label}` : (saved ? "\u2665" : "\u2661");
 });
 
 document.querySelectorAll("[data-buy-product]").forEach((button) => {
@@ -392,7 +498,6 @@ card.innerHTML = `
 <div class="library-card-copy">
 <span class="library-card-tag">${escapeHtml(item.tag)}</span>
 <strong>${escapeHtml(item.name)}</strong>
-${renderRating(item.id, true)}
 <span>${escapeHtml(t("library.savedOn", { price: item.price, date: formatDate(item.savedAt) }))}</span>
 <span>${escapeHtml(item.description)}</span>
 <span class="library-card-status${item.purchasedAt ? " purchased" : ""}">${escapeHtml(item.purchasedAt ? t("library.purchasedOn", { date: formatDate(item.purchasedAt) }) : t("library.readyForPurchase"))}</span>
@@ -416,6 +521,9 @@ const total = items.reduce((sum, item) => sum + parsePrice(item.price) * item.qu
 const count = items.reduce((sum, item) => sum + item.quantity, 0);
 
 if(cartCount) cartCount.textContent = String(count);
+document.querySelectorAll("[data-open-checkout]").forEach((button) => {
+button.hidden = items.length === 0;
+});
 cartTotals.forEach((element) => {
 element.textContent = formatPrice(total);
 });
@@ -446,6 +554,116 @@ ${renderQuantityControl(item.id, item.quantity, true)}
 `).join("");
 cartLists.forEach((element) => {
 element.innerHTML = cartMarkup;
+});
+}
+
+function deliveryPrice(method, subtotal){
+return subtotal >= FREE_DELIVERY_FROM ? 0 : DELIVERY_PRICES[method] || 0;
+}
+
+function renderCheckoutTotals(){
+const form = document.getElementById("checkoutForm");
+if(!form) return;
+
+const items = getCart();
+const subtotal = items.reduce((sum, item) => sum + parsePrice(item.price) * item.quantity, 0);
+const delivery = deliveryPrice(form.elements.delivery.value, subtotal);
+document.getElementById("checkoutDelivery").textContent = delivery ? formatPrice(delivery) : t("checkout.free");
+document.getElementById("checkoutTotal").textContent = formatPrice(subtotal + delivery);
+}
+
+function renderCheckoutOption(group, value, label, note, checked){
+return `
+<label class="checkout-option">
+<input type="radio" name="${group}" value="${value}"${checked ? " checked" : ""}>
+<span><strong>${escapeHtml(label)}</strong>${note ? `<small>${escapeHtml(note)}</small>` : ""}</span>
+</label>
+`;
+}
+
+function renderCheckoutField(name, label, value, required = true){
+return `
+<label class="checkout-field">
+<span>${escapeHtml(label)}</span>
+<input name="${name}" type="text" value="${escapeHtml(value || "")}"${required ? " required" : ""}>
+</label>
+`;
+}
+
+function openCheckout(){
+if(!ensureSignedIn("purchase")) return;
+
+const body = document.getElementById("checkoutBody");
+const items = getCart();
+if(!body || !items.length) return;
+
+const user = state.currentUser;
+body.innerHTML = `
+<form id="checkoutForm" class="checkout-form">
+<h4 class="product-modal-heading">${escapeHtml(t("checkout.summary"))}</h4>
+<ul class="checkout-summary">${items.map((item) => `<li><span>${item.quantity} × ${escapeHtml(item.name)}</span><strong>${escapeHtml(formatPrice(parsePrice(item.price) * item.quantity))}</strong></li>`).join("")}</ul>
+<h4 class="product-modal-heading">${escapeHtml(t("checkout.deliveryTitle"))}</h4>
+<div class="checkout-options">
+${renderCheckoutOption("delivery", "courier", t("checkout.courier"), t("checkout.deliveryNote", { price: DELIVERY_PRICES.courier }), true)}
+${renderCheckoutOption("delivery", "locker", t("checkout.locker"), t("checkout.deliveryNote", { price: DELIVERY_PRICES.locker }), false)}
+</div>
+<p class="checkout-note">${escapeHtml(t("checkout.freeNote", { price: FREE_DELIVERY_FROM }))}</p>
+<h4 class="product-modal-heading">${escapeHtml(t("checkout.addressTitle"))}</h4>
+<div class="checkout-fields">
+${renderCheckoutField("phone", t("checkout.phone"), user.phone)}
+${renderCheckoutField("city", t("checkout.city"), user.city)}
+${renderCheckoutField("street", t("checkout.street"), user.street)}
+${renderCheckoutField("building", t("checkout.building"), user.building)}
+${renderCheckoutField("apartment", t("checkout.apartment"), user.apartment, false)}
+</div>
+<h4 class="product-modal-heading">${escapeHtml(t("checkout.paymentTitle"))}</h4>
+<div class="checkout-options">
+${renderCheckoutOption("payment", "blik", "BLIK", "", true)}
+${renderCheckoutOption("payment", "card", t("checkout.card"), "", false)}
+${renderCheckoutOption("payment", "transfer", t("checkout.transfer"), "", false)}
+</div>
+<p class="checkout-note">${escapeHtml(t("checkout.demoNote"))}</p>
+<div class="checkout-totals">
+<div><span>${escapeHtml(t("checkout.deliveryLabel"))}</span><strong id="checkoutDelivery"></strong></div>
+<div class="checkout-grand-total"><span>${escapeHtml(t("cart.total"))}</span><strong id="checkoutTotal"></strong></div>
+</div>
+<button class="product-action checkout-submit" type="submit">${escapeHtml(t("checkout.submit"))}</button>
+</form>
+`;
+renderCheckoutTotals();
+window.LampUI.openModal("checkoutModal");
+}
+
+async function submitCheckout(form){
+if(purchaseInProgress) return;
+purchaseInProgress = true;
+
+const items = getCart();
+const count = items.reduce((sum, item) => sum + item.quantity, 0);
+const subtotal = items.reduce((sum, item) => sum + parsePrice(item.price) * item.quantity, 0);
+const total = subtotal + deliveryPrice(form.elements.delivery.value, subtotal);
+
+try{
+if(state.apiToken){
+await storage.apiFetch("/api/checkout", { method: "POST", body: JSON.stringify({}) });
+await Promise.allSettled([loadLibraryFromApi(), loadCartFromApi()]);
+}else{
+const now = new Date().toISOString();
+libraryItems = [...libraryItems, ...items.map((item) => ({ id: item.id, savedAt: now, purchasedAt: now, quantity: item.quantity }))];
+cartItems = [];
+}
+storage.saveLocalCart(cartItems);
+}catch(error){
+purchaseInProgress = false;
+if(!error.sessionExpired) window.LampUI.showToast(t("checkout.failed"), "error");
+return;
+}
+
+syncUi();
+await window.LampUI.playPurchaseSound();
+window.LampUI.goToPage("purchase-history.html", {
+message: t("checkout.done", { count, total: formatPrice(total) }),
+type: "success"
 });
 }
 
@@ -609,6 +827,30 @@ const addCart = event.target.closest("[data-add-cart]");
 const removeLibrary = event.target.closest("[data-library-remove]");
 const removeCart = event.target.closest("[data-cart-remove]");
 const themeButton = event.target.closest("[data-product-theme]");
+const productOpener = event.target.closest("[data-open-product]");
+const libraryToggle = event.target.closest("[data-library-toggle]");
+
+if(event.target.closest("#catalogMore")){
+catalogView = { ...catalogView, visible: catalogView.visible + CATALOG_PAGE_SIZE };
+renderCatalogProducts();
+renderProductActions();
+return;
+}
+
+if(event.target.closest("[data-open-checkout]")){
+openCheckout();
+return;
+}
+
+if(productOpener){
+openProductModal(productOpener.dataset.openProduct || "");
+return;
+}
+
+if(libraryToggle){
+toggleLibrary(libraryToggle.dataset.productId || "");
+return;
+}
 
 if(quantityButton){
 const control = quantityButton.closest("[data-quantity-control]");
@@ -638,7 +880,33 @@ if(removeLibrary) removeFromLibrary(removeLibrary.dataset.libraryRemove || "");
 if(removeCart) removeFromCart(removeCart.dataset.cartRemove || "");
 });
 
+document.addEventListener("keydown", (event) => {
+const opener = event.target.closest?.("figure[data-open-product]");
+if(opener && (event.key === "Enter" || event.key === " ")){
+event.preventDefault();
+openProductModal(opener.dataset.openProduct || "");
+}
+});
+
+document.addEventListener("submit", (event) => {
+if(event.target.id !== "checkoutForm") return;
+event.preventDefault();
+submitCheckout(event.target);
+});
+
 document.addEventListener("change", (event) => {
+if(event.target.id === "catalogSort"){
+catalogView = { ...catalogView, sort: event.target.value, visible: CATALOG_PAGE_SIZE };
+renderCatalogProducts();
+renderProductActions();
+return;
+}
+
+if(event.target.name === "delivery"){
+renderCheckoutTotals();
+return;
+}
+
 const input = event.target.closest("[data-product-quantity-input], [data-cart-quantity-input]");
 if(!input) return;
 const quantity = normalizeQuantity(input.value);
@@ -652,6 +920,14 @@ updateCartQuantity(control.dataset.productId || "", quantity);
 });
 
 document.addEventListener("input", (event) => {
+if(event.target.id === "catalogMaxPrice"){
+const value = Number(event.target.value);
+catalogView = { ...catalogView, maxPrice: value >= Number(event.target.max) ? null : value, visible: CATALOG_PAGE_SIZE };
+renderCatalogProducts();
+renderProductActions();
+return;
+}
+
 const input = event.target.closest("[data-cart-quantity-input]");
 if(!input) return;
 
@@ -675,6 +951,7 @@ renderProductThemes();
 renderCatalogProducts();
 renderLibrary();
 renderCart();
+renderProductModal();
 renderProductActions();
 window.LampSearch?.renderSearchResults?.();
 window.LampUI.highlightCurrentPage();
@@ -695,6 +972,7 @@ renderCatalogProducts,
 renderLibrary,
 renderCart,
 openCartModal,
+openProductModal,
 addToLibrary,
 buyProduct,
 removeFromLibrary,
